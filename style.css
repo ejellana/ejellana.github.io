@@ -10,6 +10,19 @@ body {
     font-size: 22px; /* Adjust the overall font size */
 }
 
+.header {
+    position: fixed;
+    top: 0;
+    left: -10;
+    width: 120%;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    font-size: 18px
+}
+
 h1 {
     color: rgba(0, 0, 255, 0.792);
     font-weight: bold;
