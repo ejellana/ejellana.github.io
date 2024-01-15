@@ -81,3 +81,39 @@ nav ul li a{
     font-size: 22px;
     margin-top: 10%;
 }
+
+/*PORTFOLIO*/
+#portfolio{
+    padding: 70px 0;
+    background-image: url(images/bg\ blue3.png);
+    color: white;
+}
+.work-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+}
+
+.work{
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.work img{
+    width: 300px;
+    border-radius: 10px;
+    display: block;
+}
+
+.layer{
+    width: 100%;
+    height: 100%;
+    margin-top: 10%;
+}
+
+.layer p{
+    margin-top:5%;
+}
+
