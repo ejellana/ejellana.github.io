@@ -111,7 +111,7 @@ nav ul li a {
 
 #about{
     padding: 70px 0;
-    background-image: url(images/bgBLUEEE2.png);
+    background-color: #101728;
     color: white;
 }
 
@@ -141,12 +141,92 @@ nav ul li a {
     margin-top: 5%;
 }
 
+/*SKILLS*/
+#skills{
+    background-color: #101728;
+    padding: 50px; 
+    text-align: center; 
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    
+}
+
+.skill-main{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-row-gap: 30px;
+    grid-column-gap: 50px;
+
+}
+
+.skill-bar{
+    margin-bottom: 2.3rem;
+}
+
+.skill-main h3{
+    margin-bottom: 2rem;
+    font-size: var(--normal-font);
+    text-align: center;
+    margin-top: 20%;
+}
+
+.skill-left .skill-bar .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.skill-left .skill-bar .bar{
+    width: 100%;
+    height: 10px;
+    background-color: rgb(13, 13, 14);
+    border-radius: 25px;
+    margin-top: 10px;
+    position: relative;
+}
+.skill-bar .bar span{
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    background: rgb(8, 8, 215);
+    border-radius: 25px;
+    box-shadow: rgb(80, 78, 78)
+}
+
+.skill-bar .bar .python{
+    width: 75%;
+    animation: python 2s;
+}
+
+.skill-bar .bar .csharp{
+    width: 70%;
+    animation: python 3s;
+}
+
+.skill-bar .bar .cplus{
+    width: 50%;
+    animation: python 4s;
+}
+
+.skill-bar .bar .html{
+    width: 75%;
+    animation: python 5s;
+}
+
+.skill-bar .bar .css{
+    width: 60%;
+    animation: python 6s;
+}
 
 
 /*PORTFOLIO*/
 #portfolio{
     padding: 20px 0;
-    background-image: url(images/bgBLUEEE3.png);
+    background-color: #101728;
     color: white;
 }
 
@@ -183,5 +263,51 @@ nav ul li a {
     margin-right: 0px;
 }
 
+/*-----------KEY FRAMES------------*/
+
+@keyframes python{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 75;
+    }
+}
+
+@keyframes csharp{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 70;
+    }
+}
+
+@keyframes cplus{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 50;
+    }
+}
+
+@keyframes html{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 70;
+    }
+}
+
+@keyframes css{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 60;
+    }
+}
 
 
