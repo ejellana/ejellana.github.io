@@ -135,6 +135,11 @@ section{
 .img-box {
     overflow: hidden;
     border-radius: 2000px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.img-box:hover {
+    transform: scale(1.1);
 }
 
 img {
@@ -228,6 +233,12 @@ img {
 
 .about-col-1{
     flex-basis: 37%;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.about-col-1:hover {
+    transform: scale(1.1);
 }
 
 .about-col-1 img{
@@ -300,7 +311,8 @@ img {
 }
 
 #skills h2 {
-    font-size: 50px; 
+    font-size: 50px;
+    margin-top: -5%;
 }
 
 .skill-main{
@@ -443,6 +455,13 @@ img {
     margin-top: 50px;
 }
 
+.sub-title {
+    text-align: center;
+    font-size: 45px; 
+    color: #ffffff; 
+    margin-bottom: 30px; 
+}
+
 .work{
     border-radius: 10px;
     position: relative;
@@ -491,14 +510,6 @@ img {
 .work:hover .layer{
     height: 100%;
 }
-
-
-
-
-
-
-
-
 
 /*-----------------------------Key Frames-------------------------------*/
 
