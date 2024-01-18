@@ -41,12 +41,24 @@ body{
 }
 
 header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background:#101728;
+    border-bottom: 1px solid transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     padding: 20px 10%;
   
+}
+
+header.sticky{
+    background: #101728;
+    border-bottom: 1px;
+    padding: 12px 10%;
 }
 
 .logo{
@@ -117,7 +129,7 @@ section{
 .home-content h1 {
     font-size: 62px; 
     color: white;
-    margin-top: -20%;
+    margin-top: 10%;
 }
 
 .change-text{
@@ -199,7 +211,7 @@ section{
 
 #about{
     padding: 70px 0;
-    background-color: white;
+    background-color: #a6bcd4;
     color: black;
 }
 
@@ -370,7 +382,7 @@ section{
 /*PORTFOLIO*/
 #portfolio{
     padding: 20px 0;
-    background-color: white;
+    background-color: #a6bcd4;
     color: black;
 }
 
