@@ -14,7 +14,7 @@ body{
     font-family: 'Poppins', sans-serif;
     background-color: #101728;
     color: var(--text-color);
-    background: #101728;
+    background: rgb(26, 33, 39);
 }
 
 .container {
@@ -45,7 +45,7 @@ header{
     top: 0;
     left: 0;
     z-index: 1000;
-    background:rgb(35, 39, 42);
+    background:#101728;
     border-bottom: 1px solid transparent;
     display: flex;
     align-items: center;
@@ -213,11 +213,11 @@ img {
     z-index: -1;
 }
 
-/*ABOUT*/
+/*-----------------------------About-------------------------------*/
 
 #about{
     padding: 70px 0;
-    background-color: rgb(35, 39, 42);
+    background-color: #101728;
 }
 
 .row{
@@ -272,7 +272,7 @@ img {
     width: 500px;
     margin: 1rem 0 4rem;
     margin-left: 50%;
-    margin-top: -13%;
+    margin-top: -17%;
 }
 
 .info-box h5{
@@ -288,15 +288,19 @@ img {
 
 
 
-/*SKILLS*/
+/*-----------------------------Skills-------------------------------*/
 #skills{
-    background-color: #101728;
+    background-color: rgb(26, 33, 39);
     padding: 50px; 
     text-align: center; 
-    font-size: 22px;
+    font-size: 14px;
     font-family: 'Poppins', sans-serif;
     color: white;
-    
+    margin-top: 5%;
+}
+
+#skills h2 {
+    font-size: 50px; 
 }
 
 .skill-main{
@@ -314,9 +318,9 @@ img {
 
 .skill-main h3{
     margin-bottom: 2rem;
-    font-size: var(--normal-font);
+    font-size: 24px;
     text-align: center;
-    margin-top: 20%;
+    margin-top: 10%;
 }
 
 .skill-left .skill-bar .info {
@@ -426,11 +430,10 @@ img {
 }
 
 
-/*PORTFOLIO*/
+/*-----------------------------Portfolio-------------------------------*/
 #portfolio{
-    padding: 20px 0;
-    background-color: rgb(35, 39, 42);
-    color: black;
+    padding: 50px 0;
+    background:#101728;
 }
 
 .work-list{
@@ -447,26 +450,57 @@ img {
 }
 
 .work img{
-    width: 320px;
+    width: 100%;
     border-radius: 10px;
-    display: block;
+    display: blocked;
+    transition: transform 0.5s;
 }
 
 .layer{
     width: 100%;
-    height: 100%;
-    margin-top: 10%;
-    font-size: 30px;
-}
-
-.layer p {
-    color: white;
-    margin-top: 5%;
+    height: 0%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), #4209dd);
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
     font-size: 14px;
-    margin-right: 0px;
+    transition: height 0.5s;
 }
 
-/*-----------KEY FRAMES------------*/
+.layer h3{
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.layer a{
+    margin-top: 20px;
+}
+
+.work:hover img{
+    transform: scale(1.1);
+}
+
+.work:hover .layer{
+    height: 100%;
+}
+
+
+
+
+
+
+
+
+
+/*-----------------------------Key Frames-------------------------------*/
 
 @keyframes python{
     0% {
