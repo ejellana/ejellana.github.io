@@ -199,7 +199,7 @@ section{
 
 #about{
     padding: 70px 0;
-    background-color: rgb(212, 205, 205);
+    background-color: white;
     color: black;
 }
 
@@ -287,17 +287,17 @@ section{
 
 .skill-bar .bar .python{
     width: 75%;
-    animation: python 2s;
+    animation: python 4s;
 }
 
 .skill-bar .bar .csharp{
     width: 70%;
-    animation: python 3s;
+    animation: python 4s;
 }
 
 .skill-bar .bar .cplus{
     width: 50%;
-    animation: python 4s;
+    animation: python 5s;
 }
 
 .skill-bar .bar .html{
@@ -310,10 +310,67 @@ section{
     animation: python 6s;
 }
 
+/*Professional Skills*/
+.skill-bar2{
+    margin-bottom: 2.3rem;
+}
+
+.skill-right .skill-bar2 .info2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.skill-right .skill-bar2 .bar2{
+    width: 100%;
+    height: 10px;
+    background-color: rgb(13, 13, 14);
+    border-radius: 25px;
+    margin-top: 10px;
+    position: relative;
+}
+.skill-bar2 .bar2 span{
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    background: rgb(8, 8, 215);
+    border-radius: 25px;
+    box-shadow: rgb(80, 78, 78);
+}
+
+
+.skill-bar2 .bar2 .teamwork{
+    width: 85%;
+    animation: teamwork 4s;
+}
+
+.skill-bar2 .bar2 .creativity{
+    width: 75%;
+    animation: creativity 4s;
+}
+
+.skill-bar2 .bar2 .productivity{
+    width: 75%;
+    animation: productivity 5s;
+}
+
+.skill-bar2 .bar2 .communication{
+    width: 85%;
+    animation: communication 5s;
+}
+
+.skill-bar2 .bar2 .projectmanagement{
+    width: 80%;
+    animation: projectmanagement 6s;
+}
+
+
 /*PORTFOLIO*/
 #portfolio{
     padding: 20px 0;
-    background-color: rgb(212, 205, 205);
+    background-color: white;
     color: black;
 }
 
@@ -394,6 +451,52 @@ section{
     }
     100% {
         width: 60;
+    }
+}
+
+
+@keyframes teamwork{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 85;
+    }
+}
+
+@keyframes creativity{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 75;
+    }
+}
+
+@keyframes productivity{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 75;
+    }
+}
+
+@keyframes communication{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 85;
+    }
+}
+
+@keyframes projectmanagement{
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 80;
     }
 }
 
