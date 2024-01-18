@@ -457,7 +457,7 @@ img {
 .layer a{
     margin-top: 20px;
     font-size: 50px;
-    color: black;
+    color: rgb(194, 188, 188);
 }
 
 .layer a:hover{
