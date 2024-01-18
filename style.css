@@ -81,7 +81,7 @@ span{
 }
 
 .navlist a{
-    color: #124de4;
+    color: white;
     font-weight: 500;
     padding: 10px 20px;
     font-size: 22px;
@@ -135,11 +135,11 @@ section{
 .img-box {
     overflow: hidden;
     border-radius: 2000px;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-out;
 }
 
 .img-box:hover {
-    transform: scale(1.1);
+    transform: translateY(-10px);
 }
 
 img {
@@ -172,52 +172,6 @@ img {
     font-family:'Segoe UI', Tahoma, Verdana, sans-serif;
 }
 
-
-.social-icons{
-    display: flex;
-    justify-content: space-between;
-    width: 220px;
-    height: 40px;
-    margin-top: 5%;
-}
-
-.social-icons a{
-    display: inline-flex;
-    width: 50px;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    background:#101728;
-    color:rgb(16, 16, 233);
-    border: 2px solid black;
-    transition: .6s;
-    box-shadow: 0 0 0.3rem rgb(16, 16, 233);
-    border-radius: 5px;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.social-icons a i{
-    font-size: 1.5rem;
-}
-
-.social-icons a:hover{
-    color: rgb(8, 8, 215);
-}
-
-.social-icons a::before{
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100;
-    height: 100;
-    background: #101728;
-    transition: .6s;
-    z-index: -1;
-}
-
 /*-----------------------------About-------------------------------*/
 
 #about{
@@ -234,11 +188,11 @@ img {
 .about-col-1{
     flex-basis: 37%;
     overflow: hidden;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-out;
 }
 
 .about-col-1:hover {
-    transform: scale(1.1);
+    transform: translateY(-10px);
 }
 
 .about-col-1 img{
@@ -253,7 +207,6 @@ img {
 }
 
 .about-col-2 h1{
-    color: #124de4;
     margin-top: -10%;
 }
 
@@ -510,6 +463,51 @@ img {
 .work:hover .layer{
     height: 100%;
 }
+
+/*-------------------------------Contact-------------------------------*/
+#contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    margin-top: 2%;
+}
+
+.contact p {
+    margin-top: 30px;
+}
+
+.contact p i {
+    color: rgb(8, 8, 215);
+    margin-right: 20px;
+    font-size: 15px;
+}
+
+.social-icons {
+    margin-top: 30px;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.social-icons a {
+    text-decoration: none;
+    font-size: 50px;
+    margin-right: 15px;
+    color: #ababab;
+    display: inline-block;
+}
+
+.social-icons a:hover {
+    color: rgb(8, 8, 215);
+    transform: translateY(-5px);
+    transition: transform 0.5s;
+}
+
+
+
+
+
+
 
 /*-----------------------------Key Frames-------------------------------*/
 
