@@ -40,6 +40,20 @@ body{
     0 0 150px rgba(71, 19, 241, 0.6);
 }
 
+::-webkit-scrollbar{
+    height: 0;
+    width: .5rem;
+}
+
+::-webkit-scrollbar-track{
+    background:rgb(136, 145, 153)
+}
+
+::-webkit-scrollbar-thumb{
+    background:rgb(8, 8, 215);
+    border-radius: 5rem;
+}
+
 header{
     position: fixed;
     top: 0;
@@ -497,12 +511,6 @@ img {
     transform: translateY(-5px);
     transition: transform 0.5s;
 }
-
-
-
-
-
-
 
 /*-----------------------------Key Frames-------------------------------*/
 
