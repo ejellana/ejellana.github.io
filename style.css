@@ -140,8 +140,7 @@ section{
     align-items: center;
     justify-content: center;
     grid-gap: 4em;
-    background-image: url(images/blackGreen2.png);
-    background-size: cover;
+    background: black;
 }
 
 .home-content{
@@ -149,9 +148,15 @@ section{
 }
 
 .home-content h1 {
-    font-size: 62px; 
+    font-size: 80px; 
     color: white;
     margin-top: 10%;
+}
+
+.home-content h2{
+    font-size: 60px; 
+    color: white;
+    margin-top: 2%;
 }
 
 .change-text{
@@ -161,7 +166,7 @@ section{
 
 .change-text h3{
     margin-top: 3%;
-    font-size: 17px;
+    font-size: 22px;
     font-weight: 100;
     color: white;
     font-family:'Segoe UI', Tahoma, Verdana, sans-serif;
@@ -602,6 +607,33 @@ section{
 }
 
 @media(max-width: 768px) {   
+    
+    
+.home-content h1 {
+    font-size: 50px; 
+    color: white;
+    margin-top: 10%;
+}
+
+.home-content h2{
+    font-size: 30px; 
+    color: white;
+    margin-top: 2%;
+}
+
+.change-text{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.change-text h3{
+    margin-top: 3%;
+    font-size: 17px;
+    font-weight: 100;
+    color: white;
+    font-family:'Segoe UI', Tahoma, Verdana, sans-serif;
+}
+
     .logo {
         display: none; 
     } 
@@ -675,12 +707,6 @@ section{
 
     .contact p i{
         font-size: 20px;
-    }
-}
-
-@media only screen and (max-width: 600px){
-    .home{
-        background-image: url(images/bgPhone.jpg);
     }
 }
 
