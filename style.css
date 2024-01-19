@@ -631,20 +631,10 @@ img {
 }
 
 @media(max-width: 768px) {   
-    .navlist{
-        display: flex;
-        position: absolute;
-        right: 0;
-        left: 0;
-        flex-direction: row;
-        background:#101728;
-        text-align: left;
-        transition: all .45s ease;
-    }
+    
     .navlist a{
         display: block;
-        padding-bottom: 1rem;
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .navlist.open{
