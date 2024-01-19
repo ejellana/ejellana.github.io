@@ -97,6 +97,7 @@ span{
 
 .navlist a{
     color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 500;
     padding: 10px 20px;
     font-size: 22px;
@@ -635,10 +636,26 @@ img {
     .navlist a{
         display: block;
         font-size: 12px;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
     }
-
-    .navlist.open{
-        top: 100%;
+    .home{
+        grid-template-columns: 1fr;
+    }
+    .home-image{
+        margin-bottom: 5rem;
+    } 
+    .sub-title{
+        font-size: 40px;
+    }
+    .about-col-1{
+        flex-basis: 100;
+    }
+    .about-col-1{
+        margin-bottom: 30px;
+    }
+    .about-col-2{
+        font-size: 14px;
     }
 }
+
 
