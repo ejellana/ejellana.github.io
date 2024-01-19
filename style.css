@@ -141,6 +141,7 @@ section{
     justify-content: center;
     grid-gap: 4em;
     background-image: url(images/blackGreen2.png);
+    background-size: cover;
 }
 
 .home-content{
@@ -600,7 +601,7 @@ section{
     }   
 }
 
-@media(max-width: 768px) {       
+@media(max-width: 768px) {   
     .logo {
         display: none; 
     } 
@@ -674,6 +675,12 @@ section{
 
     .contact p i{
         font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .home{
+        background-image: url(images/bgPhone.jpg);
     }
 }
 
