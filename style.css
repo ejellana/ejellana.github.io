@@ -10,11 +10,11 @@
 html{
     scroll-behavior: smooth;
 }
+
 body{
     font-family: 'Poppins', sans-serif;
-    background-color: #101728;
+    background-color: black;
     color: var(--text-color);
-    background: rgb(26, 33, 39);
 }
 
 .container {
@@ -25,20 +25,20 @@ body{
 :root{
     --text-color: white;
     --hover-color: blue;
-    --bg-color: #101728;
+    --bg-color: black;
     --secon-bg-color: gray;
     --big-font: 2.5rem;
     --normal-font: 2rem;
-    --neon-box-shadow: 0 0 .5rem blue;
+    --neon-box-shadow: 0 0 .5rem black;
     --h2-font: 3rem;
-    --font-neon-text-shadow: 0 0 10px rgba(71, 19, 241, 0.6),
-    0 0 20px rgba(71, 19, 241, 0.6),
-    0 0 30px rgba(71, 19, 241, 0.6),
-    0 0 40px rgba(71, 19, 241, 0.6),
-    0 0 70px rgba(71, 19, 241, 0.6),
-    0 0 80px rgba(71, 19, 241, 0.6),
-    0 0 100px rgba(71, 19, 241, 0.6),
-    0 0 150px rgba(71, 19, 241, 0.6);
+    --text-shadow: 0 0 10px black,
+    0 0 20px black,
+    0 0 30px black,
+    0 0 40px black,
+    0 0 70px black,
+    0 0 80px black,
+    0 0 100px black,
+    0 0 150px black;
 }
 
 ::-webkit-scrollbar{
@@ -51,7 +51,7 @@ body{
 }
 
 ::-webkit-scrollbar-thumb{
-    background:rgb(8, 8, 215);
+    background:#029002;
     border-radius: 5rem;
 }
 
@@ -60,7 +60,7 @@ header{
     top: 0;
     left: 0;
     z-index: 1000;
-    background:#101728;
+    background:#029002;
     border-bottom: 1px solid transparent;
     display: flex;
     align-items: center;
@@ -71,7 +71,7 @@ header{
 }
 
 header.sticky{
-    background: #101728;
+    background: #029002;
     border-bottom: 1px;
     padding: 12px 10%;
 }
@@ -83,11 +83,11 @@ header.sticky{
 }
 
 span{
-    color: #124de4;
+    color: black;
 }
 
 .home h1 span{
-    color: #124de4;
+    color: #029002;
 }
 
 .navlist{
@@ -97,7 +97,6 @@ span{
 
 .navlist a{
     color: white;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 500;
     padding: 10px 20px;
     font-size: 22px;
@@ -106,15 +105,15 @@ span{
 }
 
 .navlist a:hover{
-    color:rgb(0, 0, 255);
-    text-shadow: 0 0 10px rgba(71, 19, 241, 0.6),
-    0 0 20px rgba(71, 19, 241, 0.6),
-    0 0 30px rgba(71, 19, 241, 0.6),
-    0 0 40px rgba(71, 19, 241, 0.6),
-    0 0 70px rgba(71, 19, 241, 0.6),
-    0 0 80px rgba(71, 19, 241, 0.6),
-    0 0 100px rgba(71, 19, 241, 0.6),
-    0 0 150px rgba(71, 19, 241, 0.6);
+    color:black;
+    text-shadow: 0 0 10px black,
+    0 0 20px black,
+    0 0 30px black,
+    0 0 40px black,
+    0 0 70px black,
+    0 0 80px black,
+    0 0 100px black,
+    0 0 150px black;
 }
 
 #menu-icon{
@@ -141,29 +140,8 @@ section{
     align-items: center;
     justify-content: center;
     grid-gap: 4em;
+    background-image: url(images/blackGreen2.png);
 }
-
-.home-image {
-    margin-top: 15%;
-    margin-left: calc(40% - 95px);
-}
-
-.img-box {
-    overflow: hidden;
-    border-radius: 2000px;
-    transition: transform 0.3s ease-out;
-}
-
-.img-box:hover {
-    transform: translateY(-10px);
-}
-
-img {
-    width: 100%; 
-    height: auto; 
-    display: block; 
-}
-
 
 .home-content{
     max-width: 600px;
@@ -192,7 +170,7 @@ img {
 
 #about{
     padding: 70px 0;
-    background-color: #101728;
+    background-color: black;
 }
 
 .row{
@@ -224,6 +202,7 @@ img {
 
 .about-col-2 h1{
     margin-top: -10%;
+    color: #029002
 }
 
 .about-col-2 p{
@@ -232,32 +211,9 @@ img {
     font-family:'Segoe UI', Tahoma, Verdana, sans-serif;
 }
 
-.info-box{
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 500px;
-    margin: 1rem 0 4rem;
-    margin-left: 50%;
-    margin-top: -17%;
-}
-
-.info-box h5{
-    font-weight: 600;
-    color: white;
-    font-size: 1rem;
-}
-
-.info-box span{
-    font-size: 1rem;
-    color: #bdbdbd;
-}
-
-
-
 /*-----------------------------Skills-------------------------------*/
 #skills{
-    background-color: rgb(26, 33, 39);
+    background-color: black;
     padding: 50px; 
     text-align: center; 
     font-size: 14px;
@@ -269,6 +225,7 @@ img {
 #skills h2 {
     font-size: 50px;
     margin-top: -5%;
+    color: #029002
 }
 
 .skill-main{
@@ -301,7 +258,7 @@ img {
 .skill-left .skill-bar .bar{
     width: 100%;
     height: 10px;
-    background-color: rgb(13, 13, 14);
+    background-color: rgb(98, 98, 101);
     border-radius: 25px;
     margin-top: 10px;
     position: relative;
@@ -311,9 +268,9 @@ img {
     height: 100%;
     position: absolute;
     left: 0;
-    background: rgb(8, 8, 215);
+    background: #029002;;
     border-radius: 25px;
-    box-shadow: rgb(80, 78, 78);
+    box-shadow: rgb(98, 96, 96);
 }
 
 .skill-bar .bar .python{
@@ -342,6 +299,7 @@ img {
 }
 
 /*Professional Skills*/
+
 .skill-bar2{
     margin-bottom: 2.3rem;
 }
@@ -356,7 +314,7 @@ img {
 .skill-right .skill-bar2 .bar2{
     width: 100%;
     height: 10px;
-    background-color: rgb(13, 13, 14);
+    background-color: rgb(98, 98, 101);
     border-radius: 25px;
     margin-top: 10px;
     position: relative;
@@ -366,7 +324,7 @@ img {
     height: 100%;
     position: absolute;
     left: 0;
-    background: rgb(8, 8, 215);
+    background: #029002;
     border-radius: 25px;
     box-shadow: rgb(80, 78, 78);
 }
@@ -401,7 +359,11 @@ img {
 /*-----------------------------Portfolio-------------------------------*/
 #portfolio{
     padding: 50px 0;
-    background:#101728;
+    background:black;
+}
+
+#portfolio h1{
+    color: #029002;
 }
 
 .work-list{
@@ -434,7 +396,7 @@ img {
 .layer{
     width: 100%;
     height: 0%;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), #4209dd);
+    background: linear-gradient(rgba(0, 0, 0, 0.6), #029002);
     border-radius: 10px;
     position: absolute;
     left: 0;
@@ -484,12 +446,16 @@ img {
     margin-top: 2%;
 }
 
+#contacts h1{
+    color: #029002;
+}
+
 .contact p {
     margin-top: 30px;
 }
 
 .contact p i {
-    color: rgb(8, 8, 215);
+    color: #029002;
     margin-right: 20px;
     font-size: 30px;
 }
@@ -509,7 +475,7 @@ img {
 }
 
 .social-icons a:hover {
-    color: rgb(8, 8, 215);
+    color: #029002;
     transform: translateY(-5px);
     transition: transform 0.5s;
 }
@@ -629,33 +595,91 @@ img {
     .home-content{
         margin-top: 5rem;
     }
+    .logo {
+        display: block; 
+    }   
 }
 
-@media(max-width: 768px) {   
+@media(max-width: 768px) {       
+    .logo {
+        display: none; 
+    } 
+
+    .navlist{
+        margin-bottom: -2%
+    }
     
     .navlist a{
         display: block;
-        font-size: 12px;
-        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        font-size: 13px;
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding-bottom: 1rem;
     }
     .home{
         grid-template-columns: 1fr;
     }
-    .home-image{
-        margin-bottom: 5rem;
-    } 
-    .sub-title{
-        font-size: 40px;
+    
+    .about-col-1, .about-col-2{
+        flex-basis: 100%;
     }
-    .about-col-1{
-        flex-basis: 100;
-    }
+
     .about-col-1{
         margin-bottom: 30px;
     }
-    .about-col-2{
-        font-size: 14px;
+
+    .about-col-2 h1{
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .about-col-2 p{
+        font-size: 16px;
+        color: rgb(224, 224, 224);
+    }
+
+    .skill-main{
+        grid-template-columns: 1fr;
+        font-size: 16px;
+    }
+
+    #skills h2 {
+        font-size: 36px;
+        margin-bottom: 12%;
+    }
+
+    .skill-main h3{
+        font-size: 18px;
+        color: rgb(224, 224, 224);  
+    }
+
+    .contact{
+        flex-basis: 100%;
+    }
+
+    .contact{
+        font-size: 12;
+    }
+    .contact h1.sub-title {
+        font-size: 36px; 
+    }
+
+    .contact p {
+        font-size: 16px; 
+    }
+
+    .contact .social-icons a {
+        font-size: 30px; 
+    }
+
+    .contact p i{
+        font-size: 20px;
     }
 }
 
+@media(max-width:420px){
+    html{
+        font-size: 80%;
+    }
+}
 
