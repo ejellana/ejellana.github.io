@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+
 *{
     margin: 0;
     padding: 0;
@@ -201,12 +204,14 @@ section{
 }
 
 .about-col-2{
+    font-family: 'Poppins', sans-serif;
     margin-top: 10%;
     flex-basis: 50%;
     font-size: 22px;
 }
 
 .about-col-2 h1{
+    font-family: 'Poppins', sans-serif;
     margin-top: -10%;
     color: #029002
 }
@@ -214,7 +219,7 @@ section{
 .about-col-2 p{
     font-size: 21px;
     margin-top: 8%;
-    font-family:'Segoe UI', Tahoma, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 /*-----------------------------Skills-------------------------------*/
@@ -226,6 +231,7 @@ section{
     font-family: 'Poppins', sans-serif;
     color: white;
     margin-top: 5%;
+    font-family: 'Poppins', sans-serif;
 }
 
 #skills h2 {
@@ -366,6 +372,7 @@ section{
 #portfolio{
     padding: 50px 0;
     background:black;
+    font-family: 'Poppins', sans-serif;
 }
 
 #portfolio h1{
@@ -397,6 +404,7 @@ section{
     border-radius: 10px;
     display: blocked;
     transition: transform 0.5s;
+    object-fit: cover;
 }
 
 .layer{
@@ -450,6 +458,7 @@ section{
     align-items: center;
     font-size: 22px;
     margin-top: 2%;
+    font-family: 'Poppins', sans-serif;
 }
 
 #contacts h1{
