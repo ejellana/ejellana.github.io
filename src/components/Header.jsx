@@ -173,17 +173,18 @@ export default function Header() {
 
           <nav className="nav-desktop">
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#skills">Skills</a></li>
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="#home" onClick={closeMenu}>Home</a></li>
+              <li><a href="#about" onClick={closeMenu}>About</a></li>
+              <li><a href="#skills" onClick={closeMenu}>Skills</a></li>
+              <li><a href="#projects" onClick={closeMenu}>Projects</a></li>
+              <li><a href="#certificates" onClick={closeMenu}>Certificates</a></li>
+              <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
             </ul>
           </nav>
 
-          <button 
-            className="burger-btn" 
-            onClick={toggleMenu} 
+          <button
+            className="burger-btn"
+            onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="xl" />
@@ -191,8 +192,8 @@ export default function Header() {
         </div>
 
         <>
-          <div 
-            className={`menu-backdrop ${isMenuOpen ? 'active' : ''}`} 
+          <div
+            className={`menu-backdrop ${isMenuOpen ? 'active' : ''}`}
             onClick={closeMenu}
           />
 
@@ -208,6 +209,7 @@ export default function Header() {
               <li><a href="#about" onClick={closeMenu}>About</a></li>
               <li><a href="#skills" onClick={closeMenu}>Skills</a></li>
               <li><a href="#projects" onClick={closeMenu}>Projects</a></li>
+              <li><a href="#certificates" onClick={closeMenu}>Certificates</a></li>
               <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
             </ul>
           </nav>

@@ -1,4 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CursorParticles from '../components/CursorParticles';
+import RotatingRole from '../components/RotatingRole';
 
 // ── SOLID icons ────────────────────────────────────────
 import {
@@ -21,6 +23,9 @@ import myGame from '../assets/images/myGame.png';
 import merchQuest from '../assets/images/merchqueststts.png';
 import fourPeks from '../assets/images/4peks.png';
 import paws from '../assets/images/paws.png';
+import animalTraceability from '../assets/images/animal-traceability.png';
+import animal from '../assets/images/animal.png';
+import parkpeek from '../assets/images/parkpeek.png';
 
 // Certificate images
 import certCompTiaTech from '../assets/images/certificates/CompTIA Tech+ certificate_page-0001.jpg';
@@ -87,10 +92,13 @@ export default function Home() {
     <div id="home">
       {/* Hero / Introduction Section */}
       <section className="hero" id="home">
+        <CursorParticles />
         <div className="container">
           <h2>Hello,</h2>
           <h1 className="title-accent">I'm Emmanuel Ellana</h1>
-          <p className="tagline">Aspiring Data/Business Analyst</p>
+          <p className="tagline">
+            Aspiring <RotatingRole />
+          </p>
           <p className="subtitle">
             4th Year Computer Science Student, Specializing in Data Science & Analytics from<br />
             Mapúa Malayan Colleges Laguna
@@ -250,17 +258,33 @@ export default function Home() {
               </div>
 
               <div className="project-card">
-                <img src={merchQuest} alt="MerchQuest" loading="lazy" />
+                <img src={animal} alt="Animal Disease Traceability System" loading="lazy" />
                 <div className="project-overlay">
-                  <h3>MerchQuest</h3>
-                  <p>Web-based e-commerce prototype with a virtual shopping assistant to guide you step-by-step.</p>
+                  <h3>Animal Disease Traceability System</h3>
+                  <p>A permissioned blockchain, real-time data analytics, and machine learning framework built with Hyperledger Fabric and React to provide secure, tamper-proof animal disease traceability for municipal livestock management.</p>
                   <a
-                    href="https://www.canva.com/design/DAFi-0G04V8/pyTdqk4jCBj3CW69XDRVHQ/edit?utm_content=DAFi-0G04V8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+                    href="https://github.com/ejellana/animal-disease-traceability-system"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="View Project"
+                    aria-label="View on GitHub"
                   >
-                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                    <FontAwesomeIcon icon={faGithub} />
+                  </a>
+                </div>
+              </div>
+
+              <div className="project-card">
+                <img src={parkpeek} alt="ParkPeek Parking System" loading="lazy" />
+                <div className="project-overlay">
+                  <h3>ParkPeek</h3>
+                  <p>A mobile-app based parking occupancy system featuring a peak-volume predictive model powered by clustering and time-series analysis.</p>
+                  <a
+                    href="https://github.com/ejellana/parkpeek"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View on GitHub"
+                  >
+                    <FontAwesomeIcon icon={faGithub} />
                   </a>
                 </div>
               </div>
@@ -272,26 +296,6 @@ export default function Home() {
                   <p>Classic 4 Pics 1 Word game built with Python Tkinter and OOP principles.</p>
                   <a
                     href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="View on GitHub"
-                  >
-                    <FontAwesomeIcon icon={faGithub} />
-                  </a>
-                </div>
-              </div>
-
-              <div className="project-card">
-                <img
-                  src="https://img.freepik.com/free-vector/twitter-app-new-logo-x-black-background_1017-45425.jpg"
-                  alt="Twitter Clone"
-                  loading="lazy"
-                />
-                <div className="project-overlay">
-                  <h3>Twitter Clone</h3>
-                  <p>A dynamic platform mimicking Twitter – browse, tweet, follow users, and stay updated.</p>
-                  <a
-                    href="https://github.com/ejellana/Twitter-Clone"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="View on GitHub"
