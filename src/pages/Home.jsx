@@ -87,6 +87,62 @@ const certificatesData = [
   }
 ];
 
+// Maps skill chip text → Simple Icons slug (https://simpleicons.org)
+// Maps skill chip text → Icon source
+const skillIcons = {
+  Python: 'python',
+  SQL: 'mysql',
+  Excel: 'microsoftexcel',
+  Jupyter: 'jupyter',
+  HTML: 'html5',
+  CSS: 'css3',
+  JavaScript: 'javascript',
+  React: 'react',
+  'C#': 'csharp',
+  'C++': 'cplusplus',
+  'ASP.NET': 'dotnet',
+  Git: 'git',
+  GitHub: 'github',
+  'VS Code': 'visualstudiocode',
+  Figma: 'figma',
+  'MS Access': 'microsoftaccess',
+  Canva: 'canva',
+  Vite: 'vite',
+  Tableau: 'tableau',
+  PowerBI: 'powerbi',
+  'React Native': 'react',
+  Laravel: 'laravel',
+  Bootstrap: 'bootstrap',
+  Tailwind: 'tailwindcss',
+  N8N: 'n8n',
+};
+
+function SkillIcon({ skill }) {
+  const slug = skillIcons[skill];
+  if (!slug) return null;
+
+  return (
+    <img
+      src={`https://cdn.simpleicons.org/${slug}`}
+      alt={`${skill} icon`}
+      className="chip-icon"
+      loading="lazy"
+      onError={(e) => {
+        const img = e.currentTarget;
+        // Prevent multiple error triggers
+        if (img.dataset.triedFallback) {
+          img.style.display = 'none';
+          return;
+        }
+        img.dataset.triedFallback = 'true';
+
+        // Try alternative CDN
+        img.src = `https://cdn.jsdelivr.net/npm/simple-icons@v12/icons/${slug}.svg`;
+      }}
+    />
+  );
+}
+
 export default function Home() {
   return (
     <div id="home">
@@ -152,9 +208,7 @@ export default function Home() {
             {/* Data & Analytics */}
             <div className="bento-card bento-card--analytics">
               <div className="bento-card__header">
-                <span className="material-symbols-outlined bento-card__icon">
-                  analytics
-                </span>
+                <span className="material-symbols-outlined bento-card__icon">analytics</span>
                 <h3 className="bento-card__title">Data &amp; Analytics</h3>
               </div>
 
@@ -163,8 +217,11 @@ export default function Home() {
               </p>
 
               <div className="skill-chips">
-                {['Python', 'SQL', 'Excel', 'Data Analysis', 'Jupyter'].map(skill => (
-                  <span key={skill} className="chip">{skill}</span>
+                {['Python', 'SQL', 'Excel', 'Jupyter', 'Tableau', 'PowerBI'].map(skill => (
+                  <span key={skill} className="chip">
+                    <SkillIcon skill={skill} />
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
@@ -172,9 +229,7 @@ export default function Home() {
             {/* Development */}
             <div className="bento-card bento-card--dev">
               <div className="bento-card__header">
-                <span className="material-symbols-outlined bento-card__icon">
-                  code
-                </span>
+                <span className="material-symbols-outlined bento-card__icon">code</span>
                 <h3 className="bento-card__title">Development</h3>
               </div>
 
@@ -183,8 +238,11 @@ export default function Home() {
               </p>
 
               <div className="skill-chips">
-                {['HTML', 'CSS', 'JavaScript', 'React', 'C#', 'C++', 'Python', 'ASP.NET'].map(skill => (
-                  <span key={skill} className="chip">{skill}</span>
+                {['HTML', 'CSS', 'JavaScript', 'React', 'React Native', 'C#', 'C++', 'Python', 'ASP.NET', 'Laravel', 'Bootstrap', 'Tailwind'].map(skill => (
+                  <span key={skill} className="chip">
+                    <SkillIcon skill={skill} />
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
@@ -192,9 +250,7 @@ export default function Home() {
             {/* Tools & Platforms */}
             <div className="bento-card bento-card--tools">
               <div className="bento-card__header">
-                <span className="material-symbols-outlined bento-card__icon">
-                  build
-                </span>
+                <span className="material-symbols-outlined bento-card__icon">build</span>
                 <h3 className="bento-card__title">Tools &amp; Platforms</h3>
               </div>
 
@@ -203,8 +259,11 @@ export default function Home() {
               </p>
 
               <div className="skill-chips">
-                {['Git', 'GitHub', 'VS Code', 'Figma', 'MS Access', 'Canva', 'Vite'].map(skill => (
-                  <span key={skill} className="chip">{skill}</span>
+                {['Git', 'GitHub', 'VS Code', 'Figma', 'N8N', 'Canva', 'Vite'].map(skill => (
+                  <span key={skill} className="chip">
+                    <SkillIcon skill={skill} />
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
@@ -212,9 +271,7 @@ export default function Home() {
             {/* Professional Skills */}
             <div className="bento-card bento-card--professional">
               <div className="bento-card__header">
-                <span className="material-symbols-outlined bento-card__icon">
-                  groups
-                </span>
+                <span className="material-symbols-outlined bento-card__icon">groups</span>
                 <h3 className="bento-card__title">Professional Skills</h3>
               </div>
 
@@ -223,12 +280,24 @@ export default function Home() {
               </p>
 
               <div className="skill-chips">
-                {['Team Work', 'Communication', 'Creativity', 'Productivity', 'Project Management', 'Problem Solving', 'Adaptability'].map(skill => (
-                  <span key={skill} className="chip">{skill}</span>
+                {[
+                  { name: 'Team Work', icon: 'groups' },
+                  { name: 'Communication', icon: 'chat' },
+                  { name: 'Creativity', icon: 'lightbulb' },
+                  { name: 'Productivity', icon: 'speed' },
+                  { name: 'Project Management', icon: 'task' },
+                  { name: 'Problem Solving', icon: 'psychology' },
+                  { name: 'Adaptability', icon: 'change_circle' },
+                ].map(skill => (
+                  <span key={skill.name} className="chip">
+                    <span className="material-symbols-outlined chip-icon" style={{ color: '#2a2a2a', fontSize: '15px' }}>
+                      {skill.icon}
+                    </span>
+                    {skill.name}
+                  </span>
                 ))}
               </div>
             </div>
-
           </div>
         </div>
       </section>

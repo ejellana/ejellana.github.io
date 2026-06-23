@@ -1,12 +1,29 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+const MOBILE_BREAKPOINT = 768;
 
 export default function CursorParticles() {
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(
+        typeof window !== 'undefined' ? window.innerWidth <= MOBILE_BREAKPOINT : false
+    );
 
     useEffect(() => {
+        function checkMobile() {
+            setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
+        }
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    useEffect(() => {
+        if (isMobile) return;
+
         const container = containerRef.current;
-        const sectionEl = container.parentElement; // the <section> this is mounted inside
+        if (!container) return;
+        const sectionEl = container.parentElement;
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
 
@@ -46,9 +63,14 @@ export default function CursorParticles() {
                 this.size = Math.random() * 0.8 + 1.1;
                 this.angle = Math.random() * Math.PI * 2;
                 this.radius = Math.random() * 3.5 + 1.5;
-                this.speed = (Math.random() - 0.5) * 0.008;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
+
+                // SLOWER ORBIT
+                this.speed = (Math.random() - 0.5) * 0.0012;
+
+                // Much gentler initial velocity
+                this.vx = (Math.random() - 0.5) * 0.12;
+                this.vy = (Math.random() - 0.5) * 0.12;
+
                 this.life = 1;
                 this.decay = Math.random() * 0.006 + 0.004;
                 this.color = colors[Math.floor(Math.random() * colors.length)];
@@ -61,14 +83,16 @@ export default function CursorParticles() {
                 const targetX = this.baseX + orbitX;
                 const targetY = this.baseY + orbitY;
 
-                this.vx += (targetX - this.x) * 0.009;
-                this.vy += (targetY - this.y) * 0.009;
+                // Much gentler pull to orbit
+                this.vx += (targetX - this.x) * 0.0018;
+                this.vy += (targetY - this.y) * 0.0018;
 
+                // Mouse interaction (also softened)
                 const dx = this.x - mouse.x;
                 const dy = this.y - mouse.y;
                 const dist = Math.hypot(dx, dy);
                 if (mouse.active && dist < 420 && dist > 8) {
-                    const force = ((420 - dist) / 420) * 1.6;
+                    const force = ((420 - dist) / 420) * 0.28; // reduced force
                     this.vx += (dx / dist) * force;
                     this.vy += (dy / dist) * force;
                 }
@@ -76,8 +100,10 @@ export default function CursorParticles() {
                 this.x += this.vx;
                 this.y += this.vy;
 
-                this.vx *= 0.955;
-                this.vy *= 0.955;
+                // Stronger damping = slower, calmer movement
+                this.vx *= 0.925;
+                this.vy *= 0.925;
+
                 this.life -= this.decay;
             }
 
@@ -111,11 +137,10 @@ export default function CursorParticles() {
 
         function spawnAroundMouse() {
             if (!mouse.active) return;
-            // spawn 2 per frame, distributed evenly around a wide ring
             for (let i = 0; i < 2; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const minRadius = 160;
-                const maxRadius = 420; // wider spread than before
+                const maxRadius = 420;
                 const radius = minRadius + Math.random() * (maxRadius - minRadius);
                 const x = mouse.x + Math.cos(angle) * radius;
                 const y = mouse.y + Math.sin(angle) * radius;
@@ -155,7 +180,9 @@ export default function CursorParticles() {
             sectionEl.removeEventListener('mouseleave', handleMouseLeave);
             cancelAnimationFrame(animationId);
         };
-    }, []);
+    }, [isMobile]);
+
+    if (isMobile) return null;
 
     return (
         <div ref={containerRef} className="cursor-particles-wrap">

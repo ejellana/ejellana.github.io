@@ -40,6 +40,12 @@ body {
   z-index: 2;
 }
 
+@media (max-width: 768px) {
+  .cursor-particles-wrap {
+    display: none;
+  }
+}
+
 /* ── rotating role ───────────────────────────────── */
 
 .rotating-role {
@@ -336,9 +342,14 @@ body {
 }
 
 .bento-card__icon {
-  font-size: 1.75rem;
-  line-height: 1;
-  color: #333;
+  color: #2a2a2a;
+  font-size: 28px;
+}
+
+/* Make sure soft skill icons look good */
+.chip .material-symbols-outlined {
+  margin-right: 0.4rem;
+  vertical-align: -3px;
 }
 
 .bento-card__title {
@@ -361,6 +372,16 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
+}
+
+.chip-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 0.4rem;
+  vertical-align: -2px;
+  flex-shrink: 0;
+  display: inline-block;
+  /* helps prevent layout shift */
 }
 
 .chip {
