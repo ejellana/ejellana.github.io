@@ -94,8 +94,12 @@ body {
   font-weight: 600;
   text-decoration: none;
   margin: 0 1rem;
-  transition: all 0.3s;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.25s ease,
+    color 0.25s ease;
   cursor: pointer;
+  will-change: transform;
 }
 
 .btn.primary {
@@ -106,7 +110,8 @@ body {
 
 .btn.primary:hover {
   background: #222;
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
 }
 
 .btn.outline {
@@ -118,7 +123,8 @@ body {
 .btn.outline:hover {
   background: #000;
   color: white;
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
 /* Global section padding */
@@ -180,12 +186,12 @@ body {
 .hero h1 {
   font-family: 'Playfair Display', Georgia, serif;
   font-style: italic;
-  font-size: 5.2rem;
+  font-size: 5.8rem;
   font-weight: 700;
   margin: 0.4rem 0 1rem;
   color: #000;
-  line-height: 1.08;
-  letter-spacing: -1px;
+  line-height: 1.06;
+  letter-spacing: -1.5px;
 }
 
 .hero .tagline {
@@ -193,6 +199,16 @@ body {
   font-weight: 500;
   color: #555;
   margin-bottom: 0.8rem;
+}
+
+.hero .tagline--large {
+  font-size: 2.4rem;
+  /* Aspiring text is now big and elegant */
+  font-weight: 600;
+  color: #111;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  letter-spacing: -0.5px;
 }
 
 .hero .subtitle {
@@ -256,283 +272,411 @@ body {
   letter-spacing: -0.5px;
 }
 
-/* About */
-#about p {
-  font-size: 1.15rem;
-  max-width: 800px;
-  margin: 0 auto;
-  color: #444;
-  text-align: center;
+/* About Section Split Layout */
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  margin-top: 2rem;
 }
 
-/* ── Skills: Bento Grid ──────────────────────────────── */
+.about-text {
+  flex: 1;
+}
+
+.about-text p {
+  font-size: 1.25rem;
+  /* slightly bigger font size as requested */
+  line-height: 1.75;
+  color: #333;
+  text-align: left;
+}
+
+.about-image-wrap {
+  flex: 0 0 320px;
+  aspect-ratio: 4 / 5;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 20px 60px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e5e5;
+  background: #fdfdfd;
+  will-change: transform;
+}
+
+.about-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-image-wrap:hover .about-image {
+  transform: scale(1.05);
+}
+
+/* ── Skills Section – Premium Upgrade ──────────────────────────────── */
+.skills {
+  position: relative;
+}
+
+.skills::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.018) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.skills-heading {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 3.6rem;
+  text-align: center;
+  margin-bottom: 4.5rem;
+  color: #0a0a0a;
+  letter-spacing: -1.8px;
+  position: relative;
+}
+
+.skills-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 3px;
+  background: linear-gradient(90deg, #111, #444, #111);
+  border-radius: 999px;
+  opacity: 0.6;
+}
+
+/* ── 2x2 Bento Grid ──────────────────────────────── */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  margin-top: 3rem;
+  gap: 2.4rem;
+  margin-top: 2rem;
 }
 
 .bento-card {
   background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 20px;
-  padding: 2.5rem 2.5rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 8px 28px rgba(0, 0, 0, 0.06);
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
-  animation: bentoFadeIn 0.6s ease both;
+  border: 1px solid #e8e8e8;
+  border-radius: 28px;
+  padding: 3rem 2.75rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04), 0 20px 60px rgba(0, 0, 0, 0.06);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform, box-shadow;
 }
 
-/* Subtle accent line at top of each card */
-.bento-card::before {
-  content: '';
+/* Remove old positioning classes */
+.bento-card--analytics,
+.bento-card--dev,
+.bento-card--tools,
+.bento-card--professional {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+/* Subtle glass-like accent */
+.bento-card__accent {
   position: absolute;
-  top: 0;
-  left: 2.5rem;
-  right: 2.5rem;
-  height: 2px;
-  background: linear-gradient(90deg, #111 0%, transparent 100%);
-  border-radius: 0 0 2px 2px;
-  opacity: 0.12;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.6), rgba(248, 248, 248, 0.3));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.bento-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07), 0 16px 48px rgba(0, 0, 0, 0.11);
+.bento-card:hover .bento-card__accent {
+  opacity: 1;
 }
 
-/* Staggered fade-in for each card */
-.bento-card:nth-child(1) {
-  animation-delay: 0.05s;
-}
-
-.bento-card:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.bento-card:nth-child(3) {
-  animation-delay: 0.25s;
-}
-
-.bento-card:nth-child(4) {
-  animation-delay: 0.35s;
-}
-
-@keyframes bentoFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Premium Category Header */
 .bento-card__header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.85rem;
-  padding-bottom: 1rem;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
   border-bottom: 1px solid #f0f0f0;
+  position: relative;
+  z-index: 2;
 }
 
-.bento-card__icon {
-  color: #2a2a2a;
-  font-size: 28px;
+.category-icon-wrapper {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid #e5e5e5;
 }
 
-/* Make sure soft skill icons look good */
-.chip .material-symbols-outlined {
-  margin-right: 0.4rem;
-  vertical-align: -3px;
+.category-icon {
+  font-size: 32px;
+  color: #1f1f1f;
+  transition: transform 0.4s ease;
 }
 
 .bento-card__title {
-  font-size: 1.2rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: #0a0a0a;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
+  margin: 0;
 }
 
+/* Description */
 .bento-card__desc {
-  font-size: 0.9rem;
-  color: #6b6b6b;
-  line-height: 1.7;
-  margin-top: 0.9rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.02rem;
+  color: #555;
+  line-height: 1.75;
+  margin-bottom: 2.25rem;
+  flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
-/* Skill chip tags */
+/* Premium Skill Chips */
 .skill-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.65rem;
-}
-
-.chip-icon {
-  width: 14px;
-  height: 14px;
-  margin-right: 0.4rem;
-  vertical-align: -2px;
-  flex-shrink: 0;
-  display: inline-block;
-  /* helps prevent layout shift */
+  gap: 0.75rem;
+  position: relative;
+  z-index: 2;
 }
 
 .chip {
-  display: inline-block;
-  padding: 0.45rem 1.1rem;
-  border-radius: 999px;
-  font-size: 0.83rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
   font-weight: 500;
-  background: #f7f7f7;
-  color: #2a2a2a;
-  border: 1px solid #e0e0e0;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  background: #fafafa;
+  color: #222;
+  border: 1px solid #e5e5e5;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
   cursor: default;
   white-space: nowrap;
-  letter-spacing: 0.1px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.chip:hover {
-  background: #0a0a0a;
-  color: #ffffff;
-  border-color: #0a0a0a;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.chip-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
 }
 
-/* Projects */
+.chip-text {
+  transition: color 0.25s ease;
+}
+
+.chip:hover .chip-icon {
+  transform: scale(1.15);
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .bento-card--dev {
+    grid-row: auto;
+  }
+
+  .bento-card {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .skills-heading {
+    font-size: 2.8rem;
+  }
+
+  .bento-card {
+    padding: 2.25rem 1.75rem;
+  }
+
+  .bento-card__desc {
+    font-size: 0.98rem;
+  }
+}
+
+/* ── Projects Grid ──────────────────────────────────── */
 .projects-subtitle {
   text-align: center;
   color: #666;
-  margin: -0.5rem 0 2rem;
+  margin: -0.5rem 0 2.5rem;
   font-size: 1.05rem;
 }
 
-.projects-scroller {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #999 #f5f5f5;
-  padding: 1.5rem 0;
-  margin: 0 -1rem;
+.projects-container {
+  max-width: 1600px;
+  /* expands the grid container to let cards be even bigger */
+}
+
+/* 5 columns × 2 rows desktop grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.8rem;
+  /* widened space between cards */
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
-.projects-scroller::-webkit-scrollbar {
-  height: 14px;
-}
-
-.projects-scroller::-webkit-scrollbar-track {
-  background: #e0e0e0;
-  border-radius: 10px;
-  margin: 0 20px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.projects-scroller::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  border-radius: 10px;
-  border: 3px solid #e0e0e0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.projects-scroller::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg, #5a67d8, #6b46c1);
-}
-
-.projects-track {
-  display: flex;
-  gap: 2rem;
-  padding: 0 1rem;
-}
-
+/* ── Card shell ── */
 .project-card {
-  flex: 0 0 340px;
-  height: 440px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
   overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-  transition: all 0.35s ease;
-  background: white;
-  scroll-snap-align: start;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07), 0 8px 28px rgba(0, 0, 0, 0.06);
+  will-change: transform;
 }
 
-.project-card:hover {
-  transform: translateY(-18px) scale(1.03);
-  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.22);
+/* ── 1:1 aspect-ratio image area ── */
+.project-card__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f4f4f4;
+  flex-shrink: 0;
 }
 
-.project-card img {
+.project-card__image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
+  object-fit: contain;
+  /* preserves original ratio, never distorts */
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 0;
+  /* removed padding to make images bigger */
 }
 
-.project-card:hover img {
-  transform: scale(1.14);
+.project-card:hover .project-card__image {
+  transform: scale(1.06);
 }
 
+/* ── Hover overlay ── */
 .project-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.88) 65%);
+  bottom: 3.4rem;
+  /* stop above the footer */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.85) 65%);
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 2.2rem 2rem 2rem;
+  padding: 1.4rem 1.2rem 1rem;
   opacity: 0;
-  transition: opacity 0.45s ease;
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   backdrop-filter: blur(2px);
+  pointer-events: none;
 }
 
 .project-card:hover .project-overlay {
   opacity: 1;
+  pointer-events: auto;
 }
 
-.project-overlay h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.project-overlay__content h3 {
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
 }
 
-.project-overlay p {
-  font-size: 0.97rem;
-  line-height: 1.55;
-  margin-bottom: 1.6rem;
-  opacity: 0.94;
+.project-overlay__content p {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  opacity: 0.92;
 }
 
-.project-overlay a {
-  width: 58px;
-  height: 58px;
-  background: rgba(255, 255, 255, 0.22);
-  border-radius: 50%;
-  color: white;
-  font-size: 1.7rem;
+/* ── Always-visible card footer ── */
+.project-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.9rem 0.6rem 1rem;
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  min-height: 3.4rem;
+}
+
+.project-card__title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  letter-spacing: -0.1px;
+  line-height: 1.3;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 0.5rem;
+}
+
+.project-card__icons {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Individual GitHub / Canva icon button */
+.project-icon-btn {
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.35s ease;
-  align-self: flex-start;
+  border-radius: 8px;
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #e5e5e5;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
 }
 
-.project-overlay a:hover {
-  background: white;
-  color: #000;
-  transform: scale(1.15) translateY(-4px);
+.project-icon-btn:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
 }
 
 /* ── Certificates ─────────────────────────────────────── */
@@ -553,7 +697,7 @@ body {
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
   scrollbar-color: #999 #f5f5f5;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   margin: 0 -1rem;
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
@@ -583,57 +727,67 @@ body {
 
 .certs-track {
   display: flex;
-  gap: 1.5rem;
-  padding: 0 1.5rem;
+  gap: 1.8rem;
+  /* widened space between cards, matching projects */
+  padding: 0.5rem 1rem;
 }
 
 .cert-card {
-  flex: 0 0 280px;
-  height: 330px;
-  /* Much more compact - adjust between 360-390 if needed */
+  flex: 0 0 calc((100% - 7.2rem) / 5);
+  /* exact same width as project cards */
+  min-width: 290px;
+  /* prevents shrinking too small */
   background: #ffffff;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e8e8e8;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.05);
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07), 0 8px 28px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   scroll-snap-align: start;
+  will-change: transform;
 }
 
 .cert-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06), 0 16px 36px rgba(0, 0, 0, 0.08);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.20);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Image */
 .cert-card__image-wrap {
-  aspect-ratio: 16 / 9;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  /* 1:1 ratio like project cards */
   overflow: hidden;
-  background: #f4f4f4;
+  background: #ffffff;
   flex-shrink: 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .cert-card__image-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  /* displays full certificate without cropping */
   display: block;
-  transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 12px;
+  /* keeps document cleanly inside card border */
 }
 
 .cert-card:hover .cert-card__image-wrap img {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 /* Body */
 .cert-card__body {
-  padding: 1.25rem;
+  padding: 1.1rem 1.25rem 1.25rem;
   display: flex;
   flex-direction: column;
   flex: 1;
-  /* IMPORTANT */
 }
 
 .cert-card__body>div:first-child {
@@ -805,13 +959,28 @@ body {
     font-size: 2.6rem;
   }
 
-  .hero .tagline {
-    font-size: 1.4rem;
+  .hero .tagline--large {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
   }
 
-  .hero .subtitle {
-    font-size: 1.1rem;
+  .about-content {
+    flex-direction: column-reverse;
+    /* image on top on mobile/tablet */
+    gap: 2.5rem;
   }
+
+  .about-text p {
+    text-align: center;
+    font-size: 1.15rem;
+  }
+
+  .about-image-wrap {
+    flex: 0 0 280px;
+    width: 280px;
+    margin: 0 auto;
+  }
+
 
   .bento-grid {
     grid-template-columns: 1fr;
@@ -827,13 +996,10 @@ body {
     flex: 0 0 250px;
   }
 
-  .project-card {
-    flex: 0 0 90vw;
-    height: 380px;
-  }
-
-  .projects-track {
-    gap: 1.5rem;
+  /* projects grid: 2 cols on tablet */
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .contact-form {
@@ -851,9 +1017,29 @@ body {
     font-size: 2.2rem;
   }
 
+  .hero .tagline--large {
+    font-size: 1.5rem;
+  }
+
   .btn {
     padding: 0.8rem 1.8rem;
     font-size: 0.95rem;
     margin: 0.5rem;
+  }
+}
+
+/* ── Prefers Reduced Motion ───────────────────────────────── */
+/* Respects OS-level accessibility setting. Framer Motion also
+   checks this internally, but this CSS layer covers any
+   CSS-only transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
