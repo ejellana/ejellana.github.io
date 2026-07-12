@@ -1,10 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
+// CV file — same asset used in the Hero download button
+import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
+
+// "Home" is intentionally not a nav link — the EJ logo already scrolls
+// back to the Hero section, so a separate Home item would be redundant.
 const NAV_LINKS = [
-  { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
   { href: '#skills', label: 'Skills' },
   { href: '#projects', label: 'Projects' },
@@ -12,13 +17,22 @@ const NAV_LINKS = [
   { href: '#contact', label: 'Contact' },
 ];
 
-const SECTION_IDS = NAV_LINKS.map((l) => l.href.slice(1));
+// Still observe #home for scroll-position tracking parity with before,
+// even though it has no corresponding nav link to highlight.
+const SECTION_IDS = ['home', ...NAV_LINKS.map((l) => l.href.slice(1))];
+
+const SOCIAL_LINKS = [
+  { href: 'https://github.com/ejellana', icon: faGithub, label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/emmanuel-ellana-ba8a9a182/', icon: faLinkedinIn, label: 'LinkedIn' },
+  { href: 'https://www.instagram.com/ej.ellana/', icon: faInstagram, label: 'Instagram' },
+];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen((v) => !v);
   const closeMenu = () => setIsMenuOpen(false);
 
   // ── Active section via IntersectionObserver ───────────────
@@ -43,6 +57,14 @@ export default function Header() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
+  // ── Header appearance changes once the page has scrolled ──
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   // ── Lock body scroll when mobile menu is open ─────────────
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : '';
@@ -53,13 +75,20 @@ export default function Header() {
     <>
       <style>{`
         .header {
-          background: #000000;
-          color: white;
-          padding: 1.2rem 0;
           position: sticky;
           top: 0;
           z-index: 1000;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+          padding: 1.1rem 0;
+          background: #000000;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02);
+          transition: padding 0.35s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .header--scrolled {
+          padding: 0.75rem 0;
+          border-bottom-color: rgba(255, 255, 255, 0.09);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
         }
 
         .header .container {
@@ -71,150 +100,245 @@ export default function Header() {
         .logo a {
           color: white;
           text-decoration: none;
-          font-size: 1.8rem;
-          font-weight: 700;
-          letter-spacing: -0.5px;
-          transition: opacity 0.2s ease;
+          font-size: 1.55rem;
+          font-weight: 800;
+          letter-spacing: -0.3px;
+          display: inline-block;
+          transition: opacity 0.25s ease, transform 0.25s ease;
         }
 
         .logo a:hover {
-          opacity: 0.75;
+          opacity: 0.78;
+          transform: translateY(-1px);
         }
 
+        /* ── Desktop nav — sliding pill active indicator ── */
         .nav-desktop ul {
           display: flex;
+          align-items: center;
           list-style: none;
-          gap: 2.2rem;
+          gap: 0.35rem;
           margin: 0;
           padding: 0;
         }
 
-        .nav-desktop a {
-          color: rgba(255,255,255,0.72);
+        .nav-item {
+          position: relative;
+        }
+
+        .nav-item a {
+          position: relative;
+          display: inline-block;
+          color: rgba(255, 255, 255, 0.68);
           text-decoration: none;
           font-weight: 500;
-          font-size: 0.95rem;
-          position: relative;
-          padding-bottom: 4px;
-          transition: color 0.25s ease;
+          font-size: 0.93rem;
           letter-spacing: 0.01em;
+          padding: 0.5rem 0.95rem;
+          border-radius: 999px;
+          transition: color 0.25s ease;
         }
 
-        /* Animated underline for active link */
-        .nav-desktop a::after {
-          content: '';
+        .nav-item a:hover {
+          color: #ffffff;
+        }
+
+        .nav-item a.nav-link--active {
+          color: #ffffff;
+          font-weight: 600;
+        }
+
+        .nav-pill {
           position: absolute;
-          left: 0;
-          bottom: -2px;
-          width: 100%;
-          height: 2px;
-          background: #ffffff;
-          border-radius: 2px;
-          transform: scaleX(0);
-          transform-origin: left center;
-          transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+          inset: 0;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 999px;
+          z-index: -1;
         }
 
-        .nav-desktop a:hover {
-          color: #ffffff;
+        .nav-link-label {
+          position: relative;
+          z-index: 1;
         }
 
-        .nav-desktop a:hover::after {
-          transform: scaleX(1);
-        }
-
-        /* Active section highlight */
-        .nav-desktop a.nav-link--active {
-          color: #ffffff;
-        }
-
-        .nav-desktop a.nav-link--active::after {
-          transform: scaleX(1);
-        }
-
+        /* ── Burger button ── */
         .burger-btn {
           display: none;
-          background: none;
+          align-items: center;
+          justify-content: center;
+          width: 42px;
+          height: 42px;
+          background: transparent;
           border: none;
+          border-radius: 12px;
           color: white;
           cursor: pointer;
-          padding: 0.5rem;
-          font-size: 1.8rem;
-          transition: opacity 0.2s ease;
+          font-size: 1.25rem;
+          transition: background 0.25s ease;
         }
 
-        .burger-btn:hover {
-          opacity: 0.7;
+        .burger-btn:hover,
+        .burger-btn:focus-visible {
+          background: rgba(255, 255, 255, 0.08);
         }
 
-        /* Mobile backdrop */
+        .burger-icon-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* ── Mobile backdrop ── */
         .menu-backdrop {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.5);
-          backdrop-filter: blur(4px);
+          background: rgba(0, 0, 0, 0.55);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
           z-index: 998;
         }
 
-        /* Mobile drawer */
+        /* ── Mobile drawer ── */
         .nav-mobile {
           position: fixed;
           top: 0;
           right: 0;
-          width: 80%;
-          max-width: 320px;
+          width: 84%;
+          max-width: 340px;
           height: 100vh;
-          background: #000000;
+          display: flex;
+          flex-direction: column;
+          background: #0a0a0a;
           color: white;
           z-index: 999;
-          box-shadow: -10px 0 30px rgba(0,0,0,0.4);
+          box-shadow: -18px 0 50px rgba(0, 0, 0, 0.5);
+          border-left: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .mobile-menu-header {
           display: flex;
-          justify-content: flex-end;
-          padding: 1.5rem 1.5rem 0;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1.5rem 1.5rem 1rem;
+        }
+
+        .mobile-menu-header .logo a {
+          font-size: 1.3rem;
         }
 
         .close-btn {
-          background: none;
-          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 12px;
           color: white;
-          font-size: 2rem;
+          font-size: 1.1rem;
           cursor: pointer;
-          padding: 0.5rem;
-          transition: transform 0.2s ease, color 0.2s ease;
+          transition: background 0.25s ease, transform 0.25s ease;
         }
 
         .close-btn:hover {
-          transform: rotate(90deg);
-          color: rgba(255,255,255,0.6);
+          background: rgba(255, 255, 255, 0.12);
         }
 
         .mobile-menu-list {
           list-style: none;
-          padding: 4rem 2rem 2rem;
+          padding: 0.75rem 1.5rem 0;
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 2.8rem;
-          text-align: right;
+          gap: 0.25rem;
         }
 
         .mobile-menu-list a {
-          color: white;
-          text-decoration: none;
-          font-size: 1.9rem;
-          font-weight: 600;
-          transition: all 0.3s ease;
+          position: relative;
           display: block;
+          color: rgba(255, 255, 255, 0.78);
+          text-decoration: none;
+          font-size: 1.18rem;
+          font-weight: 600;
+          letter-spacing: -0.1px;
+          padding: 0.85rem 0.9rem;
+          border-radius: 14px;
+          transition: background 0.25s ease, color 0.25s ease, padding-left 0.25s ease;
         }
 
-        .mobile-menu-list a.nav-link--active,
         .mobile-menu-list a:hover,
         .mobile-menu-list a:focus {
-          color: rgba(255,255,255,0.6);
-          transform: translateX(-12px);
+          color: #ffffff;
+          background: rgba(255, 255, 255, 0.06);
+          padding-left: 1.15rem;
+        }
+
+        .mobile-menu-list a.nav-link--active {
+          color: #ffffff;
+          background: rgba(255, 255, 255, 0.09);
+        }
+
+        .mobile-menu-divider {
+          margin: 1.35rem 1.5rem 1.25rem;
+          border: none;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .mobile-menu-footer {
+          margin-top: auto;
+          padding: 0 1.5rem 2.25rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+        }
+
+        .mobile-cv-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          padding: 0.85rem 1.2rem;
+          background: #ffffff;
+          color: #0a0a0a;
+          font-weight: 600;
+          font-size: 0.98rem;
+          text-decoration: none;
+          border-radius: 999px;
+          transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .mobile-cv-btn:hover {
+          opacity: 0.88;
+          transform: translateY(-2px);
+        }
+
+        .mobile-social-row {
+          display: flex;
+          justify-content: center;
+          gap: 0.7rem;
+        }
+
+        .mobile-social-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.09);
+          color: rgba(255, 255, 255, 0.85);
+          font-size: 1rem;
+          text-decoration: none;
+          transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+
+        .mobile-social-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: #ffffff;
+          transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
@@ -222,10 +346,10 @@ export default function Header() {
             display: none;
           }
           .burger-btn {
-            display: block;
+            display: flex;
           }
           .logo a {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
           }
         }
 
@@ -234,11 +358,28 @@ export default function Header() {
             display: none !important;
           }
         }
+
+        @media (max-width: 380px) {
+          .nav-mobile {
+            width: 88%;
+          }
+          .mobile-menu-list a {
+            font-size: 1.08rem;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .header, .header--scrolled, .logo a, .nav-item a,
+          .burger-btn, .close-btn, .mobile-menu-list a,
+          .mobile-cv-btn, .mobile-social-btn {
+            transition: none !important;
+          }
+        }
       `}</style>
 
       {/* Header entrance animation on mount */}
       <motion.header
-        className="header"
+        className={`header${isScrolled ? ' header--scrolled' : ''}`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
@@ -250,17 +391,27 @@ export default function Header() {
 
           <nav className="nav-desktop">
             <ul>
-              {NAV_LINKS.map(({ href, label }) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    onClick={closeMenu}
-                    className={activeSection === href.slice(1) ? 'nav-link--active' : ''}
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
+              {NAV_LINKS.map(({ href, label }) => {
+                const isActive = activeSection === href.slice(1);
+                return (
+                  <li key={href} className="nav-item">
+                    <a
+                      href={href}
+                      onClick={closeMenu}
+                      className={isActive ? 'nav-link--active' : ''}
+                    >
+                      {isActive && (
+                        <motion.span
+                          className="nav-pill"
+                          layoutId="nav-pill"
+                          transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                        />
+                      )}
+                      <span className="nav-link-label">{label}</span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
@@ -269,7 +420,13 @@ export default function Header() {
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
-            <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="xl" />
+            <motion.span
+              className="burger-icon-wrap"
+              animate={{ rotate: isMenuOpen ? 90 : 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
+            </motion.span>
           </button>
         </div>
 
@@ -290,11 +447,14 @@ export default function Header() {
                 initial={{ x: '100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="mobile-menu-header">
+                  <h2 className="logo">
+                    <a href="#home" onClick={closeMenu}>EJ</a>
+                  </h2>
                   <button className="close-btn" onClick={closeMenu} aria-label="Close menu">
-                    <FontAwesomeIcon icon={faTimes} size="2x" />
+                    <FontAwesomeIcon icon={faTimes} />
                   </button>
                 </div>
 
@@ -302,11 +462,11 @@ export default function Header() {
                   {NAV_LINKS.map(({ href, label }, i) => (
                     <motion.li
                       key={href}
-                      initial={{ opacity: 0, x: 40 }}
+                      initial={{ opacity: 0, x: 24 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{
-                        duration: 0.35,
-                        delay: i * 0.06,
+                        duration: 0.38,
+                        delay: 0.08 + i * 0.05,
                         ease: [0.22, 1, 0.36, 1],
                       }}
                     >
@@ -320,6 +480,38 @@ export default function Header() {
                     </motion.li>
                   ))}
                 </ul>
+
+                <hr className="mobile-menu-divider" />
+
+                <motion.div
+                  className="mobile-menu-footer"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.08 + NAV_LINKS.length * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <a
+                    href={cvFile}
+                    download="CV_Ellana-EmmanuelJacob.pdf"
+                    className="mobile-cv-btn"
+                  >
+                    Download CV
+                  </a>
+
+                  <div className="mobile-social-row">
+                    {SOCIAL_LINKS.map(({ href, icon, label }) => (
+                      <a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={label}
+                        className="mobile-social-btn"
+                      >
+                        <FontAwesomeIcon icon={icon} />
+                      </a>
+                    ))}
+                  </div>
+                </motion.div>
               </motion.nav>
             </>
           )}

@@ -20,7 +20,6 @@ import {
 import {
   faEnvelope,
   faArrowUpRightFromSquare,
-  faPalette,
 } from '@fortawesome/free-solid-svg-icons';
 
 // ── BRAND icons ────────────────────────────────────────
@@ -32,6 +31,9 @@ import {
 
 // CV file
 import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
+
+// About Me profile image
+import imgMe from '../assets/images/about/me2.JPEG';
 
 // Project images
 import imgN8BLeadGen from '../assets/images/Projects/N8N-B2BLeadGen.png';
@@ -296,6 +298,73 @@ function SkillIconGrid({ skills, labeled = true }) {
   );
 }
 
+// ── Premium Profile Card — About section portrait with floating tech badges ──
+// Card slides in from the right (handled by the ScrollReveal wrapper around
+// it); the badges themselves reveal a beat later, once the card is in view.
+function ProfileCard({ image, alt }) {
+  return (
+    <motion.div
+      className="profile-card"
+      whileHover={{
+        y: -8,
+        scale: 1.02,
+        boxShadow: '0 34px 64px rgba(0, 0, 0, 0.14), 0 10px 28px rgba(0, 0, 0, 0.08)',
+        transition: { duration: 0.35, ease: [0.23, 1, 0.32, 1] },
+      }}
+    >
+      <img src={image} alt={alt} className="profile-card__image" />
+
+      {/* Top-right badge — programming */}
+      <motion.div
+        className="profile-badge profile-badge--top"
+        initial={{ opacity: 0, scale: 0.5, y: 14 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={VIEWPORT}
+        transition={{ duration: 0.5, delay: 0.55, ease: [0.23, 1, 0.32, 1] }}
+        whileHover={{
+          y: -4,
+          rotate: -6,
+          scale: 1.1,
+          boxShadow: '0 14px 30px rgba(0, 0, 0, 0.16)',
+          transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
+        }}
+      >
+        <span className="material-symbols-outlined">code</span>
+      </motion.div>
+
+      {/* Bottom-left badge — data / analytics */}
+      <motion.div
+        className="profile-badge profile-badge--bottom"
+        initial={{ opacity: 0, scale: 0.5, y: -14 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={VIEWPORT}
+        transition={{ duration: 0.5, delay: 0.68, ease: [0.23, 1, 0.32, 1] }}
+        whileHover={{
+          y: -4,
+          rotate: 6,
+          scale: 1.1,
+          boxShadow: '0 14px 30px rgba(0, 0, 0, 0.16)',
+          transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
+        }}
+      >
+        <span className="material-symbols-outlined">database</span>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Local slide-in variants for the About section's two columns.
+// (No transition baked in — ScrollReveal applies its own `delay` prop.)
+const slideInLeft = {
+  hidden: { opacity: 0, x: -56 },
+  visible: { opacity: 1, x: 0 },
+};
+
+const slideInRight = {
+  hidden: { opacity: 0, x: 56 },
+  visible: { opacity: 1, x: 0 },
+};
+
 export default function Home() {
   return (
     <div id="home">
@@ -395,18 +464,24 @@ export default function Home() {
       {/* ── About Me Section ─────────────────────────────── */}
       <section id="about" className="section about">
         <div className="container">
-          <ScrollReveal variant={fadeUp}>
-            <h2 className="title-accent">About Me</h2>
-          </ScrollReveal>
-
           <div className="about-content">
-            <ScrollReveal variant={fadeUp} delay={0.15} className="about-text">
-              <p>
-                I am Emmanuel Jacob C. Ellana, a Bachelor of Science in Computer Science student specializing in Data Science and Analytics at Mapúa Malayan Colleges Laguna (2022–Present), and a consistent Dean's Lister and Iskolar ng Laguna scholar.
-                My experience includes developing projects in machine learning, full-stack development, and data analytics such as blockchain-based systems, predictive models, and web applications.
-                I am actively involved in the Junior Philippine Computer Society (JPCS) and have participated in hackathons and competitions including the ASEAN AI Hackathon and BPI DataWave.
+
+            {/* Left column — heading + description, slides in from the left */}
+            <ScrollReveal variant={slideInLeft} className="about-text-col">
+              <h2 className="title-accent about-heading">About Me</h2>
+              <p className="about-paragraph">
+                I am Emmanuel Jacob C. Ellana, a Bachelor of Science in Computer Science student specializing in Data Science and Analytics at Mapúa Malayan Colleges Laguna.
+                I am a consistent Dean's Lister and an Iskolar ng Laguna who enjoys continuously learning and taking on new challenges.
+                Outside of academics, I enjoy playing video games, watching movies, listening to music, and spending time exploring new interests.
+                I value creativity, curiosity, and personal growth, and I strive to maintain a balance between my studies and the activities I enjoy.
               </p>
             </ScrollReveal>
+
+            {/* Right column — profile card, slides in from the right, badges follow */}
+            <ScrollReveal variant={slideInRight} delay={0.1} className="about-image-col">
+              <ProfileCard image={imgMe} alt="Emmanuel Jacob C. Ellana" />
+            </ScrollReveal>
+
           </div>
         </div>
       </section>
@@ -461,83 +536,83 @@ export default function Home() {
             {[
               {
                 img: imgN8BLeadGen,
-                alt: "N8N B2B Lead Gen",
+                alt: "PhilLeads: B2B Lead Gen",
                 title: "N8N-B2B Lead Gen",
-                desc: "An AI-powered B2B lead generation system that automates lead discovery, enrichment, and categorization using ETL pipelines, multiple data sources, and intelligent data processing.",
-                githubHref: "#",
-                canvaHref: "#",
+                year: "2026",
+                desc: "An AI-powered system that automates B2B lead discovery using intelligent ETL pipelines and a comprehensive data analytics dashboard.",
+                shareHref: "#",
               },
               {
                 img: imgAnimalTraceability,
                 alt: "Animal Disease Traceability System",
                 title: "Animal Disease Traceability",
-                desc: "A permissioned blockchain, real-time data analytics, and machine learning framework built with Hyperledger Fabric and React to provide secure, tamper-proof animal disease traceability for municipal livestock management.",
-                githubHref: "#",
-                canvaHref: "#",
+                year: "2026",
+                desc: "A secure blockchain and Data Analytics framework built to provide tamper-proof livestock disease tracking.",
+                shareHref: "#",
               },
               {
                 img: imgParkPeek,
                 alt: "ParkPeek",
                 title: "ParkPeek",
-                desc: "A mobile-app based parking occupancy system featuring a peak-volume predictive model powered by clustering and time-series analysis.",
-                githubHref: "#",
-                canvaHref: "#",
+                year: "2025",
+                desc: "A mobile parking app featuring peak-volume prediction powered by clustering and time-series analysis.",
+                shareHref: "#",
               },
               {
                 img: imgHeartDisease,
                 alt: "Heart Disease Prediction",
                 title: "Heart Disease Prediction",
-                desc: "An AI-powered heart disease risk prediction system that uses neural networks and K-Means clustering to classify patients into Low, Mid, or High Risk through web and Android applications.",
-                githubHref: "#",
-                canvaHref: "#",
-              },
-              {
-                img: imgDineDash,
-                alt: "DineDash",
-                title: "DineDash",
-                desc: "A full-stack online food ordering platform with user authentication, shopping cart, order tracking, and an admin dashboard for managing inventory, orders, and sales.",
-                githubHref: "#",
-                canvaHref: "#",
+                year: "2025",
+                desc: "An AI system utilizing neural networks to predict patient heart disease risk via web and mobile apps.",
+                shareHref: "#",
               },
               {
                 img: imgMushroom,
                 alt: "Mushroom Dataset",
                 title: "Mushroom Dataset",
-                desc: "A data mining project that uses Information Gain to evaluate feature importance and optimize decision tree classification on a mushroom dataset.",
-                githubHref: "#",
-                canvaHref: "#",
+                year: "2025",
+                desc: "A data mining project utilizing Information Gain to optimize decision tree classifications.",
+                shareHref: "#",
+              },
+              {
+                img: imgDineDash,
+                alt: "DineDash",
+                title: "DineDash",
+                year: "2024",
+                desc: "A full-stack food delivery platform featuring order tracking and a comprehensive admin dashboard.",
+                shareHref: "#",
               },
               {
                 img: imgCommuteSync,
                 alt: "CommuteSync",
                 title: "CommuteSync",
-                desc: "A technopreneurship prototype for a smart commuting platform that leverages data analytics to provide real-time traffic updates, optimized routes, ride-hailing integration, online payments, and seat reservations.",
-                githubHref: "#",
-                canvaHref: "#",
-              },
-              {
-                img: imgMerchQuest,
-                alt: "MerchQuest",
-                title: "MerchQuest",
-                desc: "A UI/UX design project for a virtual shopping assistant that simplifies product discovery with personalized recommendations, price comparisons, and an intuitive shopping experience.",
-                githubHref: "#",
-                canvaHref: "#",
+                year: "2023",
+                desc: "A smart transit prototype offering real-time routes, ride-hailing integration, and seat reservations.",
+                shareHref: "#",
               },
               {
                 img: imgJeepneyRush,
                 alt: "JeepneyRush",
                 title: "JeepneyRush",
-                desc: "A top-down, immersive C# game where you transport people across a zombie-infested city.",
-                githubHref: "#",
-                canvaHref: "#",
+                year: "2023",
+                desc: "A top-down C# survival game where players transport passengers through a zombie apocalypse.",
+                shareHref: "#",
+              },
+              {
+                img: imgMerchQuest,
+                alt: "MerchQuest",
+                title: "MerchQuest",
+                year: "2023",
+                desc: "A UI/UX prototype for a virtual assistant that streamlines shopping through personalized recommendations.",
+                shareHref: "#",
               },
               {
                 img: imgFourPics1Word,
                 alt: "4Pics1Word",
                 title: "4Pics1Word",
-                desc: "Classic 4 Pics 1 Word game built with Python Tkinter and OOP principles.",
-                githubHref: "#",
-                canvaHref: "#",
+                year: "2022",
+                desc: "A Python Tkinter recreation of the classic puzzle game built with OOP principles.",
+                shareHref: "#",
               },
             ].map((project) => (
               <motion.div
@@ -561,45 +636,28 @@ export default function Home() {
                   />
                 </div>
 
-                {/* ── Hover overlay (title + desc) ── */}
-                <div className="project-overlay">
-                  <div className="project-overlay__content">
-                    <h3>{project.title}</h3>
-                    <p>{project.desc}</p>
+                {/* ── Info panel: title + year, description, share icon ── */}
+                <div className="project-card__info">
+                  <div className="project-card__row">
+                    <h3 className="project-card__title">{project.title}</h3>
+                    <span className="project-card__year">{project.year}</span>
                   </div>
-                </div>
 
-                {/* ── Always-visible footer: title + icons ── */}
-                <div className="project-card__footer">
-                  <span className="project-card__title">{project.title}</span>
-                  <div className="project-card__icons">
-                    {/* GitHub — add href later */}
+                  <p className="project-card__desc">{project.desc}</p>
+
+                  <div className="project-card__share-wrap">
                     <motion.a
-                      href={project.githubHref}
-                      aria-label={`${project.title} on GitHub`}
-                      className="project-icon-btn"
+                      href={project.shareHref}
+                      aria-label={`Share ${project.title}`}
+                      className="project-card__share"
                       whileHover={{
                         y: -3,
-                        scale: 1.15,
+                        scale: 1.1,
                         transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
                       }}
-                      whileTap={{ scale: 0.9 }}
+                      whileTap={{ scale: 0.92 }}
                     >
-                      <FontAwesomeIcon icon={faGithub} />
-                    </motion.a>
-                    {/* Canva — add href later */}
-                    <motion.a
-                      href={project.canvaHref}
-                      aria-label={`${project.title} on Canva`}
-                      className="project-icon-btn"
-                      whileHover={{
-                        y: -3,
-                        scale: 1.15,
-                        transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
-                      }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <FontAwesomeIcon icon={faPalette} />
+                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                     </motion.a>
                   </div>
                 </div>

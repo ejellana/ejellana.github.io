@@ -21,15 +21,15 @@ export default function ScrollReveal({
 
   const variantWithDelay = delay
     ? {
-        hidden: variant.hidden,
-        visible: {
-          ...variant.visible,
-          transition: {
-            ...variant.visible.transition,
-            delay,
-          },
+      hidden: variant.hidden,
+      visible: {
+        ...variant.visible,
+        transition: {
+          ...variant.visible.transition,
+          delay,
         },
-      }
+      },
+    }
     : variant;
 
   return (
@@ -38,7 +38,9 @@ export default function ScrollReveal({
       style={style}
       initial="hidden"
       whileInView="visible"
-      viewport={VIEWPORT}
+      // Spread the existing VIEWPORT config (like 'margin' or 'amount') 
+      // but explicitly override 'once' to ensure it triggers every time.
+      viewport={{ ...VIEWPORT, once: false }}
       variants={variantWithDelay}
     >
       {children}
