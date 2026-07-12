@@ -18,11 +18,9 @@ import {
 
 // ── SOLID icons ────────────────────────────────────────
 import {
-  faPaperPlane,
-  faPhone,
+  faEnvelope,
   faArrowUpRightFromSquare,
   faPalette,
-  faFilePdf,
 } from '@fortawesome/free-solid-svg-icons';
 
 // ── BRAND icons ────────────────────────────────────────
@@ -31,6 +29,9 @@ import {
   faLinkedinIn,
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
+
+// CV file
+import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
 
 // Project images
 import imgN8BLeadGen from '../assets/images/Projects/N8N-B2BLeadGen.png';
@@ -115,42 +116,98 @@ const skillIcons = {
   JavaScript: 'javascript',
   React: 'react',
   'C#': 'csharp',
-  'C++': 'cplusplus',
-  'ASP.NET': 'dotnet',
   Git: 'git',
   GitHub: 'github',
   'VS Code': 'visualstudiocode',
   Figma: 'figma',
   'MS Access': 'microsoftaccess',
+  'MS Word': 'microsoftword',
   Canva: 'canva',
-  Vite: 'vite',
   Tableau: 'tableau',
   PowerBI: 'powerbi',
-  'React Native': 'react',
+  'Vue.js': 'vuedotjs',
   Laravel: 'laravel',
-  Bootstrap: 'bootstrap',
   Tailwind: 'tailwindcss',
   N8N: 'n8n',
 };
+
+// Skill categories — same technologies as before, now organized for the
+// vertical icon-card layout instead of chips inside bento cards.
+// `labeled: true` marks the one category (Professional Skills) that keeps
+// its text labels, since those icons aren't universally recognizable.
+const skillCategories = [
+  {
+    title: 'Data & Analytics',
+    description: 'Extracting insights from data to support informed decision-making.',
+    skills: ['Python', 'SQL', 'Excel', 'Jupyter', 'Tableau', 'PowerBI'],
+    labeled: false,
+  },
+  {
+    title: 'Development',
+    description: 'Building modern, scalable, and responsive software applications.',
+    skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Vue.js', 'Laravel', 'C#', 'Python', 'Tailwind'],
+    labeled: false,
+  },
+  {
+    title: 'Tools & Platforms',
+    description: 'Leveraging modern tools to streamline development and collaboration.',
+    skills: ['Git', 'GitHub', 'VS Code', 'Figma', 'N8N', 'Canva', 'Excel', 'MS Word'],
+    labeled: false,
+  },
+  {
+    title: 'Professional Skills',
+    description: 'Applying collaboration, problem-solving, and communication in software development.',
+    skills: [
+      { name: 'Team Work', icon: 'groups' },
+      { name: 'Communication', icon: 'chat' },
+      { name: 'Creativity', icon: 'lightbulb' },
+      { name: 'Productivity', icon: 'speed' },
+      { name: 'Project Management', icon: 'task' },
+      { name: 'Problem Solving', icon: 'psychology' },
+      { name: 'Adaptability', icon: 'change_circle' },
+    ],
+    labeled: true,
+  },
+];
 
 function SkillIcon({ skill }) {
   const slug = skillIcons[skill];
   if (!slug) return null;
 
+  // Fallback chain: primary colored CDN -> jsDelivr (latest) -> unpkg (latest).
+  // If every source fails, swap in a visible text-badge instead of going
+  // blank, so a broken icon is always noticeable and never looks "missing".
+  const sources = [
+    `https://cdn.simpleicons.org/${slug}`,
+    `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${slug}.svg`,
+    `https://unpkg.com/simple-icons@latest/icons/${slug}.svg`,
+  ];
+
   return (
     <img
-      src={`https://cdn.simpleicons.org/${slug}`}
+      src={sources[0]}
       alt={`${skill} icon`}
-      className="chip-icon"
       loading="lazy"
+      data-attempt="0"
       onError={(e) => {
         const img = e.currentTarget;
-        if (img.dataset.triedFallback) {
-          img.style.display = 'none';
+        const next = Number(img.dataset.attempt) + 1;
+
+        if (next < sources.length) {
+          img.dataset.attempt = String(next);
+          img.src = sources[next];
           return;
         }
-        img.dataset.triedFallback = 'true';
-        img.src = `https://cdn.jsdelivr.net/npm/simple-icons@v12/icons/${slug}.svg`;
+
+        // All sources failed — replace with a text badge instead of hiding.
+        const wrapper = img.parentElement;
+        if (wrapper) {
+          img.remove();
+          const badge = document.createElement('span');
+          badge.textContent = skill.slice(0, 2).toUpperCase();
+          badge.style.cssText = 'font-family:"Poppins",sans-serif;font-weight:700;font-size:0.8rem;color:#666;';
+          wrapper.appendChild(badge);
+        }
       }}
     />
   );
@@ -166,21 +223,18 @@ const skillColors = {
   CSS: '#1572B6',
   JavaScript: '#F7DF1E',
   React: '#61DAFB',
-  'React Native': '#61DAFB',
   'C#': '#239120',
-  'C++': '#00599C',
-  'ASP.NET': '#512BD4',
   Git: '#F05032',
   GitHub: '#181717',
   'VS Code': '#007ACC',
   Figma: '#F24E1E',
   'MS Access': '#BA141A',
+  'MS Word': '#2B579A',
   Canva: '#00C4CC',
-  Vite: '#646CFF',
   Tableau: '#E97627',
   PowerBI: '#F2C811',
+  'Vue.js': '#4FC08D',
   Laravel: '#FF2D20',
-  Bootstrap: '#7952B3',
   Tailwind: '#06B6D4',
   N8N: '#FF6D5A',
   // Professional skills color mappings
@@ -193,48 +247,15 @@ const skillColors = {
   'Adaptability': '#8BC34A'
 };
 
-// ── Reusable animated bento card ─────────────────────────────
-function BentoCard({ children, className }) {
+// ── Premium Icon Card Grid — replaces the old skill chips ─────────────
+// `labeled`: true keeps the text label under each icon (Professional Skills).
+// false renders a larger, label-less "icon-only" card (technical skills),
+// since those logos are already recognizable on their own.
+function SkillIconGrid({ skills, labeled = true }) {
   return (
     <motion.div
-      className={`bento-card ${className}`}
-      variants={bentoCard}
-      whileHover={{
-        y: -12,
-        scale: 1.02,
-        transition: { duration: 0.4, ease: [0.23, 1, 0.32, 1] },
-      }}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={VIEWPORT}
-    >
-      <div className="bento-card__accent" />
-      {children}
-    </motion.div>
-  );
-}
-// ── Premium Category Icon ─────────────────────────────
-function CategoryIcon({ iconName }) {
-  return (
-    <motion.div
-      className="category-icon-wrapper"
-      whileHover={{
-        scale: 1.12,
-        rotate: 8,
-        transition: { duration: 0.4, ease: [0.23, 1, 0.32, 1] }
-      }}
-    >
-      <span className="material-symbols-outlined category-icon">{iconName}</span>
-    </motion.div>
-  );
-}
-
-// ── Premium Animated Skill Chips ───────────────────────────
-function AnimatedChips({ skills }) {
-  return (
-    <motion.div
-      className="skill-chips"
-      variants={staggerContainer(0.035)}
+      className="skill-icons-grid"
+      variants={staggerContainer(0.05)}
       initial="hidden"
       whileInView="visible"
       viewport={VIEWPORT}
@@ -242,38 +263,33 @@ function AnimatedChips({ skills }) {
       {skills.map((skill) => {
         const name = typeof skill === 'string' ? skill : skill.name;
         const brandColor = skillColors[name] || '#111111';
-        const isDarkBrand = brandColor === '#181717' || brandColor === '#0a0a0a' || brandColor === '#111111';
 
         return (
-          <motion.span
+          <motion.div
             key={name}
-            className="chip"
+            className={`skill-icon-card ${labeled ? '' : 'skill-icon-card--icon-only'}`}
             variants={chipPopIn}
             whileHover={{
-              y: -5,
-              scale: 1.08,
-              borderColor: brandColor,
-              color: isDarkBrand ? '#fff' : '#111',
-              backgroundColor: isDarkBrand ? brandColor : '#fff',
-              boxShadow: `0 10px 30px ${brandColor}25, 0 4px 12px ${brandColor}18`,
+              y: -6,
+              scale: 1.06,
+              borderColor: `${brandColor}66`,
+              boxShadow: `0 14px 32px ${brandColor}22, 0 4px 14px ${brandColor}18`,
               transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
             }}
             whileTap={{ scale: 0.96 }}
+            title={name}
           >
-            {typeof skill === 'string' ? (
-              <>
+            <span className={`skill-icon-card__icon ${labeled ? '' : 'skill-icon-card__icon--large'}`}>
+              {typeof skill === 'string' ? (
                 <SkillIcon skill={skill} />
-                <span className="chip-text">{skill}</span>
-              </>
-            ) : (
-              <>
-                <span className="material-symbols-outlined chip-icon" style={{ color: brandColor }}>
+              ) : (
+                <span className="material-symbols-outlined" style={{ color: brandColor }}>
                   {skill.icon}
                 </span>
-                <span className="chip-text">{skill.name}</span>
-              </>
-            )}
-          </motion.span>
+              )}
+            </span>
+            {labeled && <span className="skill-icon-card__label">{name}</span>}
+          </motion.div>
         );
       })}
     </motion.div>
@@ -319,9 +335,9 @@ export default function Home() {
               Aspiring <RotatingRole />
             </motion.p>
 
-            {/* Social icons — staggered pop-in */}
+            {/* Action buttons — social icons + CV download, staggered pop-in */}
             <motion.div
-              className="hero-social"
+              className="hero-actions"
               variants={staggerContainer(0.07)}
               initial="hidden"
               animate="visible"
@@ -331,27 +347,45 @@ export default function Home() {
                 { href: "https://www.instagram.com/ej.ellana/", icon: faInstagram, label: "Instagram" },
                 { href: "https://github.com/ejellana", icon: faGithub, label: "GitHub" },
                 { href: "https://www.linkedin.com/in/emmanuel-ellana-ba8a9a182/", icon: faLinkedinIn, label: "LinkedIn" },
-                { href: "#", icon: faFilePdf, label: "CV" }, // Resume placeholder
               ].map(({ href, icon, label }) => (
                 <motion.a
                   key={label}
                   href={href}
-                  target={label === "CV" ? undefined : "_blank"}
+                  target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
+                  className="hero-icon-btn"
                   variants={socialIcon}
                   whileHover={{
-                    y: -5,
-                    scale: 1.12,
-                    background: '#111',
-                    color: '#fff',
-                    transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
+                    y: -6,
+                    scale: 1.05,
+                    borderColor: '#0a0a0a',
+                    boxShadow: '0 18px 38px rgba(0, 0, 0, 0.12)',
+                    transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
                   }}
-                  whileTap={{ scale: 0.94 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <FontAwesomeIcon icon={icon} />
                 </motion.a>
               ))}
+
+              <motion.a
+                href={cvFile}
+                download="CV_Ellana-EmmanuelJacob.pdf"
+                aria-label="Download CV"
+                className="hero-cv-btn"
+                variants={socialIcon}
+                whileHover={{
+                  y: -6,
+                  scale: 1.03,
+                  borderColor: '#0a0a0a',
+                  boxShadow: '0 18px 38px rgba(0, 0, 0, 0.12)',
+                  transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
+                }}
+                whileTap={{ scale: 0.97 }}
+              >
+                Download CV
+              </motion.a>
             </motion.div>
 
           </div>
@@ -368,22 +402,9 @@ export default function Home() {
           <div className="about-content">
             <ScrollReveal variant={fadeUp} delay={0.15} className="about-text">
               <p>
-                I am Emmanuel Jacob C. Ellana, a Bachelor of Science in Computer Science student specializing in Data Science and Analytics at Mapúa Malayan Colleges Laguna (2022–Present), and a consistent Dean's Lister and Iskolar ng Laguna scholar.
-                My experience includes developing projects in machine learning, full-stack development, and data analytics such as blockchain-based systems, predictive models, and web applications.
-                I am actively involved in the Junior Philippine Computer Society (JPCS) and have participated in hackathons and competitions including the ASEAN AI Hackathon and BPI DataWave.
+                I am Emmanuel Jacob C. Ellana, a Bachelor of Science in Computer Science student specializing in Data Science and Analytics at Mapúa Malayan Colleges Laguna. I am a consistent Dean's Lister and an Iskolar ng Laguna scholar who enjoys continuously learning and taking on new challenges. Outside of academics, I enjoy playing video games, watching movies, listening to music, and spending time exploring new interests. I value creativity, curiosity, and personal growth, and I strive to maintain a balance between my studies and the activities I enjoy.
               </p>
             </ScrollReveal>
-
-            {/* Achievements bento card — replaces the old portrait, same design language as Skills */}
-            <BentoCard className="about-achievement">
-              <div className="bento-card__header">
-                <CategoryIcon iconName="emoji_events" />
-                <h3 className="bento-card__title">Achievements</h3>
-              </div>
-              <p className="bento-card__desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.
-              </p>
-            </BentoCard>
           </div>
         </div>
       </section>
@@ -395,67 +416,22 @@ export default function Home() {
             <h2 className="skills">Skills</h2>
           </ScrollReveal>
 
-          <motion.div
-            className="bento-grid"
-            variants={staggerContainer(0.1)}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
-          >
-            {/* Row 1 */}
-            <BentoCard className="bento-card--analytics">
-              <div className="bento-card__header">
-                <CategoryIcon iconName="analytics" />
-                <h3 className="bento-card__title">Data &amp; Analytics</h3>
-              </div>
-              <p className="bento-card__desc">
-                Transforming raw data into actionable insights through analysis, cleaning, and visualization using Python and SQL. Focused on building structured datasets and meaningful interpretations that support decision-making.
-              </p>
-              <AnimatedChips skills={['Python', 'SQL', 'Excel', 'Jupyter', 'Tableau', 'PowerBI']} />
-            </BentoCard>
-
-            <BentoCard className="bento-card--dev">
-              <div className="bento-card__header">
-                <CategoryIcon iconName="code" />
-                <h3 className="bento-card__title">Development</h3>
-              </div>
-              <p className="bento-card__desc">
-                Building responsive and scalable web and software applications using modern frameworks and programming languages. Focused on clean code, performance, and user-centered design.
-              </p>
-              <AnimatedChips skills={['HTML', 'CSS', 'JavaScript', 'React', 'React Native', 'C#', 'C++', 'Python', 'ASP.NET', 'Laravel', 'Bootstrap', 'Tailwind']} />
-            </BentoCard>
-
-            {/* Row 2 */}
-            <BentoCard className="bento-card--tools">
-              <div className="bento-card__header">
-                <CategoryIcon iconName="build" />
-                <h3 className="bento-card__title">Tools &amp; Platforms</h3>
-              </div>
-              <p className="bento-card__desc">
-                Leveraging industry-standard tools for version control, development workflow, design, and deployment. Skilled in collaborating and building efficiently using modern developer ecosystems.
-              </p>
-              <AnimatedChips skills={['Git', 'GitHub', 'VS Code', 'Figma', 'N8N', 'Canva', 'Vite']} />
-            </BentoCard>
-
-            <BentoCard className="bento-card--professional">
-              <div className="bento-card__header">
-                <CategoryIcon iconName="groups" />
-                <h3 className="bento-card__title">Professional Skills</h3>
-              </div>
-              <p className="bento-card__desc">
-                Strong foundation in collaboration, critical thinking, and communication. Able to adapt quickly, solve complex problems, and contribute effectively in team-driven environments.
-              </p>
-              <AnimatedChips skills={[
-                { name: 'Team Work', icon: 'groups' },
-                { name: 'Communication', icon: 'chat' },
-                { name: 'Creativity', icon: 'lightbulb' },
-                { name: 'Productivity', icon: 'speed' },
-                { name: 'Project Management', icon: 'task' },
-                { name: 'Problem Solving', icon: 'psychology' },
-                { name: 'Adaptability', icon: 'change_circle' },
-              ]} />
-            </BentoCard>
-          </motion.div>
+          <div className="skills-categories">
+            {skillCategories.map((category, index) => (
+              <ScrollReveal
+                key={category.title}
+                variant={fadeUp}
+                delay={index * 0.1}
+                className="skill-category"
+              >
+                <div className="skill-category__heading-wrap">
+                  <h3 className="skill-category__title">{category.title}</h3>
+                </div>
+                <p className="skill-category__desc">{category.description}</p>
+                <SkillIconGrid skills={category.skills} labeled={category.labeled} />
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -466,7 +442,10 @@ export default function Home() {
             <h2 className="title-accent">My Projects</h2>
           </ScrollReveal>
           <ScrollReveal variant={fadeIn} delay={0.12}>
-            <p className="projects-subtitle">Hover or tap to see details</p>
+            <p className="projects-subtitle">
+              A collection of the tools, models, and applications I've built — spanning data science,
+              full-stack development, and creative problem-solving, from early prototypes to fully working products.
+            </p>
           </ScrollReveal>
 
           {/* Projects grid — 5 columns × 2 rows, staggered reveal */}
@@ -712,44 +691,75 @@ export default function Home() {
       {/* ── Contact Section ───────────────────────────────── */}
       <section id="contact" className="section contact">
         <div className="container">
-          <ScrollReveal variant={fadeUp}>
-            <h2 className="title-accent">Contact Me</h2>
-          </ScrollReveal>
+          <div className="contact-hero">
+            <ScrollReveal variant={fadeUp}>
+            </ScrollReveal>
 
-          <ScrollReveal variant={fadeUp} delay={0.12}>
-            <p className="contact-intro">
-              I'm always open to new opportunities, collaborations, or just a friendly chat.
-              Reach out via email/phone!
-            </p>
-          </ScrollReveal>
+            <ScrollReveal variant={fadeUp} delay={0.08}>
+              <h2 className="contact-title title-accent">Let's Build Something Together</h2>
+            </ScrollReveal>
 
-          <motion.div
-            className="contact-info"
-            variants={staggerContainer(0.12)}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
-          >
-            <motion.p variants={fadeUp}>
-              <FontAwesomeIcon icon={faPaperPlane} className="contact-icon" />
-              <motion.a
-                href="mailto:emman.ellana@gmail.com"
-                whileHover={{ x: 4, transition: { duration: 0.2 } }}
-              >
-                emman.ellana@gmail.com
-              </motion.a>
-            </motion.p>
+            <ScrollReveal variant={fadeUp} delay={0.16}>
+              <p className="contact-description">
+                I'm always open to new opportunities, collaborations, or just a friendly chat.
+              </p>
+            </ScrollReveal>
 
-            <motion.p variants={fadeUp}>
-              <FontAwesomeIcon icon={faPhone} className="contact-icon" />
-              <motion.a
-                href="tel:+639291046945"
-                whileHover={{ x: 4, transition: { duration: 0.2 } }}
-              >
-                0929 104 6945
-              </motion.a>
-            </motion.p>
-          </motion.div>
+            {/* Contact cards — GitHub, LinkedIn, Email */}
+            <motion.div
+              className="contact-cards"
+              variants={staggerContainer(0.1)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VIEWPORT}
+            >
+              {[
+                {
+                  href: "https://github.com/ejellana",
+                  icon: faGithub,
+                  label: "GitHub",
+                  external: true,
+                },
+                {
+                  href: "https://www.linkedin.com/in/emmanuel-ellana-ba8a9a182/",
+                  icon: faLinkedinIn,
+                  label: "LinkedIn",
+                  external: true,
+                },
+                {
+                  href: "mailto:emman.ellana@gmail.com",
+                  icon: faEnvelope,
+                  label: "Email",
+                  external: false,
+                },
+              ].map(({ href, icon, label, external }) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className="contact-card"
+                  variants={fadeUp}
+                  whileHover={{
+                    y: -6,
+                    scale: 1.03,
+                    borderColor: '#0a0a0a',
+                    boxShadow: '0 18px 38px rgba(0, 0, 0, 0.12)',
+                    transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <motion.span
+                    className="contact-card__icon"
+                    whileHover={{ x: 3, transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] } }}
+                  >
+                    <FontAwesomeIcon icon={icon} />
+                  </motion.span>
+                  <span className="contact-card__label">{label}</span>
+                </motion.a>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
