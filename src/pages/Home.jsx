@@ -402,7 +402,9 @@ export default function Home() {
           <div className="about-content">
             <ScrollReveal variant={fadeUp} delay={0.15} className="about-text">
               <p>
-                I am Emmanuel Jacob C. Ellana, a Bachelor of Science in Computer Science student specializing in Data Science and Analytics at Mapúa Malayan Colleges Laguna. I am a consistent Dean's Lister and an Iskolar ng Laguna scholar who enjoys continuously learning and taking on new challenges. Outside of academics, I enjoy playing video games, watching movies, listening to music, and spending time exploring new interests. I value creativity, curiosity, and personal growth, and I strive to maintain a balance between my studies and the activities I enjoy.
+                I am Emmanuel Jacob C. Ellana, a Bachelor of Science in Computer Science student specializing in Data Science and Analytics at Mapúa Malayan Colleges Laguna (2022–Present), and a consistent Dean's Lister and Iskolar ng Laguna scholar.
+                My experience includes developing projects in machine learning, full-stack development, and data analytics such as blockchain-based systems, predictive models, and web applications.
+                I am actively involved in the Junior Philippine Computer Society (JPCS) and have participated in hackathons and competitions including the ASEAN AI Hackathon and BPI DataWave.
               </p>
             </ScrollReveal>
           </div>
@@ -413,7 +415,7 @@ export default function Home() {
       <section id="skills" className="section skills">
         <div className="container">
           <ScrollReveal variant={fadeUp}>
-            <h2 className="skills">Skills</h2>
+            <h2 className="skills-heading">Skills</h2>
           </ScrollReveal>
 
           <div className="skills-categories">
