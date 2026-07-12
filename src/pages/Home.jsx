@@ -44,9 +44,6 @@ import imgMerchQuest from '../assets/images/Projects/MerchQuest.png';
 import imgJeepneyRush from '../assets/images/Projects/JeepneyRush.png';
 import imgFourPics1Word from '../assets/images/Projects/4Pics1Word.png';
 
-// About Me image
-import imgMe from '../assets/images/About/me.jpg';
-
 // Certificate images
 import certCompTiaTech from '../assets/images/certificates/CompTIA Tech+ certificate_page-0001.jpg';
 import certDataAnalyticsEssentials from '../assets/images/certificates/Data-Analytics-Essentials_page-0001.jpg';
@@ -290,71 +287,74 @@ export default function Home() {
       {/* ── Hero / Introduction Section ───────────────────── */}
       <section className="hero" id="home">
         <div className="container">
+          {/* Left-aligned content column — ~55-60% of the container width */}
+          <div className="hero-content">
 
-          {/* "Hello," greeting */}
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-          >
-            Hello,
-          </motion.h2>
+            {/* "Hello," greeting */}
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            >
+              Hello,
+            </motion.h2>
 
-          {/* Main name headline */}
-          <motion.h1
-            className="title-accent"
-            initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-          >
-            I'm Emmanuel Ellana
-          </motion.h1>
+            {/* Main name headline */}
+            <motion.h1
+              className="title-accent"
+              initial={{ opacity: 0, y: 36 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+            >
+              I'm Emmanuel Ellana
+            </motion.h1>
 
-          {/* Tagline with rotating role */}
-          <motion.p
-            className="tagline tagline--large"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
-          >
-            Aspiring <RotatingRole />
-          </motion.p>
+            {/* Tagline with rotating role */}
+            <motion.p
+              className="tagline tagline--large"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
+            >
+              Aspiring <RotatingRole />
+            </motion.p>
 
-          {/* Social icons — staggered pop-in */}
-          <motion.div
-            className="hero-social"
-            variants={staggerContainer(0.07)}
-            initial="hidden"
-            animate="visible"
-            style={{ transitionDelay: '0.75s' }}
-          >
-            {[
-              { href: "https://www.instagram.com/ej.ellana/", icon: faInstagram, label: "Instagram" },
-              { href: "https://github.com/ejellana", icon: faGithub, label: "GitHub" },
-              { href: "https://www.linkedin.com/in/emmanuel-ellana-ba8a9a182/", icon: faLinkedinIn, label: "LinkedIn" },
-              { href: "#", icon: faFilePdf, label: "Resume" }, // Resume placeholder
-            ].map(({ href, icon, label }) => (
-              <motion.a
-                key={label}
-                href={href}
-                target={label === "Resume" ? undefined : "_blank"}
-                rel="noopener noreferrer"
-                aria-label={label}
-                variants={socialIcon}
-                whileHover={{
-                  y: -5,
-                  scale: 1.12,
-                  background: '#111',
-                  color: '#fff',
-                  transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
-                }}
-                whileTap={{ scale: 0.94 }}
-              >
-                <FontAwesomeIcon icon={icon} />
-              </motion.a>
-            ))}
-          </motion.div>
+            {/* Social icons — staggered pop-in */}
+            <motion.div
+              className="hero-social"
+              variants={staggerContainer(0.07)}
+              initial="hidden"
+              animate="visible"
+              style={{ transitionDelay: '0.75s' }}
+            >
+              {[
+                { href: "https://www.instagram.com/ej.ellana/", icon: faInstagram, label: "Instagram" },
+                { href: "https://github.com/ejellana", icon: faGithub, label: "GitHub" },
+                { href: "https://www.linkedin.com/in/emmanuel-ellana-ba8a9a182/", icon: faLinkedinIn, label: "LinkedIn" },
+                { href: "#", icon: faFilePdf, label: "CV" }, // Resume placeholder
+              ].map(({ href, icon, label }) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target={label === "CV" ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  variants={socialIcon}
+                  whileHover={{
+                    y: -5,
+                    scale: 1.12,
+                    background: '#111',
+                    color: '#fff',
+                    transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
+                  }}
+                  whileTap={{ scale: 0.94 }}
+                >
+                  <FontAwesomeIcon icon={icon} />
+                </motion.a>
+              ))}
+            </motion.div>
 
+          </div>
         </div>
       </section>
 
@@ -373,9 +373,17 @@ export default function Home() {
                 I am actively involved in the Junior Philippine Computer Society (JPCS) and have participated in hackathons and competitions including the ASEAN AI Hackathon and BPI DataWave.
               </p>
             </ScrollReveal>
-            <ScrollReveal variant={fadeUp} delay={0.25} className="about-image-wrap">
-              <img src={imgMe} alt="Emmanuel Jacob C. Ellana" className="about-image" />
-            </ScrollReveal>
+
+            {/* Achievements bento card — replaces the old portrait, same design language as Skills */}
+            <BentoCard className="about-achievement">
+              <div className="bento-card__header">
+                <CategoryIcon iconName="emoji_events" />
+                <h3 className="bento-card__title">Achievements</h3>
+              </div>
+              <p className="bento-card__desc">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.
+              </p>
+            </BentoCard>
           </div>
         </div>
       </section>
@@ -384,7 +392,7 @@ export default function Home() {
       <section id="skills" className="section skills">
         <div className="container">
           <ScrollReveal variant={fadeUp}>
-            <h2 className="skills-heading">Skills</h2>
+            <h2 className="skills">Skills</h2>
           </ScrollReveal>
 
           <motion.div

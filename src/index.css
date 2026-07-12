@@ -9,41 +9,10 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: "Poppins", sans-serif;
   line-height: 1.6;
   color: #222;
   background-color: #ffffff;
-}
-
-/* ── cursor particles ───────────────────────────────── */
-
-.cursor-particles-wrap {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.cursor-particles-canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.hero {
-  position: relative;
-}
-
-.hero .container {
-  position: relative;
-  z-index: 2;
-}
-
-@media (max-width: 768px) {
-  .cursor-particles-wrap {
-    display: none;
-  }
 }
 
 /* ── rotating role ───────────────────────────────── */
@@ -74,10 +43,9 @@ body {
 
 /* ── Accent typography ───────────────────────────────── */
 .title-accent {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  letter-spacing: -1px;
 }
 
 .container {
@@ -91,6 +59,7 @@ body {
   display: inline-block;
   padding: 0.9rem 2.2rem;
   border-radius: 50px;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   text-decoration: none;
   margin: 0 1rem;
@@ -134,64 +103,81 @@ body {
 
 /* Alternating backgrounds */
 .hero {
-  background: #ffffff;
-  text-align: center;
-  padding: 10rem 0 8rem;
-  min-height: 70vh;
-  display: flex;
-  align-items: center;
+  background: linear-gradient(180deg,
+      #ffffff 0%,
+      #fbfbfc 100%);
 }
 
 #about {
-  background: #f5f5f5;
+  background: linear-gradient(180deg,
+      #f7f8fa 0%,
+      #f3f4f6 100%);
 }
 
 #skills {
-  background: #ffffff;
+  background: linear-gradient(180deg,
+      #ffffff 0%,
+      #fcfcfd 100%);
 }
 
 #projects {
-  background: #f5f5f5;
+  background: linear-gradient(180deg,
+      #f4f5f7 0%,
+      #eef1f4 100%);
 }
 
 #certificates {
-  background: #ffffff;
+  background: linear-gradient(180deg,
+      #ffffff 0%,
+      #fcfcfd 100%);
 }
 
 #contact {
-  background: #f5f5f5;
+  background: linear-gradient(180deg,
+      #f7f8fa 0%,
+      #f3f4f6 100%);
+}
+
+.section {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .hero {
-  text-align: center;
+  text-align: left;
   display: flex;
-  justify-content: center;
   align-items: center;
   min-height: 90vh;
 }
 
 .hero .container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
+}
+
+/* Left-aligned hero content column — ~55-60% of the container width */
+.hero-content {
+  max-width: 680px;
+  width: 100%;
 }
 
 /* Hero typography */
 .hero h2 {
-  font-size: 2.2rem;
-  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  font-size: 2.3rem;
+  font-weight: 500;
   color: #333;
   margin-bottom: 0.3rem;
 }
 
 .hero h1 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-size: 5.8rem;
-  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(2.8rem, 6vw, 6.3rem);
+  font-weight: 800;
   margin: 0.4rem 0 1rem;
   color: #000;
-  line-height: 1.06;
-  letter-spacing: -1.5px;
+  line-height: 1;
+  letter-spacing: -2px;
 }
 
 .hero .tagline {
@@ -202,7 +188,7 @@ body {
 }
 
 .hero .tagline--large {
-  font-size: 2.4rem;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
   /* Aspiring text is now big and elegant */
   font-weight: 600;
   color: #111;
@@ -222,7 +208,7 @@ body {
 .hero-social {
   display: flex;
   gap: 16px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 1.5rem;
 }
@@ -257,63 +243,48 @@ body {
   margin-top: 2.5rem;
   display: flex;
   gap: 12px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 /* Section headings */
 .section h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-weight: 700;
-  font-size: 3.4rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 4vw, 4rem);
   text-align: center;
   margin-bottom: 3rem;
   color: #000;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
+  line-height: 1.1;
 }
 
 /* About Section Split Layout */
 .about-content {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 4rem;
   margin-top: 2rem;
 }
 
 .about-text {
-  flex: 1;
+  flex: 1 1 55%;
+  min-width: 280px;
 }
 
 .about-text p {
-  font-size: 1.25rem;
-  /* slightly bigger font size as requested */
-  line-height: 1.75;
+  font-size: 1.32rem;
+  line-height: 1.78;
+  font-weight: 400;
   color: #333;
   text-align: left;
 }
 
-.about-image-wrap {
-  flex: 0 0 320px;
-  aspect-ratio: 4 / 5;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 20px 60px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e5e5e5;
-  background: #fdfdfd;
-  will-change: transform;
-}
-
-.about-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.about-image-wrap:hover .about-image {
-  transform: scale(1.05);
+/* Achievements bento card — right column, same design language as the Skills cards */
+.about-achievement {
+  flex: 1 1 320px;
+  max-width: 400px;
 }
 
 /* ── Skills Section – Premium Upgrade ──────────────────────────────── */
@@ -331,13 +302,14 @@ body {
 }
 
 .skills-heading {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 800;
-  font-size: 3.6rem;
+  font-size: clamp(2.6rem, 4vw, 4rem);
   text-align: center;
   margin-bottom: 4.5rem;
   color: #0a0a0a;
-  letter-spacing: -1.8px;
+  letter-spacing: -1.2px;
+  line-height: 1.1;
   position: relative;
 }
 
@@ -432,7 +404,8 @@ body {
 }
 
 .bento-card__title {
-  font-size: 1.45rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.65rem;
   font-weight: 700;
   color: #0a0a0a;
   letter-spacing: -0.4px;
@@ -441,9 +414,10 @@ body {
 
 /* Description */
 .bento-card__desc {
-  font-size: 1.02rem;
+  font-size: 1.08rem;
+  font-weight: 400;
   color: #555;
-  line-height: 1.75;
+  line-height: 1.65;
   margin-bottom: 2.25rem;
   flex: 1;
   position: relative;
@@ -463,10 +437,10 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.65rem 1.35rem;
+  padding: 0.7rem 1.45rem;
   border-radius: 9999px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
   background: #fafafa;
   color: #222;
   border: 1px solid #e5e5e5;
@@ -509,7 +483,7 @@ body {
 
 @media (max-width: 768px) {
   .skills-heading {
-    font-size: 2.8rem;
+    font-size: 3.2rem;
   }
 
   .bento-card {
@@ -517,7 +491,7 @@ body {
   }
 
   .bento-card__desc {
-    font-size: 0.98rem;
+    font-size: 1.02rem;
   }
 }
 
@@ -526,7 +500,8 @@ body {
   text-align: center;
   color: #666;
   margin: -0.5rem 0 2.5rem;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
+  font-weight: 400;
 }
 
 .projects-container {
@@ -612,7 +587,7 @@ body {
 }
 
 .project-overlay__content h3 {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: -0.2px;
   margin-bottom: 0.5rem;
@@ -620,8 +595,9 @@ body {
 }
 
 .project-overlay__content p {
-  font-size: 0.78rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  font-weight: 400;
+  line-height: 1.6;
   opacity: 0.92;
 }
 
@@ -638,8 +614,8 @@ body {
 }
 
 .project-card__title {
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 700;
   color: #0a0a0a;
   letter-spacing: -0.1px;
   line-height: 1.3;
@@ -682,7 +658,8 @@ body {
 /* ── Certificates ─────────────────────────────────────── */
 .certificates-subtitle {
   text-align: center;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
+  font-weight: 400;
   color: #666;
   margin: -1rem 0 3rem;
   max-width: 600px;
@@ -797,7 +774,7 @@ body {
 }
 
 .cert-card__title {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #0a0a0a;
   line-height: 1.3;
@@ -810,15 +787,17 @@ body {
 }
 
 .cert-card__meta {
-  font-size: 0.8rem;
+  font-size: 0.88rem;
+  font-weight: 400;
   color: #777;
   margin-top: 0.1rem;
   /* Very tight between title and meta */
 }
 
 .cert-card__id {
-  font-family: 'Geist', 'Courier New', monospace;
-  font-size: 0.75rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
   letter-spacing: 0.02em;
   color: #555;
 }
@@ -840,8 +819,8 @@ body {
   gap: 0.3rem;
   padding: 0.45rem 0.5rem;
   border-radius: 8px;
-  font-size: 0.775rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
   text-decoration: none;
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -873,12 +852,14 @@ body {
 
 .contact-intro {
   text-align: center;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
+  font-weight: 400;
   color: #555;
   margin-bottom: 2.5rem;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.7;
 }
 
 .contact-info {
@@ -890,7 +871,8 @@ body {
 }
 
 .contact-info p {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -906,7 +888,7 @@ body {
 }
 
 .contact-icon {
-  font-size: 1.4rem;
+  font-size: 1.55rem;
   color: #000;
 }
 
@@ -930,6 +912,7 @@ body {
   padding: 1rem 1rem 1rem 3.2rem;
   border: 1px solid #ccc;
   border-radius: 8px;
+  font-family: "Poppins", sans-serif;
   font-size: 1rem;
   background: #fafafa;
 }
@@ -951,34 +934,33 @@ body {
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: 3.8rem;
-    letter-spacing: -0.5px;
+    font-size: clamp(2.8rem, 10vw, 4.2rem);
+    letter-spacing: -1.2px;
   }
 
   .section h2 {
-    font-size: 2.6rem;
+    font-size: 3.2rem;
   }
 
   .hero .tagline--large {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 1.5rem;
   }
 
   .about-content {
-    flex-direction: column-reverse;
-    /* image on top on mobile/tablet */
+    flex-direction: column;
+    /* about text always appears first */
     gap: 2.5rem;
   }
 
   .about-text p {
-    text-align: center;
-    font-size: 1.15rem;
+    text-align: left;
+    font-size: 1.18rem;
   }
 
-  .about-image-wrap {
-    flex: 0 0 280px;
-    width: 280px;
-    margin: 0 auto;
+  .about-achievement {
+    max-width: 100%;
+    width: 100%;
   }
 
 
@@ -1009,16 +991,20 @@ body {
 
 @media (max-width: 480px) {
   .hero h1 {
-    font-size: 2.8rem;
-    letter-spacing: -0.3px;
+    font-size: clamp(2.4rem, 12vw, 3.2rem);
+    letter-spacing: -0.8px;
   }
 
   .section h2 {
-    font-size: 2.2rem;
+    font-size: 2.6rem;
+  }
+
+  .skills-heading {
+    font-size: 2.6rem;
   }
 
   .hero .tagline--large {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   .btn {
