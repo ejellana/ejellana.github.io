@@ -874,7 +874,7 @@ If it declares any Font Awesome CSS pseudo-elements, they will not be rendered a
             padding: 2.75rem 0 2rem;
           }
         }
-      `}),O.jsx("footer",{className:"footer",children:O.jsx("div",{className:"container",children:O.jsx(Tt.div,{className:"footer-inner",initial:{opacity:0,y:18},whileInView:{opacity:1,y:0},viewport:{once:!0,amount:.4},transition:{duration:.5,ease:[.22,1,.36,1]},children:O.jsxs("p",{className:"footer-copyright",children:["© ",n," Emmanuel Jacob C. Ellana. All rights reserved."]})})})})]})}function rO({children:n}){return O.jsxs(O.Fragment,{children:[O.jsx("style",{jsx:!0,global:!0,children:`
+      `}),O.jsx("footer",{className:"footer",children:O.jsx("div",{className:"container",children:O.jsxs(Tt.div,{className:"footer-inner",initial:{opacity:0,y:18},whileInView:{opacity:1,y:0},viewport:{once:!0,amount:.4},transition:{duration:.5,ease:[.22,1,.36,1]},children:[O.jsxs("p",{className:"footer-credit",children:["Built & Designed by ",O.jsx("strong",{children:"Emmanuel Jacob C. Ellana"})]}),O.jsxs("p",{className:"footer-copyright",children:["© ",n," All Rights Reserved."]})]})})})]})}function rO({children:n}){return O.jsxs(O.Fragment,{children:[O.jsx("style",{jsx:!0,global:!0,children:`
         .site-wrapper {
           display: flex;
           flex-direction: column;
