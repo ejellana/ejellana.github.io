@@ -553,7 +553,8 @@ export default function Home() {
                 title: "PhilLeads: B2B Lead Gen",
                 year: "2026",
                 desc: "An AI-powered system that automates B2B lead discovery using intelligent ETL pipelines and a comprehensive data analytics dashboard.",
-                shareHref: "#",
+                techStack: ["N8N", "React", "Leaflet"],
+                projectUrl: "https://github.com/ejellana/B2B-LeadGen",
               },
               {
                 img: imgPurpleBugStore,
@@ -561,7 +562,8 @@ export default function Home() {
                 title: "PurpleBug Store",
                 year: "2026",
                 desc: "An e-commerce platform for the Purple Bug brand, designed to showcase and sell the latest products with a modern, user-friendly interface.",
-                shareHref: "#",
+                techStack: ["Vue", "Laravel"],
+                projectUrl: "https://github.com/ejellana/Ellana_EmmanuelJacob_Exam",
               },
               {
                 img: imgAnimalTraceability,
@@ -569,7 +571,8 @@ export default function Home() {
                 title: "Animal Disease Traceability",
                 year: "2026",
                 desc: "A secure blockchain and Data Analytics framework built to provide tamper-proof livestock disease tracking.",
-                shareHref: "#",
+                techStack: ["React", "Go", "Blockchain"],
+                projectUrl: "https://github.com/dsmbrnLois/Thesis",
               },
               {
                 img: imgParkPeek,
@@ -577,7 +580,8 @@ export default function Home() {
                 title: "ParkPeek",
                 year: "2025",
                 desc: "A mobile parking app featuring peak-volume prediction powered by clustering and time-series analysis.",
-                shareHref: "#",
+                techStack: ["React", "React Native", "ML"],
+                projectUrl: "https://github.com/dsmbrnLois/ParkPeek_Admin-V",
               },
               {
                 img: imgHeartDisease,
@@ -585,7 +589,8 @@ export default function Home() {
                 title: "Heart Disease Prediction",
                 year: "2025",
                 desc: "An AI system utilizing neural networks to predict patient heart disease risk via web and mobile apps.",
-                shareHref: "#",
+                techStack: ["React", "Kotlin", "ML"],
+                projectUrl: "https://github.com/ejellana/Heart-RiskDetection",
               },
               {
                 img: imgMushroom,
@@ -593,7 +598,8 @@ export default function Home() {
                 title: "Mushroom Dataset",
                 year: "2025",
                 desc: "A data mining project utilizing Information Gain to optimize decision tree classifications.",
-                shareHref: "#",
+                techStack: ["Clustering", "ML"],
+                projectUrl: "https://canva.link/zj1p3e41qhgb1w5",
               },
               {
                 img: imgDineDash,
@@ -601,7 +607,8 @@ export default function Home() {
                 title: "DineDash",
                 year: "2024",
                 desc: "A full-stack food delivery platform featuring order tracking and a comprehensive admin dashboard.",
-                shareHref: "#",
+                techStack: ["ASP.NET"],
+                projectUrl: "https://github.com/abc1dee/IT114L-FinalProject-BurgerShop",
               },
               {
                 img: imgTwitterClone,
@@ -609,7 +616,8 @@ export default function Home() {
                 title: "Twitter Clone",
                 year: "2024",
                 desc: "A full-stack twitter clone with real-time updates, user authentication, and post management.",
-                shareHref: "#",
+                techStack: ["HTML", "CSS", "JavaScript"],
+                projectUrl: "https://github.com/ejellana/Twitter-Clone",
               },
               {
                 img: imgPAWS,
@@ -617,7 +625,8 @@ export default function Home() {
                 title: "PAWS",
                 year: "2024",
                 desc: "A platform empowering animal rehabilitation centers by simplifying volunteer management and care initiatives.",
-                shareHref: "#",
+                techStack: ["ASP.NET"],
+                projectUrl: "https://github.com/ejellana/PAWS-Animal-Rehabilitation-Center",
               },
               {
                 img: imgCommuteSync,
@@ -625,7 +634,8 @@ export default function Home() {
                 title: "CommuteSync",
                 year: "2023",
                 desc: "A smart transit prototype offering real-time routes, ride-hailing integration, and seat reservations.",
-                shareHref: "#",
+                techStack: ["Canva"],
+                projectUrl: "https://canva.link/jmbpa0ygorsr2ou",
               },
               {
                 img: imgJeepneyRush,
@@ -633,7 +643,8 @@ export default function Home() {
                 title: "JeepneyRush",
                 year: "2023",
                 desc: "A top-down C# survival game where players transport passengers through a zombie apocalypse.",
-                shareHref: "#",
+                techStack: ["C#"],
+                projectUrl: "https://github.com/ejellana/Jeepney-Rush-Zombie-Escape",
               },
               {
                 img: imgMerchQuest,
@@ -641,7 +652,8 @@ export default function Home() {
                 title: "MerchQuest",
                 year: "2023",
                 desc: "A UI/UX prototype for a virtual assistant that streamlines shopping through personalized recommendations.",
-                shareHref: "#",
+                techStack: ["Canva"],
+                projectUrl: "https://canva.link/xcaqka7jx2k5vtk",
               },
               {
                 img: imgFourPics1Word,
@@ -649,7 +661,8 @@ export default function Home() {
                 title: "4Pics1Word",
                 year: "2022",
                 desc: "A Python Tkinter recreation of the classic puzzle game built with OOP principles.",
-                shareHref: "#",
+                techStack: ["Python"],
+                projectUrl: null,
               },
             ].map((project) => (
               <motion.div
@@ -673,7 +686,7 @@ export default function Home() {
                   />
                 </div>
 
-                {/* ── Info panel: title + year, description, share icon ── */}
+                {/* ── Info panel: title + year, description, tech stack + share icon ── */}
                 <div className="project-card__info">
                   <div className="project-card__row">
                     <h3 className="project-card__title">{project.title}</h3>
@@ -682,20 +695,47 @@ export default function Home() {
 
                   <p className="project-card__desc">{project.desc}</p>
 
-                  <div className="project-card__share-wrap">
-                    <motion.a
-                      href={project.shareHref}
-                      aria-label={`Share ${project.title}`}
-                      className="project-card__share"
-                      whileHover={{
-                        y: -3,
-                        scale: 1.1,
-                        transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
-                      }}
-                      whileTap={{ scale: 0.92 }}
-                    >
-                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                    </motion.a>
+                  {/* Tech Stack Badges + Share Button Row */}
+                  <div className="project-card__footer">
+                    {/* Tech Stack Badges */}
+                    {project.techStack && project.techStack.length > 0 && (
+                      <div className="project-card__tech-stack">
+                        {project.techStack.map((tech) => (
+                          <span key={tech} className="tech-badge">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Share/Link Button */}
+                    <div className="project-card__share-wrap">
+                      {project.projectUrl ? (
+                        <motion.a
+                          href={project.projectUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.title} repository`}
+                          className="project-card__share"
+                          whileHover={{
+                            y: -3,
+                            scale: 1.1,
+                            transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+                          }}
+                          whileTap={{ scale: 0.92 }}
+                        >
+                          <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                        </motion.a>
+                      ) : (
+                        <span
+                          className="project-card__share project-card__share--disabled"
+                          aria-label="No repository available"
+                          title="No repository available"
+                        >
+                          <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </motion.div>
