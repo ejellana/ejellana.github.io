@@ -13,6 +13,8 @@ import {
   projectCard,
   certCard,
   socialIcon,
+  slideLeft,
+  slideRight,
   VIEWPORT,
 } from '../hooks/useScrollAnimation';
 
@@ -253,14 +255,16 @@ const skillColors = {
 // `labeled`: true keeps the text label under each icon (Professional Skills).
 // false renders a larger, label-less "icon-only" card (technical skills),
 // since those logos are already recognizable on their own.
-function SkillIconGrid({ skills, labeled = true }) {
+function SkillIconGrid({ skills, labeled = true, direction = 'left' }) {
+  const cardVariant = direction === 'left' ? slideLeft : slideRight;
+
   return (
     <motion.div
       className="skill-icons-grid"
       variants={staggerContainer(0.05)}
       initial="hidden"
       whileInView="visible"
-      viewport={VIEWPORT}
+      viewport={{ once: false, amount: 0.1 }}
     >
       {skills.map((skill) => {
         const name = typeof skill === 'string' ? skill : skill.name;
@@ -270,15 +274,17 @@ function SkillIconGrid({ skills, labeled = true }) {
           <motion.div
             key={name}
             className={`skill-icon-card ${labeled ? '' : 'skill-icon-card--icon-only'}`}
-            variants={chipPopIn}
+            variants={cardVariant}
             whileHover={{
               y: -6,
               scale: 1.06,
-              borderColor: `${brandColor}66`,
-              boxShadow: `0 14px 32px ${brandColor}22, 0 4px 14px ${brandColor}18`,
-              transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
             }}
             whileTap={{ scale: 0.96 }}
+            style={{
+              '--brand-hover-border': `${brandColor}66`,
+              '--brand-hover-shadow-1': `${brandColor}22`,
+              '--brand-hover-shadow-2': `${brandColor}18`,
+            }}
             title={name}
           >
             <span className={`skill-icon-card__icon ${labeled ? '' : 'skill-icon-card__icon--large'}`}>
@@ -505,7 +511,11 @@ export default function Home() {
                   <h3 className="skill-category__title">{category.title}</h3>
                 </div>
                 <p className="skill-category__desc">{category.description}</p>
-                <SkillIconGrid skills={category.skills} labeled={category.labeled} />
+                <SkillIconGrid
+                  skills={category.skills}
+                  labeled={category.labeled}
+                  direction={index % 2 === 0 ? 'left' : 'right'}
+                />
               </ScrollReveal>
             ))}
           </div>

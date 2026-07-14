@@ -626,20 +626,14 @@ body {
   border: 1px solid var(--border);
   border-radius: 18px;
   box-shadow: 0 1px 3px var(--shadow), 0 2px 8px var(--shadow);
-  outline: none;             /* kill any browser default outline */
+  outline: none;
   cursor: default;
-  /*
-    IMPORTANT: All four properties must live in a single transition
-    declaration on the element itself — including background-color.
-    If background-color is missing here but present on an ancestor
-    rule, the browser resolves two competing animations which causes
-    the white-edge flash on theme switch while hovering.
-  */
+  background-clip: padding-box; /* Prevent corner anti-aliasing bleed artifacts on scale + theme toggle */
+  /* Synchronized transitions for background, borders, and shadows */
   transition:
     background-color var(--transition-theme),
-    border-color     var(--transition-snap),
-    box-shadow       var(--transition-snap),
-    transform        var(--transition-snap);
+    border-color     var(--transition-theme),
+    box-shadow       var(--transition-theme);
 }
 
 .skill-icon-card--icon-only {
@@ -668,9 +662,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition:
-    transform var(--transition-snap),
-    filter    var(--transition-snap);
+  transition: transform var(--transition-snap);
 }
 
 .skill-icon-card__icon .material-symbols-outlined {
@@ -691,14 +683,12 @@ body {
   transition: color var(--transition-fast);
 }
 
-/* Refined hover: tight elevation shadow, no glow spread */
+/* Hover States — Powered by CSS variables passed from Home.jsx */
 .skill-icon-card:hover {
-  border-color: var(--border-hover);
+  border-color: var(--brand-hover-border);
   box-shadow:
-    0 0 0 1px var(--border-hover),
-    0 4px 8px var(--shadow),
-    0 8px 20px var(--shadow-hover);
-  transform: translateY(-3px);
+    0 4px 14px var(--brand-hover-shadow-2),
+    0 14px 32px var(--brand-hover-shadow-1);
 }
 
 .skill-icon-card:hover .skill-icon-card__label {
