@@ -531,7 +531,7 @@ export default function Home() {
             variants={staggerContainer(0.07)}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.05 }}
+            viewport={{ once: false, amount: 0.05 }}
           >
             {[
               {
@@ -685,7 +685,7 @@ export default function Home() {
               variants={staggerContainer(0.1)}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={{ once: false, amount: 0.1 }}
             >
               {certificatesData.map((cert, index) => (
                 <motion.article
@@ -775,9 +775,9 @@ export default function Home() {
             >
               {[
                 {
-                  href: "https://github.com/ejellana",
-                  icon: faGithub,
-                  label: "GitHub",
+                  href: "https://www.instagram.com/ej.ellana/",
+                  icon: faInstagram,
+                  label: "Instagram",
                   external: true,
                 },
                 {

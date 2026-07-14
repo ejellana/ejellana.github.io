@@ -1,63 +1,86 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faGithub, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faBars, faTimes, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
-// CV file — same asset used in the Hero download button
-import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
-
-// "Home" is intentionally not a nav link — the EJ logo already scrolls
-// back to the Hero section, so a separate Home item would be redundant.
 const NAV_LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' },
+  { href: '#about',        label: 'About'        },
+  { href: '#skills',       label: 'Skills'       },
+  { href: '#projects',     label: 'Projects'     },
   { href: '#certificates', label: 'Certificates' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#contact',      label: 'Contact'      },
 ];
 
-// Still observe #home for scroll-position tracking parity with before,
-// even though it has no corresponding nav link to highlight.
 const SECTION_IDS = ['home', ...NAV_LINKS.map((l) => l.href.slice(1))];
 
-const SOCIAL_LINKS = [
-  { href: 'https://github.com/ejellana', icon: faGithub, label: 'GitHub' },
-  { href: 'https://www.linkedin.com/in/emmanuel-ellana-ba8a9a182/', icon: faLinkedinIn, label: 'LinkedIn' },
-  { href: 'https://www.instagram.com/ej.ellana/', icon: faInstagram, label: 'Instagram' },
-];
 
+
+/* ─── Framer Motion variants ──────────────────────────────────────────── */
+const drawerVariants = {
+  hidden:  { x: '100%', opacity: 0   },
+  visible: { x: 0,      opacity: 1,
+    transition: { type: 'spring', stiffness: 340, damping: 38, mass: 0.9 } },
+  exit:    { x: '100%', opacity: 0,
+    transition: { duration: 0.28, ease: [0.4, 0, 1, 1] } },
+};
+
+const backdropVariants = {
+  hidden:  { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.22, ease: 'easeOut' } },
+  exit:    { opacity: 0, transition: { duration: 0.22, ease: 'easeIn'  } },
+};
+
+const navItemVariants = {
+  hidden:  { opacity: 0, x: 20 },
+  visible: (i) => ({
+    opacity: 1, x: 0,
+    transition: { delay: i * 0.05 + 0.06, duration: 0.28, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+/* ─── Component ───────────────────────────────────────────────────────── */
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen]       = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled]       = useState(false);
+  const [theme, setTheme]                 = useState('light');
 
   const toggleMenu = () => setIsMenuOpen((v) => !v);
-  const closeMenu = () => setIsMenuOpen(false);
+  const closeMenu  = () => setIsMenuOpen(false);
 
-  // ── Active section via IntersectionObserver ───────────────
+  /* Theme init */
   useEffect(() => {
-    const observers = [];
+    const saved    = localStorage.getItem('theme');
+    const sysDark  = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const resolved = saved || (sysDark ? 'dark' : 'light');
+    setTheme(resolved);
+    if (resolved === 'dark') document.documentElement.classList.add('dark');
+  }, []);
 
+  const toggleTheme = () => {
+    const next = theme === 'light' ? 'dark' : 'light';
+    setTheme(next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    localStorage.setItem('theme', next);
+  };
+
+  /* Active section observer */
+  useEffect(() => {
+    const obs = [];
     SECTION_IDS.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
-
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id);
-        },
+      const o = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
         { threshold: 0.3, rootMargin: '-60px 0px -40% 0px' }
       );
-
-      obs.observe(el);
-      observers.push(obs);
+      o.observe(el);
+      obs.push(o);
     });
-
-    return () => observers.forEach((o) => o.disconnect());
+    return () => obs.forEach((o) => o.disconnect());
   }, []);
 
-  // ── Header appearance changes once the page has scrolled ──
+  /* Scroll-shrink */
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 16);
     onScroll();
@@ -65,7 +88,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // ── Lock body scroll when mobile menu is open ─────────────
+  /* Lock body scroll while drawer open */
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -74,45 +97,44 @@ export default function Header() {
   return (
     <>
       <style>{`
+        /* ── Header shell ── */
         .header {
           position: sticky;
           top: 0;
           z-index: 1000;
-          padding: 1.1rem 0;
-          background: #000000;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-          box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02);
-          transition: padding 0.35s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+          padding: 1rem 0;
+          background: var(--bg-primary);
+          border-bottom: 1px solid var(--border);
+          transition:
+            padding       0.35s ease,
+            box-shadow    0.35s ease,
+            border-color  0.35s ease,
+            background-color var(--transition-theme);
         }
-
         .header--scrolled {
-          padding: 0.75rem 0;
-          border-bottom-color: rgba(255, 255, 255, 0.09);
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+          padding: 0.7rem 0;
+          box-shadow: 0 4px 24px var(--shadow);
         }
-
         .header .container {
           display: flex;
           justify-content: space-between;
           align-items: center;
         }
 
+        /* ── Logo ── */
         .logo a {
-          color: white;
+          color: var(--text-primary);
           text-decoration: none;
           font-size: 1.55rem;
           font-weight: 800;
           letter-spacing: -0.3px;
           display: inline-block;
+          line-height: 1;
           transition: opacity 0.25s ease, transform 0.25s ease;
         }
+        .logo a:hover { opacity: 0.72; transform: translateY(-1px); }
 
-        .logo a:hover {
-          opacity: 0.78;
-          transform: translateY(-1px);
-        }
-
-        /* ── Desktop nav — sliding pill active indicator ── */
+        /* ── Desktop nav ── */
         .nav-desktop ul {
           display: flex;
           align-items: center;
@@ -121,15 +143,10 @@ export default function Header() {
           margin: 0;
           padding: 0;
         }
-
-        .nav-item {
-          position: relative;
-        }
-
         .nav-item a {
           position: relative;
           display: inline-block;
-          color: rgba(255, 255, 255, 0.68);
+          color: var(--text-secondary);
           text-decoration: none;
           font-weight: 500;
           font-size: 0.93rem;
@@ -138,28 +155,34 @@ export default function Header() {
           border-radius: 999px;
           transition: color 0.25s ease;
         }
-
-        .nav-item a:hover {
-          color: #ffffff;
-        }
-
+        .nav-item a:hover { color: var(--text-primary); }
         .nav-item a.nav-link--active {
-          color: #ffffff;
+          color: var(--text-primary);
           font-weight: 600;
         }
-
         .nav-pill {
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: var(--nav-pill-bg);
+          border: 1px solid var(--nav-pill-border);
           border-radius: 999px;
           z-index: -1;
         }
 
-        .nav-link-label {
-          position: relative;
-          z-index: 1;
+        /* ── Shared controls (theme toggle + burger) ── */
+        .header-controls {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        /* ── Theme toggle ── */
+        .theme-toggle {
+          transition:
+            color        0.25s cubic-bezier(0.23, 1, 0.32, 1),
+            border-color 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+            box-shadow   0.25s cubic-bezier(0.23, 1, 0.32, 1),
+            transform    0.25s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         /* ── Burger button ── */
@@ -169,215 +192,169 @@ export default function Header() {
           justify-content: center;
           width: 42px;
           height: 42px;
-          background: transparent;
-          border: none;
-          border-radius: 12px;
-          color: white;
+          border-radius: 999px;
+          background: var(--bg-card);
+          border: 1px solid var(--border);
+          color: var(--text-secondary);
+          font-size: 1.1rem;
           cursor: pointer;
-          font-size: 1.25rem;
-          transition: background 0.25s ease;
+          box-shadow: 0 2px 8px var(--shadow);
+          transition:
+            color        0.25s ease,
+            border-color 0.25s ease,
+            background   0.25s ease,
+            box-shadow   0.25s ease,
+            transform    0.25s ease;
         }
-
-        .burger-btn:hover,
-        .burger-btn:focus-visible {
-          background: rgba(255, 255, 255, 0.08);
+        .burger-btn:hover {
+          color: var(--text-primary);
+          border-color: var(--border-hover);
+          box-shadow: 0 4px 14px var(--shadow-hover);
+          transform: scale(1.05);
         }
-
         .burger-icon-wrap {
           display: flex;
           align-items: center;
           justify-content: center;
+          width: 100%;
+          height: 100%;
         }
 
-        /* ── Mobile backdrop ── */
+        /* ── Backdrop ── */
         .menu-backdrop {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.55);
-          backdrop-filter: blur(6px);
-          -webkit-backdrop-filter: blur(6px);
-          z-index: 998;
+          z-index: 1001;
+          background: rgba(0, 0, 0, 0.38);
+          backdrop-filter: blur(3px);
+          -webkit-backdrop-filter: blur(3px);
         }
 
-        /* ── Mobile drawer ── */
+        /* ── Mobile nav drawer ── */
         .nav-mobile {
           position: fixed;
           top: 0;
           right: 0;
-          width: 84%;
-          max-width: 340px;
-          height: 100vh;
+          bottom: 0;
+          z-index: 1002;
+          width: min(320px, 88vw);
           display: flex;
           flex-direction: column;
-          background: #0a0a0a;
-          color: white;
-          z-index: 999;
-          box-shadow: -18px 0 50px rgba(0, 0, 0, 0.5);
-          border-left: 1px solid rgba(255, 255, 255, 0.07);
+          background: var(--bg-primary);
+          border-left: 1px solid var(--border);
+          box-shadow: -12px 0 48px var(--shadow-hover);
+          overflow-y: auto;
+          overflow-x: hidden;
+          overscroll-behavior: contain;
+          transition: background-color var(--transition-theme), border-color var(--transition-theme);
         }
 
-        .mobile-menu-header {
+        /* ── Drawer header ── */
+        .nav-mobile__header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 1.5rem 1.5rem 1rem;
+          padding: 1.1rem 1.25rem;
+          border-bottom: 1px solid var(--border);
+          flex-shrink: 0;
+          transition: border-color var(--transition-theme);
         }
-
-        .mobile-menu-header .logo a {
-          font-size: 1.3rem;
+        .nav-mobile__logo {
+          color: var(--text-primary);
+          text-decoration: none;
+          font-size: 1.45rem;
+          font-weight: 800;
+          letter-spacing: -0.3px;
+          line-height: 1;
         }
-
-        .close-btn {
+        .nav-mobile__close {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 40px;
-          height: 40px;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 12px;
-          color: white;
-          font-size: 1.1rem;
+          width: 38px;
+          height: 38px;
+          border-radius: 999px;
+          background: transparent;
+          border: 1px solid var(--border);
+          color: var(--text-secondary);
+          font-size: 1rem;
           cursor: pointer;
-          transition: background 0.25s ease, transform 0.25s ease;
+          transition:
+            color        0.2s ease,
+            border-color 0.2s ease,
+            background   0.2s ease;
+        }
+        .nav-mobile__close:hover {
+          color: var(--text-primary);
+          background: var(--bg-secondary);
+          border-color: var(--border-hover);
         }
 
-        .close-btn:hover {
-          background: rgba(255, 255, 255, 0.12);
-        }
-
+        /* ── Nav links list ── */
         .mobile-menu-list {
           list-style: none;
-          padding: 0.75rem 1.5rem 0;
+          padding: 0.75rem 1rem;
           margin: 0;
+          flex: 1;
           display: flex;
           flex-direction: column;
           gap: 0.25rem;
         }
-
-        .mobile-menu-list a {
-          position: relative;
-          display: block;
-          color: rgba(255, 255, 255, 0.78);
-          text-decoration: none;
-          font-size: 1.18rem;
-          font-weight: 600;
-          letter-spacing: -0.1px;
-          padding: 0.85rem 0.9rem;
-          border-radius: 14px;
-          transition: background 0.25s ease, color 0.25s ease, padding-left 0.25s ease;
-        }
-
-        .mobile-menu-list a:hover,
-        .mobile-menu-list a:focus {
-          color: #ffffff;
-          background: rgba(255, 255, 255, 0.06);
-          padding-left: 1.15rem;
-        }
-
-        .mobile-menu-list a.nav-link--active {
-          color: #ffffff;
-          background: rgba(255, 255, 255, 0.09);
-        }
-
-        .mobile-menu-divider {
-          margin: 1.35rem 1.5rem 1.25rem;
-          border: none;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .mobile-menu-footer {
-          margin-top: auto;
-          padding: 0 1.5rem 2.25rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-
-        .mobile-cv-btn {
+        .mobile-menu-list li a {
           display: flex;
           align-items: center;
-          justify-content: center;
-          width: 100%;
-          padding: 0.85rem 1.2rem;
-          background: #ffffff;
-          color: #0a0a0a;
-          font-weight: 600;
-          font-size: 0.98rem;
-          text-decoration: none;
-          border-radius: 999px;
-          transition: opacity 0.25s ease, transform 0.25s ease;
-        }
-
-        .mobile-cv-btn:hover {
-          opacity: 0.88;
-          transform: translateY(-2px);
-        }
-
-        .mobile-social-row {
-          display: flex;
-          justify-content: center;
-          gap: 0.7rem;
-        }
-
-        .mobile-social-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 42px;
-          height: 42px;
+          justify-content: space-between;
+          padding: 0.85rem 1rem;
           border-radius: 12px;
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.09);
-          color: rgba(255, 255, 255, 0.85);
-          font-size: 1rem;
+          color: var(--text-secondary);
           text-decoration: none;
-          transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+          font-weight: 500;
+          font-size: 1.05rem;
+          letter-spacing: 0.01em;
+          min-height: 52px;
+          transition:
+            background  0.2s ease,
+            color       0.2s ease,
+            padding-left 0.2s ease;
+        }
+        .mobile-menu-list li a:hover {
+          background: var(--bg-secondary);
+          color: var(--text-primary);
+          padding-left: 1.3rem;
+        }
+        .mobile-menu-list li a.nav-link--active {
+          background: var(--bg-secondary);
+          color: var(--text-primary);
+          font-weight: 600;
+          border: 1px solid var(--border);
+        }
+        .mobile-menu-list li a.nav-link--active .mobile-active-dot {
+          display: block;
+        }
+        .mobile-active-dot {
+          display: none;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--text-primary);
+          flex-shrink: 0;
         }
 
-        .mobile-social-btn:hover {
-          background: rgba(255, 255, 255, 0.1);
-          color: #ffffff;
-          transform: translateY(-2px);
-        }
-
+        /* ── Responsive visibility ── */
         @media (max-width: 768px) {
-          .nav-desktop {
-            display: none;
-          }
-          .burger-btn {
-            display: flex;
-          }
-          .logo a {
-            font-size: 1.4rem;
-          }
+          .nav-desktop  { display: none; }
+          /* On mobile, the desktop-only theme toggle hides too */
+          .header-controls .theme-toggle { display: none; }
+          .burger-btn   { display: flex; }
+          /* Show mobile theme toggle in controls */
+          .header-controls .mobile-theme-toggle { display: flex; }
         }
-
         @media (min-width: 769px) {
-          .burger-btn {
-            display: none !important;
-          }
-        }
-
-        @media (max-width: 380px) {
-          .nav-mobile {
-            width: 88%;
-          }
-          .mobile-menu-list a {
-            font-size: 1.08rem;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .header, .header--scrolled, .logo a, .nav-item a,
-          .burger-btn, .close-btn, .mobile-menu-list a,
-          .mobile-cv-btn, .mobile-social-btn {
-            transition: none !important;
-          }
+          .burger-btn              { display: none !important; }
+          .mobile-theme-toggle     { display: none !important; }
         }
       `}</style>
 
-      {/* Header entrance animation on mount */}
       <motion.header
         className={`header${isScrolled ? ' header--scrolled' : ''}`}
         initial={{ y: -80, opacity: 0 }}
@@ -385,10 +362,12 @@ export default function Header() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
       >
         <div className="container">
+          {/* Logo */}
           <h1 className="logo">
             <a href="#home" onClick={closeMenu}>EJ</a>
           </h1>
 
+          {/* Desktop nav */}
           <nav className="nav-desktop">
             <ul>
               {NAV_LINKS.map(({ href, label }) => {
@@ -415,103 +394,117 @@ export default function Header() {
             </ul>
           </nav>
 
-          <button
-            className="burger-btn"
-            onClick={toggleMenu}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          >
-            <motion.span
-              className="burger-icon-wrap"
-              animate={{ rotate: isMenuOpen ? 90 : 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          {/* Right-side controls:
+              Desktop → theme toggle only
+              Mobile  → theme toggle + burger (side-by-side) */}
+          <div className="header-controls">
+            {/* Desktop theme toggle */}
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             >
-              <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
-            </motion.span>
-          </button>
+              <motion.span
+                animate={{ rotate: theme === 'dark' ? 45 : 0 }}
+                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
+              </motion.span>
+            </button>
+
+            {/* Mobile-only theme toggle — shown beside burger */}
+            <button
+              className="theme-toggle mobile-theme-toggle"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              <motion.span
+                animate={{ rotate: theme === 'dark' ? 45 : 0 }}
+                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
+              </motion.span>
+            </button>
+
+            {/* Burger */}
+            <button
+              className="burger-btn"
+              onClick={toggleMenu}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMenuOpen}
+            >
+              <motion.span
+                className="burger-icon-wrap"
+                animate={{ rotate: isMenuOpen ? 90 : 0 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
+              </motion.span>
+            </button>
+          </div>
         </div>
 
-        {/* Mobile menu — AnimatePresence for smooth mount/unmount */}
+        {/* ── Mobile drawer ── */}
         <AnimatePresence>
           {isMenuOpen && (
             <>
+              {/* Backdrop */}
               <motion.div
                 className="menu-backdrop"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
+                variants={backdropVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
                 onClick={closeMenu}
+                aria-hidden="true"
               />
+
+              {/* Drawer */}
               <motion.nav
                 className="nav-mobile"
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
-                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                variants={drawerVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                aria-label="Mobile navigation"
               >
-                <div className="mobile-menu-header">
-                  <h2 className="logo">
-                    <a href="#home" onClick={closeMenu}>EJ</a>
-                  </h2>
-                  <button className="close-btn" onClick={closeMenu} aria-label="Close menu">
+                {/* Drawer header */}
+                <div className="nav-mobile__header">
+                  <a href="#home" className="nav-mobile__logo" onClick={closeMenu}>EJ</a>
+                  <button
+                    className="nav-mobile__close"
+                    onClick={closeMenu}
+                    aria-label="Close menu"
+                  >
                     <FontAwesomeIcon icon={faTimes} />
                   </button>
                 </div>
 
-                <ul className="mobile-menu-list">
-                  {NAV_LINKS.map(({ href, label }, i) => (
-                    <motion.li
-                      key={href}
-                      initial={{ opacity: 0, x: 24 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        duration: 0.38,
-                        delay: 0.08 + i * 0.05,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                    >
-                      <a
-                        href={href}
-                        onClick={closeMenu}
-                        className={activeSection === href.slice(1) ? 'nav-link--active' : ''}
+                {/* Nav links */}
+                <ul className="mobile-menu-list" role="list">
+                  {NAV_LINKS.map(({ href, label }, i) => {
+                    const isActive = activeSection === href.slice(1);
+                    return (
+                      <motion.li
+                        key={href}
+                        custom={i}
+                        variants={navItemVariants}
+                        initial="hidden"
+                        animate="visible"
                       >
-                        {label}
-                      </a>
-                    </motion.li>
-                  ))}
+                        <a
+                          href={href}
+                          onClick={closeMenu}
+                          className={isActive ? 'nav-link--active' : ''}
+                        >
+                          {label}
+                          <span className="mobile-active-dot" aria-hidden="true" />
+                        </a>
+                      </motion.li>
+                    );
+                  })}
                 </ul>
 
-                <hr className="mobile-menu-divider" />
-
-                <motion.div
-                  className="mobile-menu-footer"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.08 + NAV_LINKS.length * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <a
-                    href={cvFile}
-                    download="CV_Ellana-EmmanuelJacob.pdf"
-                    className="mobile-cv-btn"
-                  >
-                    Download CV
-                  </a>
-
-                  <div className="mobile-social-row">
-                    {SOCIAL_LINKS.map(({ href, icon, label }) => (
-                      <a
-                        key={label}
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={label}
-                        className="mobile-social-btn"
-                      >
-                        <FontAwesomeIcon icon={icon} />
-                      </a>
-                    ))}
-                  </div>
-                </motion.div>
               </motion.nav>
             </>
           )}
