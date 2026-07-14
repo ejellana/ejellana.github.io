@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const ROLES = ['Data Analyst', 'Data Engineer', 'IT Business Analyst'];
+const ROLES = ['Data Analyst', 'Data Engineer', 'IT Business Analyst', 'Larper'];
 const TYPING_SPEED = 90;
 const DELETING_SPEED = 45;
 const PAUSE_AFTER_TYPE = 1600;

@@ -10,27 +10,28 @@
 /* ====================== THEME VARIABLES ====================== */
 :root {
   /* ── Backgrounds ── */
-  --bg-primary:   #ffffff;
+  --bg-primary: #ffffff;
   --bg-secondary: #f7f8fa;
-  --bg-tertiary:  #f0f1f4;
-  --bg-card:      #ffffff;
+  --bg-tertiary: #f0f1f4;
+  --bg-card: #ffffff;
 
   /* ── Text ── */
-  --text-primary:   #0a0a0a;
+  --text-primary: #0a0a0a;
   --text-secondary: #555555;
-  --text-muted:     #777777;
+  --text-muted: #777777;
 
   /* ── Borders ── */
-  --border:       #e4e4e7;
+  --border: #e4e4e7;
   --border-light: #ececef;
   --border-hover: #c0c0c8;
 
   /* ── Accent (monochrome — flips in dark) ── */
-  --accent:        #0a0a0a;
-  --accent-fg:     #ffffff;   /* text on top of --accent */
+  --accent: #0a0a0a;
+  --accent-fg: #ffffff;
+  /* text on top of --accent */
 
   /* ── Shadows ── */
-  --shadow:       rgba(0, 0, 0, 0.06);
+  --shadow: rgba(0, 0, 0, 0.06);
   --shadow-hover: rgba(0, 0, 0, 0.13);
 
   /* ── Scrollbar — matches certificate section bg gradient ── */
@@ -40,73 +41,73 @@
 
   /* ── Decorative / accent underline ── */
   --accent-line-from: #111111;
-  --accent-line-to:   #555555;
+  --accent-line-to: #555555;
 
   /* ── Nav pill (active highlight) ── */
-  --nav-pill-bg:     rgba(0, 0, 0, 0.06);
+  --nav-pill-bg: rgba(0, 0, 0, 0.06);
   --nav-pill-border: rgba(0, 0, 0, 0.08);
 
   /* ── Muted fill button (Verify / secondary-fill actions) ── */
   /* Light: dark charcoal fill — authoritative but not accent-heavy */
-  --btn-fill-bg:     #1a1a1a;
-  --btn-fill-fg:     #ffffff;
+  --btn-fill-bg: #1a1a1a;
+  --btn-fill-fg: #ffffff;
   --btn-fill-border: #1a1a1a;
-  --btn-fill-bg-hover:     transparent;
-  --btn-fill-fg-hover:     #0a0a0a;
+  --btn-fill-bg-hover: transparent;
+  --btn-fill-fg-hover: #0a0a0a;
   --btn-fill-border-hover: #0a0a0a;
 
   /* ── Transitions ── */
   --transition-theme: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-  --transition-fast:  0.25s ease;
-  --transition-snap:  0.3s cubic-bezier(0.23, 1, 0.32, 1);
-  --transition-lift:  0.35s ease;
+  --transition-fast: 0.25s ease;
+  --transition-snap: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-lift: 0.35s ease;
 }
 
 .dark {
   /* ── Backgrounds ── */
-  --bg-primary:   #0f1115;
+  --bg-primary: #0f1115;
   --bg-secondary: #161a22;
-  --bg-tertiary:  #1a1f2b;
-  --bg-card:      #1d222b;
+  --bg-tertiary: #1a1f2b;
+  --bg-card: #1d222b;
 
   /* ── Text ── */
-  --text-primary:   #f5f5f5;
+  --text-primary: #f5f5f5;
   --text-secondary: #b0b8c5;
-  --text-muted:     #8a919e;
+  --text-muted: #8a919e;
 
   /* ── Borders ── */
-  --border:       #2a303b;
+  --border: #2a303b;
   --border-light: #323a4a;
   --border-hover: #4b5563;
 
   /* ── Accent ── */
-  --accent:    #ffffff;
+  --accent: #ffffff;
   --accent-fg: #0f1115;
 
   /* ── Shadows ── */
-  --shadow:       rgba(0, 0, 0, 0.25);
+  --shadow: rgba(0, 0, 0, 0.25);
   --shadow-hover: rgba(0, 0, 0, 0.45);
 
   /* ── Scrollbar — sits on certificate section's dark bg gradient ── */
-  --scrollbar-thumb:       #3a4252;
-  --scrollbar-track:       #1d222b;
+  --scrollbar-thumb: #3a4252;
+  --scrollbar-track: #1d222b;
   --scrollbar-thumb-hover: #556070;
 
   /* ── Decorative ── */
   --accent-line-from: #aaaaaa;
-  --accent-line-to:   #666666;
+  --accent-line-to: #666666;
 
   /* ── Nav pill ── */
-  --nav-pill-bg:     rgba(255, 255, 255, 0.08);
+  --nav-pill-bg: rgba(255, 255, 255, 0.08);
   --nav-pill-border: rgba(255, 255, 255, 0.08);
 
   /* ── Muted fill button — dark mode override ── */
   /* Uses a restrained mid-toned surface, not blinding white */
-  --btn-fill-bg:     #e8eaed;
-  --btn-fill-fg:     #0f1115;
+  --btn-fill-bg: #e8eaed;
+  --btn-fill-fg: #0f1115;
   --btn-fill-border: #e8eaed;
-  --btn-fill-bg-hover:     transparent;
-  --btn-fill-fg-hover:     #f5f5f5;
+  --btn-fill-bg-hover: transparent;
+  --btn-fill-fg-hover: #f5f5f5;
   --btn-fill-border-hover: #b0b8c5;
 }
 
@@ -121,7 +122,7 @@ html {
   scroll-behavior: smooth;
   transition:
     background-color var(--transition-theme),
-    color           var(--transition-theme);
+    color var(--transition-theme);
 }
 
 /*
@@ -149,9 +150,9 @@ article,
 .theme-toggle {
   transition:
     background-color var(--transition-theme),
-    border-color     var(--transition-theme),
-    color            var(--transition-theme),
-    box-shadow       var(--transition-theme);
+    border-color var(--transition-theme),
+    color var(--transition-theme),
+    box-shadow var(--transition-theme);
 }
 
 /* ====================== BASE ====================== */
@@ -175,8 +176,16 @@ body {
 }
 
 @keyframes blink {
-  0%,   50%    { opacity: 1; }
-  50.01%, 100% { opacity: 0; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  50.01%,
+  100% {
+    opacity: 0;
+  }
 }
 
 /* ====================== ACCENT TYPOGRAPHY ====================== */
@@ -206,11 +215,11 @@ body {
   cursor: pointer;
   will-change: transform;
   transition:
-    transform     0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow    0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    background    var(--transition-fast),
-    color         var(--transition-fast),
-    border-color  var(--transition-fast);
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .btn.primary {
@@ -369,8 +378,8 @@ body {
   text-decoration: none;
   transition:
     border-color var(--transition-snap),
-    box-shadow   var(--transition-snap),
-    transform    var(--transition-snap);
+    box-shadow var(--transition-snap),
+    transform var(--transition-snap);
 }
 
 .hero-cv-btn {
@@ -391,8 +400,8 @@ body {
   white-space: nowrap;
   transition:
     border-color var(--transition-snap),
-    box-shadow   var(--transition-snap),
-    transform    var(--transition-snap);
+    box-shadow var(--transition-snap),
+    transform var(--transition-snap);
 }
 
 .hero-icon-btn:hover,
@@ -465,7 +474,8 @@ body {
 }
 
 .dark .profile-card::before {
-  opacity: 0.18; /* Subtle in dark mode — not distracting */
+  opacity: 0.18;
+  /* Subtle in dark mode — not distracting */
 }
 
 .profile-card__image {
@@ -493,8 +503,8 @@ body {
   color: var(--text-primary);
   transition:
     background-color var(--transition-theme),
-    border-color     var(--transition-theme),
-    box-shadow       var(--transition-theme);
+    border-color var(--transition-theme),
+    box-shadow var(--transition-theme);
 }
 
 .profile-badge .material-symbols-outlined {
@@ -628,12 +638,13 @@ body {
   box-shadow: 0 1px 3px var(--shadow), 0 2px 8px var(--shadow);
   outline: none;
   cursor: default;
-  background-clip: padding-box; /* Prevent corner anti-aliasing bleed artifacts on scale + theme toggle */
+  background-clip: padding-box;
+  /* Prevent corner anti-aliasing bleed artifacts on scale + theme toggle */
   /* Synchronized transitions for background, borders, and shadows */
   transition:
     background-color var(--transition-theme),
-    border-color     var(--transition-theme),
-    box-shadow       var(--transition-theme);
+    border-color var(--transition-theme),
+    box-shadow var(--transition-theme);
 }
 
 .skill-icon-card--icon-only {
@@ -747,9 +758,9 @@ body {
   */
   transition:
     background-color var(--transition-theme),
-    transform        var(--transition-lift),
-    box-shadow       var(--transition-lift),
-    border-color     var(--transition-lift);
+    transform var(--transition-lift),
+    box-shadow var(--transition-lift),
+    border-color var(--transition-lift);
 }
 
 /* Hover: precise elevation — lifted card, not glowing card */
@@ -852,10 +863,10 @@ body {
   font-size: 0.78rem;
   text-decoration: none;
   transition:
-    background     var(--transition-fast),
-    color          var(--transition-fast),
-    border-color   var(--transition-fast),
-    box-shadow     var(--transition-fast);
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .project-card__share:hover {
@@ -934,9 +945,9 @@ body {
   /* background-color must be included here — same flash-fix as skill/project cards */
   transition:
     background-color var(--transition-theme),
-    transform        0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow       0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color     var(--transition-fast);
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color var(--transition-fast);
 }
 
 .cert-card:hover {
@@ -981,7 +992,7 @@ body {
   background: var(--bg-card);
 }
 
-.cert-card__body > div:first-child {
+.cert-card__body>div:first-child {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1044,24 +1055,24 @@ body {
   cursor: pointer;
   /* include background-color so there's no flash conflict on theme switch */
   transition:
-    background-color  var(--transition-fast),
-    color             var(--transition-fast),
-    border-color      var(--transition-fast),
-    box-shadow        var(--transition-fast),
-    transform         var(--transition-fast);
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 /* Verify — filled using muted semantic fill vars */
 .cert-btn--primary {
   background: var(--btn-fill-bg);
-  color:      var(--btn-fill-fg);
+  color: var(--btn-fill-fg);
   border: 1px solid var(--btn-fill-border);
   box-shadow: 0 2px 6px var(--shadow);
 }
 
 .cert-btn--primary:hover {
-  background:   var(--btn-fill-bg-hover);
-  color:        var(--btn-fill-fg-hover);
+  background: var(--btn-fill-bg-hover);
+  color: var(--btn-fill-fg-hover);
   border-color: var(--btn-fill-border-hover);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px var(--shadow-hover);
@@ -1081,8 +1092,8 @@ body {
 }
 
 .cert-btn--outline:hover {
-  background:   var(--btn-fill-bg);
-  color:        var(--btn-fill-fg);
+  background: var(--btn-fill-bg);
+  color: var(--btn-fill-fg);
   border-color: var(--btn-fill-border);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px var(--shadow-hover);
@@ -1158,8 +1169,8 @@ body {
   font-size: 1.02rem;
   transition:
     border-color var(--transition-snap),
-    box-shadow   var(--transition-snap),
-    transform    var(--transition-snap);
+    box-shadow var(--transition-snap),
+    transform var(--transition-snap);
 }
 
 .contact-card:hover {
@@ -1200,10 +1211,10 @@ body {
   font-size: 1.25rem;
   box-shadow: 0 2px 8px var(--shadow);
   transition:
-    color        var(--transition-fast),
+    color var(--transition-fast),
     border-color var(--transition-fast),
-    box-shadow   var(--transition-fast),
-    transform    var(--transition-fast);
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .theme-toggle:hover {
@@ -1482,6 +1493,7 @@ body {
 
 /* ====================== PREFERS REDUCED MOTION ====================== */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

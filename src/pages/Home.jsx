@@ -48,6 +48,9 @@ import imgCommuteSync from '../assets/images/Projects/CommuteSync.png';
 import imgMerchQuest from '../assets/images/Projects/MerchQuest.png';
 import imgJeepneyRush from '../assets/images/Projects/JeepneyRush.png';
 import imgFourPics1Word from '../assets/images/Projects/4Pics1Word.png';
+import imgPurpleBugStore from '../assets/images/Projects/PurpleBugStore.png';
+import imgPAWS from '../assets/images/Projects/PAWS.png';
+import imgTwitterClone from '../assets/images/Projects/Twitter-Clone.png';
 
 // Certificate images
 import certCompTiaTech from '../assets/images/certificates/CompTIA Tech+ certificate_page-0001.jpg';
@@ -547,9 +550,17 @@ export default function Home() {
               {
                 img: imgN8BLeadGen,
                 alt: "PhilLeads: B2B Lead Gen",
-                title: "N8N-B2B Lead Gen",
+                title: "PhilLeads: B2B Lead Gen",
                 year: "2026",
                 desc: "An AI-powered system that automates B2B lead discovery using intelligent ETL pipelines and a comprehensive data analytics dashboard.",
+                shareHref: "#",
+              },
+              {
+                img: imgPurpleBugStore,
+                alt: "PurpleBug Store",
+                title: "PurpleBug Store",
+                year: "2026",
+                desc: "An e-commerce platform for the Purple Bug brand, designed to showcase and sell the latest products with a modern, user-friendly interface.",
                 shareHref: "#",
               },
               {
@@ -590,6 +601,22 @@ export default function Home() {
                 title: "DineDash",
                 year: "2024",
                 desc: "A full-stack food delivery platform featuring order tracking and a comprehensive admin dashboard.",
+                shareHref: "#",
+              },
+              {
+                img: imgTwitterClone,
+                alt: "Twitter Clone",
+                title: "Twitter Clone",
+                year: "2024",
+                desc: "A full-stack twitter clone with real-time updates, user authentication, and post management.",
+                shareHref: "#",
+              },
+              {
+                img: imgPAWS,
+                alt: "PAWS",
+                title: "PAWS",
+                year: "2024",
+                desc: "A platform empowering animal rehabilitation centers by simplifying volunteer management and care initiatives.",
                 shareHref: "#",
               },
               {

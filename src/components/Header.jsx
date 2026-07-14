@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 const NAV_LINKS = [
-  { href: '#about',        label: 'About'        },
-  { href: '#skills',       label: 'Skills'       },
-  { href: '#projects',     label: 'Projects'     },
+  { href: '#about', label: 'About' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#projects', label: 'Projects' },
   { href: '#certificates', label: 'Certificates' },
-  { href: '#contact',      label: 'Contact'      },
+  { href: '#contact', label: 'Contact' },
 ];
 
 const SECTION_IDS = ['home', ...NAV_LINKS.map((l) => l.href.slice(1))];
@@ -17,21 +17,25 @@ const SECTION_IDS = ['home', ...NAV_LINKS.map((l) => l.href.slice(1))];
 
 /* ─── Framer Motion variants ──────────────────────────────────────────── */
 const drawerVariants = {
-  hidden:  { x: '100%', opacity: 0   },
-  visible: { x: 0,      opacity: 1,
-    transition: { type: 'spring', stiffness: 340, damping: 38, mass: 0.9 } },
-  exit:    { x: '100%', opacity: 0,
-    transition: { duration: 0.28, ease: [0.4, 0, 1, 1] } },
+  hidden: { x: '100%', opacity: 0 },
+  visible: {
+    x: 0, opacity: 1,
+    transition: { type: 'spring', stiffness: 340, damping: 38, mass: 0.9 }
+  },
+  exit: {
+    x: '100%', opacity: 0,
+    transition: { duration: 0.28, ease: [0.4, 0, 1, 1] }
+  },
 };
 
 const backdropVariants = {
-  hidden:  { opacity: 0 },
+  hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.22, ease: 'easeOut' } },
-  exit:    { opacity: 0, transition: { duration: 0.22, ease: 'easeIn'  } },
+  exit: { opacity: 0, transition: { duration: 0.22, ease: 'easeIn' } },
 };
 
 const navItemVariants = {
-  hidden:  { opacity: 0, x: 20 },
+  hidden: { opacity: 0, x: 20 },
   visible: (i) => ({
     opacity: 1, x: 0,
     transition: { delay: i * 0.05 + 0.06, duration: 0.28, ease: [0.22, 1, 0.36, 1] },
@@ -40,18 +44,18 @@ const navItemVariants = {
 
 /* ─── Component ───────────────────────────────────────────────────────── */
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen]       = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [isScrolled, setIsScrolled]       = useState(false);
-  const [theme, setTheme]                 = useState('light');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [theme, setTheme] = useState('light');
 
   const toggleMenu = () => setIsMenuOpen((v) => !v);
-  const closeMenu  = () => setIsMenuOpen(false);
+  const closeMenu = () => setIsMenuOpen(false);
 
   /* Theme init */
   useEffect(() => {
-    const saved    = localStorage.getItem('theme');
-    const sysDark  = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const saved = localStorage.getItem('theme');
+    const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const resolved = saved || (sysDark ? 'dark' : 'light');
     setTheme(resolved);
     if (resolved === 'dark') document.documentElement.classList.add('dark');
