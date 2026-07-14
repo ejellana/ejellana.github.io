@@ -724,48 +724,89 @@ body {
   max-width: 1600px;
 }
 
-.projects-grid {
+/* Horizontal scroller wrapper — matches certificates pattern */
+.projects-scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  /* Firefox — uses CSS variables, fully theme-aware */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  padding: 1.5rem 0;
+  margin: 0 -1rem;
+  background: transparent;
+}
+
+.projects-scroller::-webkit-scrollbar {
+  height: 6px;
+}
+
+.projects-scroller::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 999px;
+  /* Horizontal inset so the track doesn't run edge-to-edge */
+  margin: 0 2rem;
+}
+
+.projects-scroller::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  /* 1px gap between thumb and track using border trick */
+  border: 1px solid var(--scrollbar-track);
+  transition: background var(--transition-fast);
+}
+
+.projects-scroller::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* 
+  Projects track — Grid layout for proper 5×2 structure
+  Desktop: CSS Grid with 2 rows, auto columns
+  Each row container becomes a grid row
+*/
+.projects-track {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: column;
   gap: 1.8rem;
-  margin-top: 1rem;
-  padding: 1.5rem 1rem;
-  margin-left: -1rem;
-  margin-right: -1rem;
-  align-items: stretch;
+  padding: 0.5rem 1rem;
+  width: fit-content;
+  min-width: 100%;
+}
+
+/* 
+  Each row wrapper contains exactly 5 cards
+  Desktop: positioned as grid items in their respective rows
+  Mobile: will be flattened
+*/
+.projects-row {
+  display: contents;
 }
 
 .project-card {
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 320px;
   height: 100%;
   border-radius: 16px;
   overflow: hidden;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  /*
-    Resting shadow: two-layer — a crisp near shadow + soft ambient.
-    Keeps cards grounded without glowing.
-  */
   box-shadow:
     0 1px 2px var(--shadow),
     0 3px 8px var(--shadow);
-  will-change: transform;
-  /*
-    Same fix as .skill-icon-card: background-color must be here
-    so it doesn't compete with the theme-transition block.
-  */
+  scroll-snap-align: start;
   transition:
     background-color var(--transition-theme),
-    transform var(--transition-lift),
     box-shadow var(--transition-lift),
     border-color var(--transition-lift);
 }
 
 /* Hover: precise elevation — lifted card, not glowing card */
 .project-card:hover {
-  transform: translateY(-5px);
   box-shadow:
     0 0 0 1px var(--border-hover),
     0 4px 8px var(--shadow),
@@ -1291,8 +1332,11 @@ body {
 
 /* ====================== MEDIA QUERIES ====================== */
 @media (max-width: 1024px) {
-  .projects-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .project-card {
+    width: 280px;
+  }
+
+  .projects-track {
     gap: 1.4rem;
   }
 
@@ -1334,12 +1378,12 @@ body {
     flex: 0 0 250px;
   }
 
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .project-card {
+    width: 260px;
+  }
+
+  .projects-track {
     gap: 1rem;
-    padding: 1.5rem 0;
-    margin-left: 0;
-    margin-right: 0;
   }
 
   .contact-cards {
@@ -1425,66 +1469,81 @@ body {
 }
 
 @media (max-width: 600px) {
-  .projects-grid {
-    display: flex;
-    grid-template-columns: unset;
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+
+  /* ── Scrollbar ── */
+  .projects-scroller {
     scrollbar-width: none;
     -ms-overflow-style: none;
-    gap: 1rem;
-    padding: 1rem 1.5rem 2rem;
-    margin-left: 0;
-    margin-right: 0;
+    padding-bottom: 2rem;
+    /*
+      scroll-padding-left aligns each snap point to the track's
+      left padding so the first card isn't obscured on snap.
+    */
+    scroll-padding-left: 1rem;
   }
 
-  .projects-grid::-webkit-scrollbar {
+  .projects-scroller::-webkit-scrollbar {
     display: none;
-    height: 0;
   }
 
+  /*
+    2-row × N-column CSS Grid — one column = one swipeable "page".
+
+    grid-auto-flow: column fills cells top-first then right, so:
+      col 1 → card 1 (row 1),  card 2 (row 2)   ← Page 1
+      col 2 → card 3 (row 1),  card 4 (row 2)   ← Page 2
+      col 3 → card 5 (row 1),  card 6 (row 2)   ← Page 3
+      …and so on through all 13 cards.
+
+    grid-auto-columns: 82vw keeps each page at 82% of the viewport,
+    leaving a comfortable right-peek of the next page.
+  */
+  .projects-track {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: 82vw;
+    column-gap: 1.25rem;
+    row-gap: 1rem;
+    padding: 0.5rem 1rem;
+    width: auto;
+    min-width: unset;
+  }
+
+  /*
+    Restore display: contents — identical to the desktop rule.
+    This removes the .projects-row wrappers from the layout tree
+    so all 13 cards participate directly in the grid above,
+    in their exact source order. Without this, the 5-card row
+    wrappers become opaque flex containers that destroy the grid.
+  */
+  .projects-row {
+    display: contents;
+  }
+
+  /*
+    Cards fill their 82vw grid column.
+    flex: none clears the 0 0 87% sizing inherited from the
+    previous mobile rule, which has no meaning inside a grid.
+    scroll-snap-align: start causes one column-page to snap
+    into view per swipe.
+  */
   .project-card {
-    flex: 0 0 87%;
-    width: 87%;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-  }
-
-  .project-card__title {
-    font-size: 0.95rem;
-  }
-
-  .project-card__desc {
-    font-size: 0.84rem;
-  }
-
-  .contact-description {
-    font-size: clamp(1rem, 3.6vw, 1.15rem);
-  }
-
-  .contact-cards {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.7rem;
-    max-width: 220px;
-    margin: 0 auto;
-  }
-
-  .contact-card {
-    flex: 0 0 auto;
     width: 100%;
-    max-width: 220px;
-    min-height: 42px;
-    padding: 0.55rem 0.9rem;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    border-radius: 12px;
+    flex: none;
+    scroll-snap-align: start;
   }
 
-  .contact-card__icon {
-    font-size: 1rem;
+  /*
+    Replace the 1:1 square ratio with 16:9.
+    At 82vw on a 390px device (≈ 320px wide), the image height
+    becomes ≈ 180px instead of 320px — compact enough for two
+    stacked cards to fit within a standard mobile viewport height.
+    object-fit: contain (already declared on .project-card__image)
+    cleanly letterboxes any non-16:9 source image.
+  */
+  .project-card__image-wrap {
+    aspect-ratio: 9 / 9;
   }
 }
 
