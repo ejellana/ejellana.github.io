@@ -65,7 +65,7 @@ const certificatesData = [
   {
     title: "CompTIA Tech+ Certificate",
     image: certCompTiaTech,
-    id: "COMP001022950800",
+    year: "2025",
     issuer: "CompTIA",
     verifyUrl: "http://verify.CompTIA.org",
     viewUrl: certCompTiaTech
@@ -73,7 +73,7 @@ const certificatesData = [
   {
     title: "Data Analytics Essentials",
     image: certDataAnalyticsEssentials,
-    id: "aa6928fe-764a-4ce9-a6c1-7bea55406410",
+    year: "2026",
     issuer: "Cisco",
     verifyUrl: "https://www.netacad.com",
     viewUrl: certDataAnalyticsEssentials
@@ -81,7 +81,7 @@ const certificatesData = [
   {
     title: "Google Data Analytics Certificate",
     image: certGoogleDataAnalytics,
-    id: "DSG2L2G3LDYO",
+    year: "2026",
     issuer: "Google",
     verifyUrl: "https://coursera.org/verify/professional-cert/DSG2L2G3LDYO",
     viewUrl: certGoogleDataAnalytics
@@ -89,7 +89,7 @@ const certificatesData = [
   {
     title: "IBM Tools for Data Science",
     image: certIbmToolsDataScience,
-    id: "CEUJ4FG718VH",
+    year: "2026",
     issuer: "IBM",
     verifyUrl: "https://coursera.org/verify/CEUJ4FG718VH",
     viewUrl: certIbmToolsDataScience
@@ -97,7 +97,7 @@ const certificatesData = [
   {
     title: "IBM What is Data Science",
     image: certIbmWhatIsDataScience,
-    id: "MXR0L3YYSTBO",
+    year: "2025",
     issuer: "IBM",
     verifyUrl: "https://coursera.org/verify/MXR0L3YYSTBO",
     viewUrl: certIbmWhatIsDataScience
@@ -105,7 +105,7 @@ const certificatesData = [
   {
     title: "ASEAN AI Hackathon 2026 Certificate of Participation",
     image: certAseanAiHackathon,
-    id: "P2A2026AI0341",
+    year: "2026",
     issuer: "P2A & ASEAN AI Council",
     verifyUrl: "https://www.p2a.asia",
     viewUrl: certAseanAiHackathon
@@ -801,18 +801,18 @@ export default function Home() {
                       src={cert.image}
                       alt={cert.title}
                       loading="lazy"
+                      className="cert-card__image"
                       whileHover={{
-                        scale: 1.06,
+                        scale: 1.04,
                         transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
                       }}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                     />
                   </div>
                   <div className="cert-card__body">
-                    <div>
+                    <div className="cert-card__content">
                       <h3 className="cert-card__title" title={cert.title}>{cert.title}</h3>
                       <p className="cert-card__meta">
-                        ID: <span className="cert-card__id">{cert.id}</span> &bull; {cert.issuer}
+                        <span className="cert-card__year">{cert.year}</span> &bull; {cert.issuer}
                       </p>
                     </div>
                     <div className="cert-card__actions">
