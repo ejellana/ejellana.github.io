@@ -60,8 +60,12 @@ export default function Footer() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
+            <p className="footer-credit">
+              Built & Designed by <strong>Emmanuel Jacob C. Ellana</strong>
+            </p>
+
             <p className="footer-copyright">
-              © {currentYear} Emmanuel Jacob C. Ellana. All rights reserved.
+              © {currentYear} All Rights Reserved.
             </p>
           </motion.div>
         </div>
