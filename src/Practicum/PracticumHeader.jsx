@@ -5,17 +5,13 @@ import { faBars, faTimes, faSun, faMoon } from '@fortawesome/free-solid-svg-icon
 import { Link } from 'react-router-dom';
 
 const NAV_LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#certificates', label: 'Certificates' },
-  { href: '#contact', label: 'Contact' },
-  { href: '/practicum', label: 'Practicum', isRoute: true },
+  { href: '#introduction', label: 'Introduction' },
+  { href: '#company', label: 'Company' },
+  { href: '#nature', label: 'Nature' },
+  { href: '#reflection', label: 'Reflection' },
 ];
 
-const SECTION_IDS = ['home', ...NAV_LINKS.map((l) => l.href.slice(1))];
-
-
+const SECTION_IDS = ['introduction', 'company', 'nature', 'reflection'];
 
 /* ─── Framer Motion variants ──────────────────────────────────────────── */
 const drawerVariants = {
@@ -45,9 +41,9 @@ const navItemVariants = {
 };
 
 /* ─── Component ───────────────────────────────────────────────────────── */
-export default function Header() {
+export default function PracticumHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('introduction');
   const [isScrolled, setIsScrolled] = useState(false);
   const [theme, setTheme] = useState('light');
 
@@ -104,7 +100,7 @@ export default function Header() {
     <>
       <style>{`
         /* ── Header shell ── */
-        .header {
+        .practicum-header {
           position: sticky;
           top: 0;
           z-index: 1000;
@@ -117,18 +113,18 @@ export default function Header() {
             border-color  0.35s ease,
             background-color var(--transition-theme);
         }
-        .header--scrolled {
+        .practicum-header--scrolled {
           padding: 0.7rem 0;
           box-shadow: 0 4px 24px var(--shadow);
         }
-        .header .container {
+        .practicum-header .container {
           display: flex;
           justify-content: space-between;
           align-items: center;
         }
 
         /* ── Logo ── */
-        .logo a {
+        .practicum-logo a {
           color: var(--text-primary);
           text-decoration: none;
           font-size: 1.55rem;
@@ -138,10 +134,10 @@ export default function Header() {
           line-height: 1;
           transition: opacity 0.25s ease, transform 0.25s ease;
         }
-        .logo a:hover { opacity: 0.72; transform: translateY(-1px); }
+        .practicum-logo a:hover { opacity: 0.72; transform: translateY(-1px); }
 
         /* ── Desktop nav ── */
-        .nav-desktop ul {
+        .practicum-nav-desktop ul {
           display: flex;
           align-items: center;
           list-style: none;
@@ -149,7 +145,7 @@ export default function Header() {
           margin: 0;
           padding: 0;
         }
-        .nav-item a {
+        .practicum-nav-item a {
           position: relative;
           display: inline-block;
           color: var(--text-secondary);
@@ -161,12 +157,12 @@ export default function Header() {
           border-radius: 999px;
           transition: color 0.25s ease;
         }
-        .nav-item a:hover { color: var(--text-primary); }
-        .nav-item a.nav-link--active {
+        .practicum-nav-item a:hover { color: var(--text-primary); }
+        .practicum-nav-item a.practicum-nav-link--active {
           color: var(--text-primary);
           font-weight: 600;
         }
-        .nav-pill {
+        .practicum-nav-pill {
           position: absolute;
           inset: 0;
           background: var(--nav-pill-bg);
@@ -176,14 +172,14 @@ export default function Header() {
         }
 
         /* ── Shared controls (theme toggle + burger) ── */
-        .header-controls {
+        .practicum-header-controls {
           display: flex;
           align-items: center;
           gap: 0.5rem;
         }
 
         /* ── Theme toggle ── */
-        .theme-toggle {
+        .practicum-theme-toggle {
           transition:
             color        0.25s cubic-bezier(0.23, 1, 0.32, 1),
             border-color 0.25s cubic-bezier(0.23, 1, 0.32, 1),
@@ -192,7 +188,7 @@ export default function Header() {
         }
 
         /* ── Burger button ── */
-        .burger-btn {
+        .practicum-burger-btn {
           display: none;
           align-items: center;
           justify-content: center;
@@ -212,13 +208,13 @@ export default function Header() {
             box-shadow   0.25s ease,
             transform    0.25s ease;
         }
-        .burger-btn:hover {
+        .practicum-burger-btn:hover {
           color: var(--text-primary);
           border-color: var(--border-hover);
           box-shadow: 0 4px 14px var(--shadow-hover);
           transform: scale(1.05);
         }
-        .burger-icon-wrap {
+        .practicum-burger-icon-wrap {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -227,7 +223,7 @@ export default function Header() {
         }
 
         /* ── Backdrop ── */
-        .menu-backdrop {
+        .practicum-menu-backdrop {
           position: fixed;
           inset: 0;
           z-index: 1001;
@@ -237,7 +233,7 @@ export default function Header() {
         }
 
         /* ── Mobile nav drawer ── */
-        .nav-mobile {
+        .practicum-nav-mobile {
           position: fixed;
           top: 0;
           right: 0;
@@ -256,7 +252,7 @@ export default function Header() {
         }
 
         /* ── Drawer header ── */
-        .nav-mobile__header {
+        .practicum-nav-mobile__header {
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -265,7 +261,7 @@ export default function Header() {
           flex-shrink: 0;
           transition: border-color var(--transition-theme);
         }
-        .nav-mobile__logo {
+        .practicum-nav-mobile__logo {
           color: var(--text-primary);
           text-decoration: none;
           font-size: 1.45rem;
@@ -273,7 +269,7 @@ export default function Header() {
           letter-spacing: -0.3px;
           line-height: 1;
         }
-        .nav-mobile__close {
+        .practicum-nav-mobile__close {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -290,14 +286,14 @@ export default function Header() {
             border-color 0.2s ease,
             background   0.2s ease;
         }
-        .nav-mobile__close:hover {
+        .practicum-nav-mobile__close:hover {
           color: var(--text-primary);
           background: var(--bg-secondary);
           border-color: var(--border-hover);
         }
 
         /* ── Nav links list ── */
-        .mobile-menu-list {
+        .practicum-mobile-menu-list {
           list-style: none;
           padding: 0.75rem 1rem;
           margin: 0;
@@ -306,7 +302,7 @@ export default function Header() {
           flex-direction: column;
           gap: 0.25rem;
         }
-        .mobile-menu-list li a {
+        .practicum-mobile-menu-list li a {
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -323,21 +319,21 @@ export default function Header() {
             color       0.2s ease,
             padding-left 0.2s ease;
         }
-        .mobile-menu-list li a:hover {
+        .practicum-mobile-menu-list li a:hover {
           background: var(--bg-secondary);
           color: var(--text-primary);
           padding-left: 1.3rem;
         }
-        .mobile-menu-list li a.nav-link--active {
+        .practicum-mobile-menu-list li a.practicum-nav-link--active {
           background: var(--bg-secondary);
           color: var(--text-primary);
           font-weight: 600;
           border: 1px solid var(--border);
         }
-        .mobile-menu-list li a.nav-link--active .mobile-active-dot {
+        .practicum-mobile-menu-list li a.practicum-nav-link--active .practicum-mobile-active-dot {
           display: block;
         }
-        .mobile-active-dot {
+        .practicum-mobile-active-dot {
           display: none;
           width: 6px;
           height: 6px;
@@ -348,81 +344,72 @@ export default function Header() {
 
         /* ── Responsive visibility ── */
         @media (max-width: 768px) {
-          .nav-desktop  { display: none; }
+          .practicum-nav-desktop  { display: none; }
           /* On mobile, the desktop-only theme toggle hides too */
-          .header-controls .theme-toggle { display: none; }
-          .burger-btn   { display: flex; }
+          .practicum-header-controls .practicum-theme-toggle { display: none; }
+          .practicum-burger-btn   { display: flex; }
           /* Show mobile theme toggle in controls */
-          .header-controls .mobile-theme-toggle { display: flex; }
+          .practicum-header-controls .practicum-mobile-theme-toggle { display: flex; }
         }
         @media (min-width: 769px) {
-          .burger-btn              { display: none !important; }
-          .mobile-theme-toggle     { display: none !important; }
+          .practicum-burger-btn              { display: none !important; }
+          .practicum-mobile-theme-toggle     { display: none !important; }
         }
       `}</style>
 
       <motion.header
-        className={`header${isScrolled ? ' header--scrolled' : ''}`}
+        className={`practicum-header${isScrolled ? ' practicum-header--scrolled' : ''}`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
       >
         <div className="container">
           {/* Logo */}
-          <h1 className="logo">
-            <a href="#home" onClick={closeMenu}>EJ</a>
+          <h1 className="practicum-logo">
+            <a href="#hero" onClick={closeMenu}>EJ</a>
           </h1>
 
           {/* Desktop nav */}
-          <nav className="nav-desktop">
+          <nav className="practicum-nav-desktop">
             <ul>
-              {NAV_LINKS.map(({ href, label, isRoute }) => {
-                const isActive = isRoute ? false : activeSection === href.slice(1);
+              {NAV_LINKS.map(({ href, label }) => {
+                const isActive = activeSection === href.slice(1);
                 return (
-                  <li key={href} className="nav-item">
-                    {isRoute ? (
-                      <Link
-                        to={href}
-                        className={isActive ? 'nav-link--active' : ''}
-                      >
-                        {isActive && (
-                          <motion.span
-                            className="nav-pill"
-                            layoutId="nav-pill"
-                            transition={{ type: 'spring', stiffness: 420, damping: 34 }}
-                          />
-                        )}
-                        <span className="nav-link-label">{label}</span>
-                      </Link>
-                    ) : (
-                      <a
-                        href={href}
-                        onClick={closeMenu}
-                        className={isActive ? 'nav-link--active' : ''}
-                      >
-                        {isActive && (
-                          <motion.span
-                            className="nav-pill"
-                            layoutId="nav-pill"
-                            transition={{ type: 'spring', stiffness: 420, damping: 34 }}
-                          />
-                        )}
-                        <span className="nav-link-label">{label}</span>
-                      </a>
-                    )}
+                  <li key={href} className="practicum-nav-item">
+                    <a
+                      href={href}
+                      onClick={closeMenu}
+                      className={isActive ? 'practicum-nav-link--active' : ''}
+                    >
+                      {isActive && (
+                        <motion.span
+                          className="practicum-nav-pill"
+                          layoutId="practicum-nav-pill"
+                          transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                        />
+                      )}
+                      <span className="practicum-nav-link-label">{label}</span>
+                    </a>
                   </li>
                 );
               })}
+              
+              {/* Portfolio link */}
+              <li className="practicum-nav-item">
+                <Link to="/" onClick={closeMenu}>
+                  Portfolio
+                </Link>
+              </li>
             </ul>
           </nav>
 
           {/* Right-side controls:
               Desktop → theme toggle only
               Mobile  → theme toggle + burger (side-by-side) */}
-          <div className="header-controls">
+          <div className="practicum-header-controls">
             {/* Desktop theme toggle */}
             <button
-              className="theme-toggle"
+              className="practicum-theme-toggle theme-toggle"
               onClick={toggleTheme}
               aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             >
@@ -436,7 +423,7 @@ export default function Header() {
 
             {/* Mobile-only theme toggle — shown beside burger */}
             <button
-              className="theme-toggle mobile-theme-toggle"
+              className="practicum-theme-toggle practicum-mobile-theme-toggle theme-toggle"
               onClick={toggleTheme}
               aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             >
@@ -450,13 +437,13 @@ export default function Header() {
 
             {/* Burger */}
             <button
-              className="burger-btn"
+              className="practicum-burger-btn"
               onClick={toggleMenu}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
             >
               <motion.span
-                className="burger-icon-wrap"
+                className="practicum-burger-icon-wrap"
                 animate={{ rotate: isMenuOpen ? 90 : 0 }}
                 transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               >
@@ -472,7 +459,7 @@ export default function Header() {
             <>
               {/* Backdrop */}
               <motion.div
-                className="menu-backdrop"
+                className="practicum-menu-backdrop"
                 variants={backdropVariants}
                 initial="hidden"
                 animate="visible"
@@ -483,7 +470,7 @@ export default function Header() {
 
               {/* Drawer */}
               <motion.nav
-                className="nav-mobile"
+                className="practicum-nav-mobile"
                 variants={drawerVariants}
                 initial="hidden"
                 animate="visible"
@@ -491,10 +478,10 @@ export default function Header() {
                 aria-label="Mobile navigation"
               >
                 {/* Drawer header */}
-                <div className="nav-mobile__header">
-                  <a href="#home" className="nav-mobile__logo" onClick={closeMenu}>EJ</a>
+                <div className="practicum-nav-mobile__header">
+                  <a href="#hero" className="practicum-nav-mobile__logo" onClick={closeMenu}>EJ</a>
                   <button
-                    className="nav-mobile__close"
+                    className="practicum-nav-mobile__close"
                     onClick={closeMenu}
                     aria-label="Close menu"
                   >
@@ -503,9 +490,9 @@ export default function Header() {
                 </div>
 
                 {/* Nav links */}
-                <ul className="mobile-menu-list" role="list">
-                  {NAV_LINKS.map(({ href, label, isRoute }, i) => {
-                    const isActive = isRoute ? false : activeSection === href.slice(1);
+                <ul className="practicum-mobile-menu-list" role="list">
+                  {NAV_LINKS.map(({ href, label }, i) => {
+                    const isActive = activeSection === href.slice(1);
                     return (
                       <motion.li
                         key={href}
@@ -514,28 +501,30 @@ export default function Header() {
                         initial="hidden"
                         animate="visible"
                       >
-                        {isRoute ? (
-                          <Link
-                            to={href}
-                            onClick={closeMenu}
-                            className={isActive ? 'nav-link--active' : ''}
-                          >
-                            {label}
-                            <span className="mobile-active-dot" aria-hidden="true" />
-                          </Link>
-                        ) : (
-                          <a
-                            href={href}
-                            onClick={closeMenu}
-                            className={isActive ? 'nav-link--active' : ''}
-                          >
-                            {label}
-                            <span className="mobile-active-dot" aria-hidden="true" />
-                          </a>
-                        )}
+                        <a
+                          href={href}
+                          onClick={closeMenu}
+                          className={isActive ? 'practicum-nav-link--active' : ''}
+                        >
+                          {label}
+                          <span className="practicum-mobile-active-dot" aria-hidden="true" />
+                        </a>
                       </motion.li>
                     );
                   })}
+
+                  {/* Portfolio link (mobile) */}
+                  <motion.li
+                    custom={NAV_LINKS.length}
+                    variants={navItemVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <Link to="/" onClick={closeMenu}>
+                      Portfolio
+                      <span className="practicum-mobile-active-dot" aria-hidden="true" />
+                    </Link>
+                  </motion.li>
                 </ul>
 
               </motion.nav>

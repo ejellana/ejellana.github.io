@@ -1,0 +1,182 @@
+import { motion } from 'framer-motion';
+import { FiLayout, FiGitMerge, FiMessageSquare, FiFileText } from 'react-icons/fi';
+
+const cardsData = [
+  {
+    icon: FiLayout,
+    title: 'React Analytics Dashboard',
+    description: 'Designed and developed a React.js analytics dashboard to visualize B2B lead generation data with interactive charts, lead tables, company profiles, and responsive user interfaces connected to the n8n backend.',
+  },
+  {
+    icon: FiGitMerge,
+    title: 'B2B Lead Generation & n8n',
+    description: 'Developed and completed an AI-powered B2B Lead Generation workflow using n8n by integrating APIs, databases, HTTP requests, variables, and automation pipelines for lead discovery and enrichment.',
+  },
+  {
+    icon: FiMessageSquare,
+    title: 'Smicos AI Chatbot',
+    description: 'Created and documented AI chatbot workflows using the Smicos platform, including chatbot flow design, API integration, workflow testing, and technical documentation for client chatbot solutions.',
+  },
+  {
+    icon: FiFileText,
+    title: 'Technical Documentation',
+    description: 'Prepared Customer Solution Documents (CSD), User Training guides, content inventories, web scraping outputs, and website migration documentation to support software development and client projects.',
+  },
+];
+
+// Staggered fade-up animation for cards
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+export default function NatureCards() {
+  return (
+    <>
+      <style>{`
+        /* Nature Cards Grid */
+        .nature-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+          margin: 0 auto;
+          max-width: 1200px;
+        }
+
+        /* Individual Card */
+        .nature-card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 2rem 1.5rem;
+          background: var(--bg-card);
+          border: 1px solid var(--border);
+          border-radius: 18px;
+          box-shadow: 0 1px 3px var(--shadow), 0 2px 8px var(--shadow);
+          transition:
+            background-color var(--transition-theme),
+            border-color 0.3s ease,
+            box-shadow 0.3s ease,
+            transform 0.3s ease;
+        }
+
+        .nature-card:hover {
+          border-color: var(--border-hover);
+          box-shadow: 
+            0 0 0 1px var(--border-hover),
+            0 4px 8px var(--shadow),
+            0 12px 24px var(--shadow-hover);
+          transform: translateY(-5px);
+        }
+
+        /* Icon Badge */
+        .nature-card__icon-badge {
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          background: rgba(10, 10, 10, 0.06);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 18px;
+          flex-shrink: 0;
+          transition: background-color var(--transition-theme);
+        }
+
+        .dark .nature-card__icon-badge {
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nature-card__icon-badge svg {
+          width: 26px;
+          height: 26px;
+          color: var(--accent);
+          transition: color var(--transition-theme);
+        }
+
+        /* Card Title */
+        .nature-card__title {
+          font-family: "Poppins", sans-serif;
+          font-size: 1.08rem;
+          font-weight: 700;
+          color: var(--text-primary);
+          line-height: 1.3;
+          letter-spacing: -0.2px;
+          margin-bottom: 10px;
+          transition: color var(--transition-theme);
+        }
+
+        /* Card Description */
+        .nature-card__description {
+          font-size: 0.875rem;
+          font-weight: 400;
+          color: var(--text-secondary);
+          line-height: 1.6;
+          transition: color var(--transition-theme);
+        }
+
+        /* Tablet: 2 columns */
+        @media (max-width: 1024px) {
+          .nature-cards-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+          }
+        }
+
+        /* Mobile: 1 column */
+        @media (max-width: 640px) {
+          .nature-cards-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .nature-card {
+            padding: 1.75rem 1.25rem;
+          }
+        }
+      `}</style>
+
+      <motion.div
+        className="nature-cards-grid"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
+        {cardsData.map((card, index) => {
+          const Icon = card.icon;
+          return (
+            <motion.div
+              key={index}
+              className="nature-card"
+              variants={cardVariants}
+            >
+              <div className="nature-card__icon-badge">
+                <Icon />
+              </div>
+              <h3 className="nature-card__title">{card.title}</h3>
+              <p className="nature-card__description">{card.description}</p>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+    </>
+  );
+}
