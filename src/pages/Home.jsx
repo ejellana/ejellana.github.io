@@ -13,9 +13,11 @@ import {
   projectCard,
   certCard,
   socialIcon,
+  heroChild,
   slideLeft,
   slideRight,
   VIEWPORT,
+  VIEWPORT_LAZY,
 } from '../hooks/useScrollAnimation';
 
 // ── SOLID icons ────────────────────────────────────────
@@ -264,10 +266,11 @@ function SkillIconGrid({ skills, labeled = true, direction = 'left' }) {
   return (
     <motion.div
       className="skill-icons-grid"
-      variants={staggerContainer(0.05)}
+      // Faster stagger for icon grids — they're small and numerous
+      variants={staggerContainer(0.04)}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: false, amount: 0.1 }}
     >
       {skills.map((skill) => {
         const name = typeof skill === 'string' ? skill : skill.name;
@@ -279,11 +282,14 @@ function SkillIconGrid({ skills, labeled = true, direction = 'left' }) {
             className={`skill-icon-card ${labeled ? '' : 'skill-icon-card--icon-only'}`}
             variants={cardVariant}
             whileHover={{
-              y: -6,
-              scale: 1.06,
+              // Lighter lift — premium cards don't jump around
+              y: -4,
+              scale: 1.03,
+              transition: { duration: 0.3, ease: [0.25, 1, 0.5, 1] },
             }}
             whileTap={{ scale: 0.96 }}
             style={{
+              willChange: 'transform',
               '--brand-hover-border': `${brandColor}66`,
               '--brand-hover-shadow-1': `${brandColor}22`,
               '--brand-hover-shadow-2': `${brandColor}18`,
@@ -315,27 +321,27 @@ function ProfileCard({ image, alt }) {
     <motion.div
       className="profile-card"
       whileHover={{
-        y: -8,
-        scale: 1.02,
-        boxShadow: '0 34px 64px rgba(0, 0, 0, 0.14), 0 10px 28px rgba(0, 0, 0, 0.08)',
-        transition: { duration: 0.35, ease: [0.23, 1, 0.32, 1] },
+        // Only animate GPU-safe transforms — no boxShadow (triggers repaint)
+        y: -6,
+        scale: 1.015,
+        transition: { duration: 0.4, ease: [0.25, 1, 0.5, 1] },
       }}
+      style={{ willChange: 'transform' }}
     >
       <img src={image} alt={alt} className="profile-card__image" />
 
       {/* Top-right badge — programming */}
       <motion.div
         className="profile-badge profile-badge--top"
-        initial={{ opacity: 0, scale: 0.5, y: 14 }}
+        initial={{ opacity: 0, scale: 0.6, y: 12 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
         viewport={VIEWPORT}
-        transition={{ duration: 0.5, delay: 0.55, ease: [0.23, 1, 0.32, 1] }}
+        transition={{ duration: 0.55, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         whileHover={{
           y: -4,
-          rotate: -6,
-          scale: 1.1,
-          boxShadow: '0 14px 30px rgba(0, 0, 0, 0.16)',
-          transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
+          rotate: -4,
+          scale: 1.06,
+          transition: { duration: 0.3, ease: [0.25, 1, 0.5, 1] },
         }}
       >
         <span className="material-symbols-outlined">code</span>
@@ -344,16 +350,15 @@ function ProfileCard({ image, alt }) {
       {/* Bottom-left badge — data / analytics */}
       <motion.div
         className="profile-badge profile-badge--bottom"
-        initial={{ opacity: 0, scale: 0.5, y: -14 }}
+        initial={{ opacity: 0, scale: 0.6, y: -12 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
         viewport={VIEWPORT}
-        transition={{ duration: 0.5, delay: 0.68, ease: [0.23, 1, 0.32, 1] }}
+        transition={{ duration: 0.55, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
         whileHover={{
           y: -4,
-          rotate: 6,
-          scale: 1.1,
-          boxShadow: '0 14px 30px rgba(0, 0, 0, 0.16)',
-          transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
+          rotate: 4,
+          scale: 1.06,
+          transition: { duration: 0.3, ease: [0.25, 1, 0.5, 1] },
         }}
       >
         <span className="material-symbols-outlined">database</span>
@@ -363,15 +368,15 @@ function ProfileCard({ image, alt }) {
 }
 
 // Local slide-in variants for the About section's two columns.
-// (No transition baked in — ScrollReveal applies its own `delay` prop.)
+// Reduced offset (24px vs 56px) — more refined, less theatrical.
 const slideInLeft = {
-  hidden: { opacity: 0, x: -56 },
-  visible: { opacity: 1, x: 0 },
+  hidden:  { opacity: 0, x: -24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
 
 const slideInRight = {
-  hidden: { opacity: 0, x: 56 },
-  visible: { opacity: 1, x: 0 },
+  hidden:  { opacity: 0, x: 24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
 
 export default function Home() {
@@ -435,13 +440,12 @@ export default function Home() {
                   className="hero-icon-btn"
                   variants={socialIcon}
                   whileHover={{
-                    y: -6,
-                    scale: 1.05,
-                    borderColor: '#0a0a0a',
-                    boxShadow: '0 18px 38px rgba(0, 0, 0, 0.12)',
-                    transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
+                    y: -4,
+                    scale: 1.04,
+                    transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
                   }}
                   whileTap={{ scale: 0.95 }}
+                  style={{ willChange: 'transform' }}
                 >
                   <FontAwesomeIcon icon={icon} />
                 </motion.a>
@@ -454,13 +458,12 @@ export default function Home() {
                 className="hero-cv-btn"
                 variants={socialIcon}
                 whileHover={{
-                  y: -6,
-                  scale: 1.03,
-                  borderColor: '#0a0a0a',
-                  boxShadow: '0 18px 38px rgba(0, 0, 0, 0.12)',
-                  transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
+                  y: -4,
+                  scale: 1.02,
+                  transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
                 }}
                 whileTap={{ scale: 0.97 }}
+                style={{ willChange: 'transform' }}
               >
                 Download CV
               </motion.a>
@@ -540,12 +543,18 @@ export default function Home() {
 
           {/* Projects horizontal scroller — 5 columns × 2 rows */}
           <div className="projects-scroller">
+            {/*
+              VIEWPORT_LAZY (amount: 0.05) fires the stagger container as soon
+              as 5% of the track is visible — early enough that cards are
+              fully animated before the user reaches them.
+              stagger 0.09s gives each card a distinct, unhurried reveal.
+            */}
             <motion.div
               className="projects-track"
-              variants={staggerContainer(0.07)}
+              variants={staggerContainer(0.09)}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.05 }}
+              viewport={VIEWPORT_LAZY}
             >
               {(() => {
                 const projects = [
@@ -686,10 +695,11 @@ export default function Home() {
                             className="project-card"
                             variants={projectCard}
                             whileHover={{
-                              y: -10,
-                              scale: 1.02,
-                              transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
+                              y: -6,
+                              scale: 1.015,
+                              transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
                             }}
+                            style={{ willChange: 'transform' }}
                           >
                             {/* ── 1:1 image container ── */}
                             <div className="project-card__image-wrap">
@@ -735,7 +745,7 @@ export default function Home() {
                                       whileHover={{
                                         y: -3,
                                         scale: 1.1,
-                                        transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+                                        transition: { duration: 0.25, ease: [0.25, 1, 0.5, 1] },
                                       }}
                                       whileTap={{ scale: 0.92 }}
                                     >
@@ -778,12 +788,17 @@ export default function Home() {
           </ScrollReveal>
 
           <div className="certs-scroller">
+            {/*
+              Certificates use the same cardReveal variant as projects
+              for a consistent system-wide reveal language.
+              Stagger 0.09s — unhurried, each cert feels distinct.
+            */}
             <motion.div
               className="certs-track"
-              variants={staggerContainer(0.1)}
+              variants={staggerContainer(0.09)}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={VIEWPORT_LAZY}
             >
               {certificatesData.map((cert, index) => (
                 <motion.article
@@ -791,10 +806,11 @@ export default function Home() {
                   key={index}
                   variants={certCard}
                   whileHover={{
-                    y: -8,
-                    boxShadow: '0 12px 32px rgba(0,0,0,0.09), 0 20px 44px rgba(0,0,0,0.10)',
-                    transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
+                    y: -6,
+                    scale: 1.01,
+                    transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
                   }}
+                  style={{ willChange: 'transform' }}
                 >
                   <div className="cert-card__image-wrap">
                     <motion.img
@@ -803,8 +819,8 @@ export default function Home() {
                       loading="lazy"
                       className="cert-card__image"
                       whileHover={{
-                        scale: 1.04,
-                        transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                        scale: 1.03,
+                        transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
                       }}
                     />
                   </div>
@@ -821,7 +837,7 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="cert-btn cert-btn--primary"
-                        whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                        whileHover={{ y: -2, transition: { duration: 0.25, ease: [0.25, 1, 0.5, 1] } }}
                         whileTap={{ scale: 0.96 }}
                       >
                         <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>verified</span>
@@ -832,7 +848,7 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="cert-btn cert-btn--outline"
-                        whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                        whileHover={{ y: -2, transition: { duration: 0.25, ease: [0.25, 1, 0.5, 1] } }}
                         whileTap={{ scale: 0.96 }}
                       >
                         View
@@ -850,14 +866,12 @@ export default function Home() {
       <section id="contact" className="section contact">
         <div className="container">
           <div className="contact-hero">
-            <ScrollReveal variant={fadeUp}>
-            </ScrollReveal>
 
-            <ScrollReveal variant={fadeUp} delay={0.08}>
+            <ScrollReveal variant={fadeUp}>
               <h2 className="contact-title title-accent">Let's Build Something Together</h2>
             </ScrollReveal>
 
-            <ScrollReveal variant={fadeUp} delay={0.16}>
+            <ScrollReveal variant={fadeIn} delay={0.14}>
               <p className="contact-description">
                 I'm always open to new opportunities, collaborations, or just a friendly chat.
               </p>
@@ -899,20 +913,17 @@ export default function Home() {
                   className="contact-card"
                   variants={fadeUp}
                   whileHover={{
-                    y: -6,
-                    scale: 1.03,
-                    borderColor: '#0a0a0a',
-                    boxShadow: '0 18px 38px rgba(0, 0, 0, 0.12)',
-                    transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
+                    // GPU-only transforms — no borderColor/boxShadow (handled by CSS)
+                    y: -5,
+                    scale: 1.02,
+                    transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
                   }}
                   whileTap={{ scale: 0.97 }}
+                  style={{ willChange: 'transform' }}
                 >
-                  <motion.span
-                    className="contact-card__icon"
-                    whileHover={{ x: 3, transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] } }}
-                  >
+                  <span className="contact-card__icon">
                     <FontAwesomeIcon icon={icon} />
-                  </motion.span>
+                  </span>
                   <span className="contact-card__label">{label}</span>
                 </motion.a>
               ))}

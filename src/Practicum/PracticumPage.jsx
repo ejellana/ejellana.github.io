@@ -14,11 +14,12 @@ function ImagePlaceholder({ src, alt }) {
     <motion.div
       className="profile-card"
       whileHover={{
-        y: -8,
-        scale: 1.02,
-        boxShadow: '0 34px 64px rgba(0, 0, 0, 0.14), 0 10px 28px rgba(0, 0, 0, 0.08)',
-        transition: { duration: 0.35, ease: [0.23, 1, 0.32, 1] },
+        // Only animate GPU-safe transforms — no boxShadow (triggers repaint)
+        y: -6,
+        scale: 1.015,
+        transition: { duration: 0.4, ease: [0.25, 1, 0.5, 1] },
       }}
+      style={{ willChange: 'transform' }}
     >
       {src ? (
         <img
@@ -48,16 +49,15 @@ function ImagePlaceholder({ src, alt }) {
       {/* Top-right badge — programming */}
       <motion.div
         className="profile-badge profile-badge--top"
-        initial={{ opacity: 0, scale: 0.5, y: 14 }}
+        initial={{ opacity: 0, scale: 0.6, y: 12 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.5, delay: 0.55, ease: [0.23, 1, 0.32, 1] }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.55, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         whileHover={{
           y: -4,
-          rotate: -6,
-          scale: 1.1,
-          boxShadow: '0 14px 30px rgba(0, 0, 0, 0.16)',
-          transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
+          rotate: -4,
+          scale: 1.06,
+          transition: { duration: 0.3, ease: [0.25, 1, 0.5, 1] },
         }}
       >
         <span className="material-symbols-outlined">code</span>
@@ -66,16 +66,15 @@ function ImagePlaceholder({ src, alt }) {
       {/* Bottom-left badge — data / analytics */}
       <motion.div
         className="profile-badge profile-badge--bottom"
-        initial={{ opacity: 0, scale: 0.5, y: -14 }}
+        initial={{ opacity: 0, scale: 0.6, y: -12 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.5, delay: 0.68, ease: [0.23, 1, 0.32, 1] }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.55, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
         whileHover={{
           y: -4,
-          rotate: 6,
-          scale: 1.1,
-          boxShadow: '0 14px 30px rgba(0, 0, 0, 0.16)',
-          transition: { duration: 0.25, ease: [0.23, 1, 0.32, 1] },
+          rotate: 4,
+          scale: 1.06,
+          transition: { duration: 0.3, ease: [0.25, 1, 0.5, 1] },
         }}
       >
         <span className="material-symbols-outlined">database</span>
@@ -85,14 +84,15 @@ function ImagePlaceholder({ src, alt }) {
 }
 
 // Slide-in variants for content sections
+// Reduced offset (24px vs 56px) — more refined, less theatrical.
 const slideInLeft = {
-  hidden: { opacity: 0, x: -56 },
-  visible: { opacity: 1, x: 0 },
+  hidden:  { opacity: 0, x: -24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 const slideInRight = {
-  hidden: { opacity: 0, x: 56 },
-  visible: { opacity: 1, x: 0 },
+  hidden:  { opacity: 0, x: 24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 export default function PracticumPage() {
@@ -183,7 +183,7 @@ export default function PracticumPage() {
                 variants={slideInLeft}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
                 <h2 className="title-accent about-heading">Introduction</h2>
@@ -198,7 +198,7 @@ export default function PracticumPage() {
                 variants={slideInRight}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
               >
                 <ImagePlaceholder src={introImg}   alt="Introduction" />
@@ -221,7 +221,7 @@ export default function PracticumPage() {
                 variants={slideInLeft}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
                 <ImagePlaceholder src={companyImg} alt="Company" />
@@ -233,7 +233,7 @@ export default function PracticumPage() {
                 variants={slideInRight}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
               >
                 <h2 className="title-accent about-heading">Company</h2>
@@ -259,7 +259,7 @@ export default function PracticumPage() {
                 variants={slideInLeft}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
                 <h2 className="title-accent about-heading">Nature of Work</h2>
@@ -274,7 +274,7 @@ export default function PracticumPage() {
                 variants={slideInRight}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
               >
                 <ImagePlaceholder src={natureImg} alt="Nature of Work" />
@@ -286,7 +286,7 @@ export default function PracticumPage() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               style={{ marginTop: '4rem' }}
             >
@@ -317,7 +317,7 @@ export default function PracticumPage() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               style={{ maxWidth: '800px', margin: '0 auto' }}
             >
