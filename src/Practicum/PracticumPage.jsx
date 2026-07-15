@@ -4,9 +4,9 @@ import PracticumFooter from './PracticumFooter';
 import NatureCards from './NatureCards';
 
 // images
-import introImg   from '../assets/images/Practicum/introduction.jpeg';
+import introImg from '../assets/images/Practicum/introduction.jpeg';
 import companyImg from '../assets/images/Practicum/company.jpeg';
-import natureImg  from '../assets/images/Practicum/nature-of-work.jpeg';
+import natureImg from '../assets/images/Practicum/nature-of-work.jpeg';
 
 // Placeholder image component with full ProfileCard styling from Home.jsx
 function ImagePlaceholder({ src, alt }) {
@@ -86,12 +86,12 @@ function ImagePlaceholder({ src, alt }) {
 // Slide-in variants for content sections
 // Reduced offset (24px vs 56px) — more refined, less theatrical.
 const slideInLeft = {
-  hidden:  { opacity: 0, x: -24 },
+  hidden: { opacity: 0, x: -24 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 const slideInRight = {
-  hidden:  { opacity: 0, x: 24 },
+  hidden: { opacity: 0, x: 24 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
@@ -107,9 +107,9 @@ export default function PracticumPage() {
       backgroundColor: 'var(--bg-primary)',
     }}>
       <PracticumHeader />
-      
+
       <main style={{ flex: 1 }}>
-        
+
         {/* ── HERO SECTION ─────────────────────────────────────── */}
         <section className="hero" id="hero">
           <div className="container">
@@ -201,7 +201,7 @@ export default function PracticumPage() {
                 viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
               >
-                <ImagePlaceholder src={introImg}   alt="Introduction" />
+                <ImagePlaceholder src={introImg} alt="Introduction" />
               </motion.div>
 
             </div>
@@ -209,8 +209,8 @@ export default function PracticumPage() {
         </section>
 
         {/* ── COMPANY SECTION (REVERSED LAYOUT) ────────────────── */}
-        <section id="company" className="section about" style={{ 
-          background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' 
+        <section id="company" className="section about" style={{
+          background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)'
         }}>
           <div className="container">
             <div className="about-content">
@@ -247,8 +247,8 @@ export default function PracticumPage() {
         </section>
 
         {/* ── NATURE SECTION ───────────────────────────────────── */}
-        <section id="nature" className="section about" style={{ 
-          background: 'linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%)' 
+        <section id="nature" className="section about" style={{
+          background: 'linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%)'
         }}>
           <div className="container">
             <div className="about-content">
@@ -264,7 +264,7 @@ export default function PracticumPage() {
               >
                 <h2 className="title-accent about-heading">Nature of Work</h2>
                 <p className="about-paragraph">
-                  As an IT Business Analyst Intern, I was assigned to various technical and documentation-related tasks that supported the company's software development projects. My primary responsibility was developing an AI-powered B2B Lead Generation System using n8n, where I also designed and developed a React.js analytics dashboard to visualize the collected lead data after proposing the enhancement to my supervisor. Aside from my main project, I worked on Customer Solution Documents (CSD), User Training documentation, website migration, content inventory, web scraping, and Smicos chatbot workflow documentation for different client projects. These responsibilities helped me gain practical experience in software development, technical writing, data organization, and business analysis.
+                  As an IT Business Analyst Intern, I was assigned to various tasks that supported the company's digital solutions and client projects. My primary responsibility was developing an AI-powered B2B Lead Generation System and creating a dashboard to display and organize the collected business information. Aside from my main project, I also prepared technical documents, created user guides, organized website content, gathered and reviewed information for website updates, and documented chatbot workflows for different client projects. These responsibilities helped me develop my problem-solving, communication, documentation, and organizational skills while gaining valuable experience in a professional work environment.
                 </p>
               </motion.div>
 

@@ -54,72 +54,87 @@ export default function NatureCards() {
         .nature-cards-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 1.5rem;
+          gap: 1.75rem;
           margin: 0 auto;
           max-width: 1200px;
         }
 
-        /* Individual Card */
+        /* Individual Card - Premium Left-Aligned Layout */
         .nature-card {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          text-align: center;
-          padding: 2rem 1.5rem;
+          align-items: flex-start;
+          text-align: left;
+          padding: 2.5rem 2rem;
           background: var(--bg-card);
           border: 1px solid var(--border);
-          border-radius: 18px;
-          box-shadow: 0 1px 3px var(--shadow), 0 2px 8px var(--shadow);
+          border-radius: 20px;
+          height: 100%;
+          box-shadow: 
+            0 2px 4px rgba(0, 0, 0, 0.01),
+            0 10px 30px -10px rgba(0, 0, 0, 0.04);
+          will-change: transform, border-color, box-shadow;
           transition:
             background-color var(--transition-theme),
-            border-color 0.3s ease,
-            box-shadow 0.3s ease,
-            transform 0.3s ease;
+            border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+            transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .nature-card:hover {
           border-color: var(--border-hover);
           box-shadow: 
             0 0 0 1px var(--border-hover),
-            0 4px 8px var(--shadow),
-            0 12px 24px var(--shadow-hover);
-          transform: translateY(-5px);
+            0 12px 38px var(--shadow-hover);
+          transform: translateY(-4px);
         }
 
-        /* Icon Badge */
+        /* Icon Badge with Subtle Surface and Gradient */
         .nature-card__icon-badge {
-          width: 56px;
-          height: 56px;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
-          background: rgba(10, 10, 10, 0.06);
+          background: linear-gradient(135deg, rgba(10, 10, 10, 0.03) 0%, rgba(10, 10, 10, 0.06) 100%);
+          border: 1px solid rgba(10, 10, 10, 0.04);
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 18px;
+          margin-bottom: 24px;
           flex-shrink: 0;
-          transition: background-color var(--transition-theme);
+          transition: 
+            background-color var(--transition-theme),
+            border-color var(--transition-theme);
         }
 
         .dark .nature-card__icon-badge {
-          background: rgba(255, 255, 255, 0.08);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.08) 100%);
+          border-color: rgba(255, 255, 255, 0.06);
         }
 
         .nature-card__icon-badge svg {
-          width: 26px;
-          height: 26px;
+          width: 22px;
+          height: 22px;
           color: var(--accent);
           transition: color var(--transition-theme);
         }
 
-        /* Card Title */
+        .nature-card:hover .nature-card__icon-badge {
+          background: rgba(10, 10, 10, 0.08);
+        }
+
+        .dark .nature-card:hover .nature-card__icon-badge {
+          background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Card Title - SaaS Hierarchy */
         .nature-card__title {
           font-family: "Poppins", sans-serif;
-          font-size: 1.08rem;
-          font-weight: 700;
+          font-size: 1.15rem;
+          font-weight: 600;
           color: var(--text-primary);
-          line-height: 1.3;
-          letter-spacing: -0.2px;
-          margin-bottom: 10px;
+          line-height: 1.4;
+          letter-spacing: -0.01em;
+          margin-bottom: 12px;
           transition: color var(--transition-theme);
         }
 
@@ -128,7 +143,7 @@ export default function NatureCards() {
           font-size: 0.875rem;
           font-weight: 400;
           color: var(--text-secondary);
-          line-height: 1.6;
+          line-height: 1.65;
           transition: color var(--transition-theme);
         }
 
@@ -136,7 +151,7 @@ export default function NatureCards() {
         @media (max-width: 1024px) {
           .nature-cards-grid {
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
+            gap: 1.5rem;
           }
         }
 
@@ -144,11 +159,11 @@ export default function NatureCards() {
         @media (max-width: 640px) {
           .nature-cards-grid {
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 1.25rem;
           }
 
           .nature-card {
-            padding: 1.75rem 1.25rem;
+            padding: 2.25rem 1.75rem;
           }
         }
       `}</style>
