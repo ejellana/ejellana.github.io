@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA redirect trick.
+      // When GitHub Pages 404s on a deep route (e.g. /practicum),
+      // it serves THIS file. We capture the full URL, encode the path
+      // + search + hash as a query string on the root URL, then redirect
+      // to index.html. The script in index.html will decode it and restore
+      // the correct path before React Router boots.
+      (function () {
+        var segmentCount = 0; // 0 = repo deployed at root (username.github.io)
+        var l = window.location;
+        l.replace(
+          l.protocol +
+            '//' +
+            l.hostname +
+            (l.port ? ':' + l.port : '') +
+            l.pathname
+              .split('/')
+              .slice(0, 1 + segmentCount)
+              .join('/') +
+            '/?p=/' +
+            l.pathname
+              .slice(1)
+              .split('/')
+              .slice(segmentCount)
+              .join('/') +
+            (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash
+        );
+      })();
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>
