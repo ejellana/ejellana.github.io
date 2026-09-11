@@ -12,6 +12,37 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+  <!-- GitHub Pages SPA redirect restore.
+       Must run synchronously (no defer/async) before React boots.
+       Pairs with public/404.html which encodes the route as ?p=...      -->
+  <script>
+    (function () {
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect !== location.href) {
+        history.replaceState(null, null, redirect);
+      }
+    })();
+
+    // Alternative: also handle the ?p= query-param approach used in 404.html
+    (function (l) {
+      if (l.search[1] === 'p') {
+        var decoded = l.search
+          .slice(1)
+          .split('&')
+          .map(function (s) { return s.replace(/~and~/g, '&'); });
+        var path = decoded[0].replace('p=', '') || '/';
+        var query = decoded[1] ? '?' + decoded[1].replace('q=', '') : '';
+        var hash = l.hash || '';
+        window.history.replaceState(
+          null,
+          null,
+          l.pathname.slice(0, -1) + '/' + path + query + hash
+        );
+      }
+    }(window.location));
+  </script>
 </head>
 
 <body>
