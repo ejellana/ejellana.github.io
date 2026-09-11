@@ -370,12 +370,12 @@ function ProfileCard({ image, alt }) {
 // Local slide-in variants for the About section's two columns.
 // Reduced offset (24px vs 56px) — more refined, less theatrical.
 const slideInLeft = {
-  hidden:  { opacity: 0, x: -24 },
+  hidden: { opacity: 0, x: -24 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
 
 const slideInRight = {
-  hidden:  { opacity: 0, x: 24 },
+  hidden: { opacity: 0, x: 24 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
 
