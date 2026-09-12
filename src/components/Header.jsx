@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { href: '#projects', label: 'Projects' },
   { href: '#certificates', label: 'Certificates' },
   { href: '#contact', label: 'Contact' },
-  { href: '/practicum', label: 'Practicum', isRoute: true },
 ];
 
 const SECTION_IDS = ['home', ...NAV_LINKS.map((l) => l.href.slice(1))];

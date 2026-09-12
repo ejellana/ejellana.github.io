@@ -37,7 +37,7 @@ import {
 import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
 
 // About Me profile image
-import imgMe from '../assets/images/about/me2.JPEG';
+import imgMe from '../assets/images/about/me.jpg';
 
 // Project images
 import imgN8BLeadGen from '../assets/images/Projects/N8N-B2BLeadGen.png';
