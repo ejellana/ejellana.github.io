@@ -60,10 +60,18 @@ import certDataAnalyticsEssentials from '../assets/images/certificates/Data-Anal
 import certGoogleDataAnalytics from '../assets/images/certificates/Google_Data_Analytics_Cert_page-0001.jpg';
 import certIbmToolsDataScience from '../assets/images/certificates/IBM-tools-for-data-science_page-0001.jpg';
 import certIbmWhatIsDataScience from '../assets/images/certificates/IBM-what-is-data-science_page-0001.jpg';
-import certAseanAiHackathon from '../assets/images/certificates/certificate_Emmanuel_Jacob_C__Ellana_page-0001.jpg';
+import certAseanAiHackathon from '../assets/images/certificates/Agri-Chain-Emmanuel-Jacob-C.-Ellana_page-0001.jpg';
 
 
 const certificatesData = [
+  {
+    title: "Top 16 Finalist & Top 4 – Public Health Track, ASEAN AI Hackathon 2026",
+    image: certAseanAiHackathon,
+    year: "2026",
+    issuer: "P2A & ASEAN AI Council",
+    verifyUrl: "https://www.p2a.asia",
+    viewUrl: certAseanAiHackathon
+  },
   {
     title: "CompTIA Tech+ Certificate",
     image: certCompTiaTech,
@@ -73,20 +81,20 @@ const certificatesData = [
     viewUrl: certCompTiaTech
   },
   {
-    title: "Data Analytics Essentials",
-    image: certDataAnalyticsEssentials,
-    year: "2026",
-    issuer: "Cisco",
-    verifyUrl: "https://www.netacad.com",
-    viewUrl: certDataAnalyticsEssentials
-  },
-  {
     title: "Google Data Analytics Certificate",
     image: certGoogleDataAnalytics,
     year: "2026",
     issuer: "Google",
     verifyUrl: "https://coursera.org/verify/professional-cert/DSG2L2G3LDYO",
     viewUrl: certGoogleDataAnalytics
+  },
+  {
+    title: "Data Analytics Essentials",
+    image: certDataAnalyticsEssentials,
+    year: "2026",
+    issuer: "Cisco",
+    verifyUrl: "https://www.netacad.com",
+    viewUrl: certDataAnalyticsEssentials
   },
   {
     title: "IBM Tools for Data Science",
@@ -103,14 +111,6 @@ const certificatesData = [
     issuer: "IBM",
     verifyUrl: "https://coursera.org/verify/MXR0L3YYSTBO",
     viewUrl: certIbmWhatIsDataScience
-  },
-  {
-    title: "ASEAN AI Hackathon 2026 Certificate of Participation",
-    image: certAseanAiHackathon,
-    year: "2026",
-    issuer: "P2A & ASEAN AI Council",
-    verifyUrl: "https://www.p2a.asia",
-    viewUrl: certAseanAiHackathon
   }
 ];
 
