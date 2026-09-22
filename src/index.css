@@ -1210,6 +1210,231 @@ body {
   box-shadow: 0 1px 4px var(--shadow);
 }
 
+/* ====================== EXPERIENCE ====================== */
+#experience {
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+}
+
+/*
+  Vertical timeline container.
+  Uses CSS Grid: two equally-sized columns with a 1px center divider that
+  the ::before pseudo-element draws. Each .exp-entry occupies one column.
+*/
+.exp-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 3.5rem;
+  margin-top: 3.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* The continuous vertical center line */
+.exp-timeline__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--border) 8%,
+    var(--border) 92%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Each side entry: left or right column */
+.exp-entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Left entry: card on the left, dot against the center line on the right */
+.exp-entry--left {
+  grid-column: 1;
+  align-items: flex-end;
+  padding-right: 2rem;
+}
+
+/* Right entry: dot on the left edge (against center line), card follows */
+.exp-entry--right {
+  grid-column: 2;
+  align-items: flex-start;
+  padding-left: 2rem;
+  flex-direction: row;
+  gap: 0;
+}
+
+/* Connector dot — sits on the center line, vertically aligned with card top */
+.exp-entry__dot {
+  position: absolute;
+  top: 1.65rem; /* aligns with the company name baseline */
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg-primary);
+  box-shadow: 0 0 0 1px var(--border);
+  flex-shrink: 0;
+  z-index: 1;
+  transition:
+    background-color var(--transition-theme),
+    border-color var(--transition-theme),
+    box-shadow var(--transition-theme);
+}
+
+.exp-entry--left .exp-entry__dot {
+  right: calc(2rem - 6.5px); /* center over the timeline line */
+}
+
+.exp-entry--right .exp-entry__dot {
+  position: absolute;
+  left: calc(2rem - 6.5px);
+}
+
+/* ── Experience Card ── */
+.exp-card {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px var(--shadow),
+    0 3px 8px var(--shadow);
+  transition:
+    background-color var(--transition-theme),
+    border-color var(--transition-theme),
+    box-shadow var(--transition-lift);
+}
+
+.exp-card:hover {
+  box-shadow:
+    0 0 0 1px var(--border-hover),
+    0 4px 8px var(--shadow),
+    0 12px 24px var(--shadow-hover);
+  border-color: var(--border-hover);
+}
+
+/* Hackathon image — 16:9 banner at top, matching certificate card style */
+.exp-card__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-tertiary);
+  flex-shrink: 0;
+}
+
+.exp-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.exp-card:hover .exp-card__image {
+  transform: scale(1.04);
+}
+
+/* Card header — inside the card's padding */
+.exp-card__header {
+  padding: 1.35rem 1.4rem 0;
+}
+
+.exp-card__meta-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.exp-card__company {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+
+.exp-card__location {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.exp-card__date {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-top: 0.15rem;
+}
+
+.exp-card__role {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* Bullet list — internship responsibilities */
+.exp-card__bullets {
+  list-style: none;
+  padding: 0 1.4rem 1.35rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.exp-card__bullets li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Custom bullet dot — matches the site's subtle aesthetic */
+.exp-card__bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Paragraph description — hackathon card */
+.exp-card__desc {
+  padding: 0 1.4rem 1.35rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.exp-card__desc strong {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
 /* ====================== CONTACT ====================== */
 .contact-hero {
   display: flex;
@@ -1376,6 +1601,37 @@ body {
   .hero .tagline--large {
     font-size: 2rem;
     margin-bottom: 1.5rem;
+  }
+
+  /* ── Experience timeline — stack vertically on mobile ── */
+  .exp-timeline {
+    grid-template-columns: 1fr;
+    gap: 2.5rem 0;
+    padding-left: 2rem; /* shift content right to make room for left-edge line */
+  }
+
+  /* Replace center line with a left-edge line */
+  .exp-timeline__line {
+    left: 0;
+    transform: none;
+  }
+
+  .exp-entry--left,
+  .exp-entry--right {
+    grid-column: 1;
+    align-items: flex-start;
+    padding-right: 0;
+    padding-left: 0;
+    flex-direction: column;
+  }
+
+  /* Both dots sit on the left edge line */
+  .exp-entry--left .exp-entry__dot,
+  .exp-entry--right .exp-entry__dot {
+    position: absolute;
+    left: -2rem;
+    right: auto;
+    transform: translateX(calc(50% - 0.5px));
   }
 
   .certs-track {

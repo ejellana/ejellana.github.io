@@ -36,6 +36,9 @@ import {
 // CV file
 import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
 
+// Experience images
+import imgHackathon from '../assets/images/Experience/hackathon.jpg';
+
 // About Me profile image
 import imgMe from '../assets/images/about/me.jpg';
 
@@ -524,6 +527,76 @@ export default function Home() {
                 />
               </ScrollReveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Experience Section ────────────────────────────── */}
+      <section id="experience" className="section experience" aria-label="Experience">
+        <div className="container">
+          <ScrollReveal variant={fadeUp}>
+            <h2 className="skills-heading">Experience</h2>
+          </ScrollReveal>
+
+          <div className="exp-timeline" role="list">
+            {/* ── Center vertical line ── */}
+            <div className="exp-timeline__line" aria-hidden="true" />
+
+            {/* ── LEFT card — Internship ── */}
+            <ScrollReveal variant={slideLeft} delay={0.1} className="exp-entry exp-entry--left">
+              <article className="exp-card" role="listitem" aria-label="PurpleBug Inc. Internship">
+                <header className="exp-card__header">
+                  <div className="exp-card__meta-row">
+                    <div>
+                      <h3 className="exp-card__company">PurpleBug Inc.</h3>
+                      <p className="exp-card__location">Makati, Philippines</p>
+                    </div>
+                    <time className="exp-card__date" dateTime="2026-05/2026-08">May 2026 – Aug. 2026</time>
+                  </div>
+                  <p className="exp-card__role">IT Business Analyst Intern</p>
+                </header>
+                <ul className="exp-card__bullets">
+                  <li>Developed an AI-powered B2B lead generation system automating lead discovery, enrichment, qualification, and management using n8n workflow automation.</li>
+                  <li>Designed and developed an interactive analytics dashboard using React.js, Vite, Tailwind CSS, Axios, React Router, and React Leaflet to visualize lead data and insights.</li>
+                  <li>Validated and reconciled 3,000+ records, identifying data inconsistencies and ensuring accuracy, completeness, and adherence to established standards.</li>
+                  <li>Conducted User Acceptance Testing (UAT), documented system issues, verified resolutions, and supported quality assurance activities prior to deployment.</li>
+                  <li>Prepared and maintained 15+ Content Specification Documents (CSDs) to support standardized data requirements and CMS implementation projects.</li>
+                </ul>
+              </article>
+              {/* Connector dot — visually joins card to center line */}
+              <div className="exp-entry__dot" aria-hidden="true" />
+            </ScrollReveal>
+
+            {/* ── RIGHT card — Hackathon ── */}
+            <ScrollReveal variant={slideRight} delay={0.2} className="exp-entry exp-entry--right">
+              {/* Connector dot */}
+              <div className="exp-entry__dot" aria-hidden="true" />
+              <article className="exp-card" role="listitem" aria-label="ASEAN AI Hackathon 2026">
+                <div className="exp-card__image-wrap">
+                  <img
+                    src={imgHackathon}
+                    alt="ASEAN AI Hackathon 2026 team photo"
+                    loading="lazy"
+                    className="exp-card__image"
+                  />
+                </div>
+                <header className="exp-card__header">
+                  <div className="exp-card__meta-row">
+                    <div>
+                      <h3 className="exp-card__company">ASEAN AI Hackathon 2026</h3>
+                      <p className="exp-card__location">Vietnam</p>
+                    </div>
+                    <time className="exp-card__date" dateTime="2026">2026</time>
+                  </div>
+                  <p className="exp-card__role">Top 16 of 240+ Teams · Top 4 – Public Health Track</p>
+                </header>
+                <p className="exp-card__desc">
+                  Recognized as one of the Top 16 teams out of 240+ participating teams at the ASEAN AI Hackathon 2026 held in Vietnam.
+                  Ranked Top 4 in the Public Health Track for our proposed solution, <strong>GenesisAI</strong>, focused on improving animal disease traceability and protecting public health.
+                  The project aimed to provide a more reliable and transparent way to monitor animal health and movement within the food supply chain.
+                </p>
+              </article>
+            </ScrollReveal>
           </div>
         </div>
       </section>
