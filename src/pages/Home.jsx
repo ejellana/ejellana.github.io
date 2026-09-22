@@ -588,8 +588,13 @@ export default function Home() {
                     </div>
                     <time className="exp-card__date" dateTime="2026">2026</time>
                   </div>
-                  <p className="exp-card__role">Top 16 of 240+ Teams · Top 4 – Public Health Track</p>
+                  <p className="exp-card__role">International Hackathon Participant</p>
                 </header>
+                {/* Achievement badges — pill tags that make achievements pop */}
+                <div className="exp-card__badges" aria-label="Achievements">
+                  <span className="exp-badge"> Top 16 of 240+ Teams</span>
+                  <span className="exp-badge"> Top 4 – Public Health Track</span>
+                </div>
                 <p className="exp-card__desc">
                   Recognized as one of the Top 16 teams out of 240+ participating teams at the ASEAN AI Hackathon 2026 held in Vietnam.
                   Ranked Top 4 in the Public Health Track for our proposed solution, <strong>GenesisAI</strong>, focused on improving animal disease traceability and protecting public health.
