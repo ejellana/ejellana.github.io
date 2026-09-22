@@ -263,6 +263,9 @@ body {
   display: flex;
   align-items: center;
   min-height: 90vh;
+  /* Padding ensures the card + badge chips never touch the section divider below */
+  padding-top: 2rem;
+  padding-bottom: 3rem;
   border-top: none;
 }
 
@@ -498,6 +501,7 @@ body {
   aspect-ratio: 4 / 5;
   padding: 14px;
   border-radius: 28px;
+  overflow: hidden;   /* ← prevents image from bleeding outside rounded card */
   background: linear-gradient(160deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
   border: 1px solid var(--border);
   box-shadow: 0 24px 54px var(--shadow), 0 8px 22px var(--shadow);
@@ -523,12 +527,13 @@ body {
 }
 
 .profile-card__image {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;        /* ← fill the padded inner area absolutely */
+  inset: 14px;               /* respect the card's 14px padding */
+  width: calc(100% - 28px);
+  height: calc(100% - 28px);
   border-radius: 18px;
   object-fit: cover;
-  object-position: center;
+  object-position: center top; /* favour the face when cropped */
   display: block;
 }
 
@@ -555,14 +560,20 @@ body {
   font-size: 26px;
 }
 
+/*
+  Badges are positioned inside the card boundary (card has overflow:hidden).
+  Using inset positive values so they sit in the card corners visually.
+  These values apply at all breakpoints; mobile overrides below further inset them
+  to keep them from being clipped at smaller card sizes.
+*/
 .profile-badge--top {
-  top: -16px;
-  right: -16px;
+  top: 10px;
+  right: 10px;
 }
 
 .profile-badge--bottom {
-  bottom: -16px;
-  left: -16px;
+  bottom: 10px;
+  left: 10px;
 }
 
 /* ====================== SKILLS ====================== */
@@ -1735,6 +1746,14 @@ body {
     font-size: 3.2rem;
   }
 
+  /* ── Hero: add breathing room below the sticky header ── */
+  .hero {
+    padding-top: 3.5rem;    /* gap between navbar and "Hello," heading */
+    padding-bottom: 4.5rem; /* generous clearance so card doesn't touch section divider */
+    min-height: auto;       /* let content drive height on small screens */
+    align-items: flex-start;
+  }
+
   /* ── Hero two-column — stack vertically on mobile ── */
   .hero-layout {
     flex-direction: column; /* text first, image below on mobile */
@@ -1748,11 +1767,14 @@ body {
     width: 100%;
   }
 
+  /* Image col: wider than before so the card fills the screen nicely */
   .hero-image-col {
     flex: none;
     width: 100%;
-    max-width: 300px;
+    max-width: 320px; /* slightly wider than the old 300px */
     margin: 0 auto;
+    /* extra horizontal padding so the protruding badges don't clip */
+    padding: 0 1rem;
   }
 
   .hero-identity {
@@ -1888,14 +1910,15 @@ body {
     font-size: 22px;
   }
 
+  /* Badges pulled inside card boundary — card now has overflow:hidden */
   .profile-badge--top {
-    top: -12px;
-    right: -12px;
+    top: 10px;
+    right: 10px;
   }
 
   .profile-badge--bottom {
-    bottom: -12px;
-    left: -12px;
+    bottom: 10px;
+    left: 10px;
   }
 
   .hero-icon-btn {
@@ -2074,6 +2097,16 @@ body {
 }
 
 @media (max-width: 480px) {
+  /* More generous top breathing room on small phones */
+  .hero {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .hero h2 {
+    font-size: 1.9rem; /* "Hello," — slightly smaller on tiny screens */
+  }
+
   .hero h1 {
     font-size: clamp(2.4rem, 12vw, 3.2rem);
     letter-spacing: -0.8px;
@@ -2094,6 +2127,22 @@ body {
     margin: 0.5rem;
   }
 
+  .hero-icon-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+
+  .hero-cv-btn {
+    height: 48px;
+    font-size: 0.95rem;
+    padding: 0 1.4rem;
+  }
+
+  .hero-actions {
+    gap: 0.75rem;
+  }
+
   .skill-icon-card {
     width: 72px;
   }
@@ -2107,6 +2156,7 @@ body {
     font-size: 0.68rem;
   }
 
+  /* Profile card: cap size on tiny screens, keep overflow:hidden from base */
   .profile-card {
     max-width: 260px;
   }
@@ -2121,14 +2171,17 @@ body {
     font-size: 20px;
   }
 
+  /* Badges stay outside the card (position:absolute on .profile-card which
+     now has overflow:hidden). Move them inside the card boundary so they
+     aren't clipped — pull them inward instead of letting them hang outside */
   .profile-badge--top {
-    top: -10px;
-    right: -10px;
+    top: 8px;
+    right: 8px;
   }
 
   .profile-badge--bottom {
-    bottom: -10px;
-    left: -10px;
+    bottom: 8px;
+    left: 8px;
   }
 }
 
