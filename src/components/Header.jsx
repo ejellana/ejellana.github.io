@@ -78,7 +78,13 @@ export default function Header() {
       if (!el) return;
       const o = new IntersectionObserver(
         ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
-        { threshold: 0.3, rootMargin: '-60px 0px -40% 0px' }
+        // threshold: 0 fires as soon as ANY pixel of the section enters the
+        // viewport window defined by rootMargin.
+        // rootMargin: top offset skips the sticky header (≈72px); bottom
+        // offset keeps only the upper portion of the viewport active so
+        // tall sections (like Projects with horizontal scroll) still
+        // trigger correctly.
+        { threshold: 0, rootMargin: '-72px 0px -55% 0px' }
       );
       o.observe(el);
       obs.push(o);

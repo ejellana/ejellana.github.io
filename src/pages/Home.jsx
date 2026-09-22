@@ -40,7 +40,7 @@ import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
 import imgHackathon from '../assets/images/Experience/hackathon.jpg';
 
 // About Me profile image
-import imgMe from '../assets/images/about/me.jpg';
+import imgMe from '../assets/images/home/me.jpg';
 
 // Project images
 import imgN8BLeadGen from '../assets/images/Projects/N8N-B2BLeadGen.png';
@@ -434,9 +434,7 @@ export default function Home() {
                 viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
               >
-                <span className="hero-identity__item">Mapúa MCL</span>
-                <span className="hero-identity__sep" aria-hidden="true">·</span>
-                <span className="hero-identity__item">BSCS – Data Science & Analytics</span>
+                <span className="hero-identity__item">Mapúa MCL - BSCS - Data Science & Analytics</span>
               </motion.div>
 
               {/* Action buttons — social icons + CV download, staggered pop-in */}
@@ -652,237 +650,202 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* Projects horizontal scroller — 5 columns × 2 rows */}
-          <div className="projects-scroller">
-            {/*
-              VIEWPORT_LAZY (amount: 0.05) fires the stagger container as soon
-              as 5% of the track is visible — early enough that cards are
-              fully animated before the user reaches them.
-              stagger 0.09s gives each card a distinct, unhurried reveal.
-            */}
+          {/* Mobile: horizontal-scroll wrapper (display:contents on desktop — no layout impact) */}
+          <div className="projects-mobile-scroller">
+            {/* Projects CSS Grid — 3 col desktop / 2 col tablet / 2×N horiz scroll mobile */}
             <motion.div
               className="projects-track"
-              variants={staggerContainer(0.09)}
+              variants={staggerContainer(0.07)}
               initial="hidden"
               whileInView="visible"
               viewport={VIEWPORT_LAZY}
             >
-              {(() => {
-                const projects = [
-                  {
-                    img: imgN8BLeadGen,
-                    alt: "PhilLeads: B2B Lead Gen",
-                    title: "PhilLeads: B2B Lead Gen",
-                    year: "2026",
-                    desc: "An AI-powered system that automates B2B lead discovery using intelligent ETL pipelines and a comprehensive data analytics dashboard.",
-                    techStack: ["N8N", "React", "Leaflet"],
-                    projectUrl: "https://github.com/ejellana/B2B-LeadGen",
-                  },
-                  {
-                    img: imgPurpleBugStore,
-                    alt: "PurpleBug Store",
-                    title: "PurpleBug Store",
-                    year: "2026",
-                    desc: "An e-commerce platform for the Purple Bug brand, designed to showcase and sell the latest products with a modern, user-friendly interface.",
-                    techStack: ["Vue", "Laravel"],
-                    projectUrl: "https://github.com/ejellana/Ellana_EmmanuelJacob_Exam",
-                  },
-                  {
-                    img: imgAnimalTraceability,
-                    alt: "Animal Disease Traceability System",
-                    title: "Animal Disease Traceability",
-                    year: "2026",
-                    desc: "A secure blockchain and Data Analytics framework built to provide tamper-proof livestock disease tracking.",
-                    techStack: ["React", "Go", "Blockchain"],
-                    projectUrl: "https://github.com/dsmbrnLois/Thesis",
-                  },
-                  {
-                    img: imgParkPeek,
-                    alt: "ParkPeek",
-                    title: "ParkPeek",
-                    year: "2025",
-                    desc: "A mobile parking app featuring peak-volume prediction powered by clustering and time-series analysis.",
-                    techStack: ["React", "React Native", "ML"],
-                    projectUrl: "https://github.com/dsmbrnLois/ParkPeek_Admin-V",
-                  },
-                  {
-                    img: imgHeartDisease,
-                    alt: "Heart Disease Prediction",
-                    title: "Heart Disease Prediction",
-                    year: "2025",
-                    desc: "An AI system utilizing neural networks to predict patient heart disease risk via web and mobile apps.",
-                    techStack: ["React", "Kotlin", "ML"],
-                    projectUrl: "https://github.com/ejellana/Heart-RiskDetection",
-                  },
-                  {
-                    img: imgMushroom,
-                    alt: "Mushroom Dataset",
-                    title: "Mushroom Dataset",
-                    year: "2025",
-                    desc: "A data mining project utilizing Information Gain to optimize decision tree classifications.",
-                    techStack: ["Clustering", "ML"],
-                    projectUrl: "https://canva.link/zj1p3e41qhgb1w5",
-                  },
-                  {
-                    img: imgDineDash,
-                    alt: "DineDash",
-                    title: "DineDash",
-                    year: "2024",
-                    desc: "A full-stack food delivery platform featuring order tracking and a comprehensive admin dashboard.",
-                    techStack: ["ASP.NET"],
-                    projectUrl: "https://github.com/abc1dee/IT114L-FinalProject-BurgerShop",
-                  },
-                  {
-                    img: imgTwitterClone,
-                    alt: "Twitter Clone",
-                    title: "Twitter Clone",
-                    year: "2024",
-                    desc: "A full-stack twitter clone with real-time updates, user authentication, and post management.",
-                    techStack: ["HTML", "CSS", "JavaScript"],
-                    projectUrl: "https://github.com/ejellana/Twitter-Clone",
-                  },
-                  {
-                    img: imgPAWS,
-                    alt: "PAWS",
-                    title: "PAWS",
-                    year: "2024",
-                    desc: "A platform empowering animal rehabilitation centers by simplifying volunteer management and care initiatives.",
-                    techStack: ["ASP.NET"],
-                    projectUrl: "https://github.com/ejellana/PAWS-Animal-Rehabilitation-Center",
-                  },
-                  {
-                    img: imgCommuteSync,
-                    alt: "CommuteSync",
-                    title: "CommuteSync",
-                    year: "2023",
-                    desc: "A smart transit prototype offering real-time routes, ride-hailing integration, and seat reservations.",
-                    techStack: ["Canva"],
-                    projectUrl: "https://canva.link/jmbpa0ygorsr2ou",
-                  },
-                  {
-                    img: imgJeepneyRush,
-                    alt: "JeepneyRush",
-                    title: "JeepneyRush",
-                    year: "2023",
-                    desc: "A top-down C# survival game where players transport passengers through a zombie apocalypse.",
-                    techStack: ["C#"],
-                    projectUrl: "https://github.com/ejellana/Jeepney-Rush-Zombie-Escape",
-                  },
-                  {
-                    img: imgMerchQuest,
-                    alt: "MerchQuest",
-                    title: "MerchQuest",
-                    year: "2023",
-                    desc: "A UI/UX prototype for a virtual assistant that streamlines shopping through personalized recommendations.",
-                    techStack: ["Canva"],
-                    projectUrl: "https://canva.link/xcaqka7jx2k5vtk",
-                  },
-                  {
-                    img: imgFourPics1Word,
-                    alt: "4Pics1Word",
-                    title: "4Pics1Word",
-                    year: "2022",
-                    desc: "A Python Tkinter recreation of the classic puzzle game built with OOP principles.",
-                    techStack: ["Python"],
-                    projectUrl: null,
-                  },
-                ];
+              {[
+                {
+                  img: imgN8BLeadGen,
+                  alt: "PhilLeads: B2B Lead Gen",
+                  title: "PhilLeads: B2B Lead Gen",
+                  year: "2026",
+                  desc: "An AI-powered system that automates B2B lead discovery using intelligent ETL pipelines and a comprehensive data analytics dashboard.",
+                  techStack: ["N8N", "React", "Leaflet"],
+                  projectUrl: "https://github.com/ejellana/B2B-LeadGen",
+                },
+                {
+                  img: imgPurpleBugStore,
+                  alt: "PurpleBug Store",
+                  title: "PurpleBug Store",
+                  year: "2026",
+                  desc: "An e-commerce platform for the Purple Bug brand, designed to showcase and sell the latest products with a modern, user-friendly interface.",
+                  techStack: ["Vue", "Laravel"],
+                  projectUrl: "https://github.com/ejellana/Ellana_EmmanuelJacob_Exam",
+                },
+                {
+                  img: imgAnimalTraceability,
+                  alt: "Animal Disease Traceability System",
+                  title: "Animal Disease Traceability",
+                  year: "2026",
+                  desc: "A secure blockchain and Data Analytics framework built to provide tamper-proof livestock disease tracking.",
+                  techStack: ["React", "Go", "Blockchain"],
+                  projectUrl: "https://github.com/dsmbrnLois/Thesis",
+                },
+                {
+                  img: imgParkPeek,
+                  alt: "ParkPeek",
+                  title: "ParkPeek",
+                  year: "2025",
+                  desc: "A mobile parking app featuring peak-volume prediction powered by clustering and time-series analysis.",
+                  techStack: ["React", "React Native", "ML"],
+                  projectUrl: "https://github.com/dsmbrnLois/ParkPeek_Admin-V",
+                },
+                {
+                  img: imgHeartDisease,
+                  alt: "Heart Disease Prediction",
+                  title: "Heart Disease Prediction",
+                  year: "2025",
+                  desc: "An AI system utilizing neural networks to predict patient heart disease risk via web and mobile apps.",
+                  techStack: ["React", "Kotlin", "ML"],
+                  projectUrl: "https://github.com/ejellana/Heart-RiskDetection",
+                },
+                {
+                  img: imgMushroom,
+                  alt: "Mushroom Dataset",
+                  title: "Mushroom Dataset",
+                  year: "2025",
+                  desc: "A data mining project utilizing Information Gain to optimize decision tree classifications.",
+                  techStack: ["Clustering", "ML"],
+                  projectUrl: "https://canva.link/zj1p3e41qhgb1w5",
+                },
+                {
+                  img: imgDineDash,
+                  alt: "DineDash",
+                  title: "DineDash",
+                  year: "2024",
+                  desc: "A full-stack food delivery platform featuring order tracking and a comprehensive admin dashboard.",
+                  techStack: ["ASP.NET"],
+                  projectUrl: "https://github.com/abc1dee/IT114L-FinalProject-BurgerShop",
+                },
+                {
+                  img: imgTwitterClone,
+                  alt: "Twitter Clone",
+                  title: "Twitter Clone",
+                  year: "2024",
+                  desc: "A full-stack twitter clone with real-time updates, user authentication, and post management.",
+                  techStack: ["HTML", "CSS", "JavaScript"],
+                  projectUrl: "https://github.com/ejellana/Twitter-Clone",
+                },
+                {
+                  img: imgPAWS,
+                  alt: "PAWS",
+                  title: "PAWS",
+                  year: "2024",
+                  desc: "A platform empowering animal rehabilitation centers by simplifying volunteer management and care initiatives.",
+                  techStack: ["ASP.NET"],
+                  projectUrl: "https://github.com/ejellana/PAWS-Animal-Rehabilitation-Center",
+                },
 
-                // Split into rows of 5 for desktop (rows side-by-side in horizontal track)
-                // Mobile will flatten this automatically via CSS
-                const cardsPerRow = 5;
-                const rows = [];
-                for (let i = 0; i < projects.length; i += cardsPerRow) {
-                  rows.push(projects.slice(i, i + cardsPerRow));
-                }
+                {
+                  img: imgJeepneyRush,
+                  alt: "JeepneyRush",
+                  title: "JeepneyRush",
+                  year: "2023",
+                  desc: "A top-down C# survival game where players transport passengers through a zombie apocalypse.",
+                  techStack: ["C#"],
+                  projectUrl: "https://github.com/ejellana/Jeepney-Rush-Zombie-Escape",
+                },
+                {
+                  img: imgMerchQuest,
+                  alt: "MerchQuest",
+                  title: "MerchQuest",
+                  year: "2023",
+                  desc: "A UI/UX prototype for a virtual assistant that streamlines shopping through personalized recommendations.",
+                  techStack: ["Canva"],
+                  projectUrl: "https://canva.link/xcaqka7jx2k5vtk",
+                },
+                {
+                  img: imgFourPics1Word,
+                  alt: "4Pics1Word",
+                  title: "4Pics1Word",
+                  year: "2022",
+                  desc: "A Python Tkinter recreation of the classic puzzle game built with OOP principles.",
+                  techStack: ["Python"],
+                  projectUrl: null,
+                },
+              ].map((project) => (
+                <motion.div
+                  key={project.title}
+                  className="project-card"
+                  variants={projectCard}
+                  whileHover={{
+                    y: -6,
+                    transition: { duration: 0.3, ease: [0.25, 1, 0.5, 1] },
+                  }}
+                  style={{ willChange: 'transform' }}
+                >
+                  {/* ── Image with overlay gradient ── */}
+                  <div className="project-card__image-wrap">
+                    <img
+                      src={project.img}
+                      alt={project.alt}
+                      loading="lazy"
+                      className="project-card__image"
+                    />
+                    <div className="project-card__image-overlay" aria-hidden="true" />
+                  </div>
 
-                return (
-                  <>
-                    {rows.map((row, rowIndex) => (
-                      <div key={`row-${rowIndex}`} className="projects-row">
-                        {row.map((project) => (
-                          <motion.div
-                            key={project.title}
-                            className="project-card"
-                            variants={projectCard}
+                  {/* ── Info panel ── */}
+                  <div className="project-card__info">
+                    <div className="project-card__row">
+                      <h3 className="project-card__title">{project.title}</h3>
+                      <span className="project-card__year">{project.year}</span>
+                    </div>
+
+                    <p className="project-card__desc">{project.desc}</p>
+
+                    {/* Tech Stack Badges + View Link Row */}
+                    <div className="project-card__footer">
+                      {project.techStack && project.techStack.length > 0 && (
+                        <div className="project-card__tech-stack">
+                          {project.techStack.map((tech) => (
+                            <span key={tech} className="tech-badge">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="project-card__share-wrap">
+                        {project.projectUrl ? (
+                          <motion.a
+                            href={project.projectUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`View ${project.title} repository`}
+                            className="project-card__share"
                             whileHover={{
-                              y: -6,
-                              scale: 1.015,
-                              transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
+                              y: -3,
+                              scale: 1.1,
+                              transition: { duration: 0.25, ease: [0.25, 1, 0.5, 1] },
                             }}
-                            style={{ willChange: 'transform' }}
+                            whileTap={{ scale: 0.92 }}
                           >
-                            {/* ── 1:1 image container ── */}
-                            <div className="project-card__image-wrap">
-                              <img
-                                src={project.img}
-                                alt={project.alt}
-                                loading="lazy"
-                                className="project-card__image"
-                              />
-                            </div>
-
-                            {/* ── Info panel: title + year, description, tech stack + share icon ── */}
-                            <div className="project-card__info">
-                              <div className="project-card__row">
-                                <h3 className="project-card__title">{project.title}</h3>
-                                <span className="project-card__year">{project.year}</span>
-                              </div>
-
-                              <p className="project-card__desc">{project.desc}</p>
-
-                              {/* Tech Stack Badges + Share Button Row */}
-                              <div className="project-card__footer">
-                                {/* Tech Stack Badges */}
-                                {project.techStack && project.techStack.length > 0 && (
-                                  <div className="project-card__tech-stack">
-                                    {project.techStack.map((tech) => (
-                                      <span key={tech} className="tech-badge">
-                                        {tech}
-                                      </span>
-                                    ))}
-                                  </div>
-                                )}
-
-                                {/* Share/Link Button */}
-                                <div className="project-card__share-wrap">
-                                  {project.projectUrl ? (
-                                    <motion.a
-                                      href={project.projectUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      aria-label={`View ${project.title} repository`}
-                                      className="project-card__share"
-                                      whileHover={{
-                                        y: -3,
-                                        scale: 1.1,
-                                        transition: { duration: 0.25, ease: [0.25, 1, 0.5, 1] },
-                                      }}
-                                      whileTap={{ scale: 0.92 }}
-                                    >
-                                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                                    </motion.a>
-                                  ) : (
-                                    <span
-                                      className="project-card__share project-card__share--disabled"
-                                      aria-label="No repository available"
-                                      title="No repository available"
-                                    >
-                                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
-                        ))}
+                            <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                          </motion.a>
+                        ) : (
+                          <span
+                            className="project-card__share project-card__share--disabled"
+                            aria-label="No repository available"
+                            title="No repository available"
+                          >
+                            <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                          </span>
+                        )}
                       </div>
-                    ))}
-                  </>
-                );
-              })()}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
-          </div>
+          </div>{/* end .projects-mobile-scroller */}
         </div>
       </section>
 

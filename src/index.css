@@ -759,109 +759,81 @@ body {
 .projects-subtitle {
   text-align: center;
   color: var(--text-secondary);
-  margin: -0.5rem 0 2.5rem;
+  margin: -0.5rem auto 2.5rem;
+  max-width: 700px;
   font-size: 1.15rem;
   font-weight: 400;
+  line-height: 1.6;
 }
 
 .projects-container {
-  max-width: 1600px;
-}
-
-/* Horizontal scroller wrapper — matches certificates pattern */
-.projects-scroller {
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  /* Firefox — uses CSS variables, fully theme-aware */
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-  padding: 1.5rem 0;
-  margin: 0 -1rem;
-  background: transparent;
-}
-
-.projects-scroller::-webkit-scrollbar {
-  height: 6px;
-}
-
-.projects-scroller::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-  border-radius: 999px;
-  /* Horizontal inset so the track doesn't run edge-to-edge */
-  margin: 0 2rem;
-}
-
-.projects-scroller::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 999px;
-  /* 1px gap between thumb and track using border trick */
-  border: 1px solid var(--scrollbar-track);
-  transition: background var(--transition-fast);
-}
-
-.projects-scroller::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-}
-
-/* 
-  Projects track — Grid layout for proper 5×2 structure
-  Desktop: CSS Grid with 2 rows, auto columns
-  Each row container becomes a grid row
+  max-width: 1280px;
+}/*
+  Mobile scroller wrapper — transparent on desktop (display: contents
+  means it contributes no box to the layout, cards flow into the
+  parent grid as if it didn't exist).
+  On mobile (≤767px) this becomes the horizontal scroll container.
 */
-.projects-track {
-  display: grid;
-  grid-template-rows: repeat(2, auto);
-  grid-auto-flow: column;
-  gap: 1.8rem;
-  padding: 0.5rem 1rem;
-  width: fit-content;
-  min-width: 100%;
-}
-
-/* 
-  Each row wrapper contains exactly 5 cards
-  Desktop: positioned as grid items in their respective rows
-  Mobile: will be flattened
-*/
-.projects-row {
+.projects-mobile-scroller {
   display: contents;
 }
 
+
+/*
+  Projects grid — 3 columns on desktop, responsive via media queries.
+  No horizontal scroll. Cards flow naturally into rows.
+*/
+.projects-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+/* ── Project Card — dark glassmorphism ── */
 .project-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 320px;
-  height: 100%;
   border-radius: 16px;
   overflow: hidden;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow:
     0 1px 2px var(--shadow),
     0 3px 8px var(--shadow);
-  scroll-snap-align: start;
+  /* Match cert-card transition exactly */
   transition:
     background-color var(--transition-theme),
-    box-shadow var(--transition-lift),
-    border-color var(--transition-lift);
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color var(--transition-fast);
+  will-change: transform;
 }
 
-/* Hover: precise elevation — lifted card, not glowing card */
+/* Light mode: use the site's card var so it doesn't look broken on light bg */
+:root:not(.dark) .project-card {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+/* Hover — matches cert-card:hover exactly */
 .project-card:hover {
+  transform: translateY(-6px);
   box-shadow:
     0 0 0 1px var(--border-hover),
     0 4px 8px var(--shadow),
-    0 12px 24px var(--shadow-hover);
+    0 12px 28px var(--shadow-hover);
   border-color: var(--border-hover);
 }
 
+/* ── Image area ── */
 .project-card__image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 200px;
   overflow: hidden;
   background: var(--bg-tertiary);
   flex-shrink: 0;
@@ -872,23 +844,35 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .project-card:hover .project-card__image {
-  transform: scale(1.06);
+  transform: scale(1.03);
 }
 
+/* Gradient overlay — blends image into the dark card body */
+.project-card__image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, rgba(0, 0, 0, 0.42));
+  pointer-events: none;
+}
+
+/* ── Info panel ── */
 .project-card__info {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 0.5rem;
-  padding: 1.1rem 1.2rem 1.15rem;
-  border-top: 1px solid var(--border);
-  background: var(--bg-card);
+  gap: 0.55rem;
+  padding: 1.1rem 1.2rem 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+:root:not(.dark) .project-card__info {
+  border-top-color: var(--border);
 }
 
 .project-card__row {
@@ -899,7 +883,7 @@ body {
 }
 
 .project-card__title {
-  font-size: 1.02rem;
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.15px;
@@ -918,7 +902,7 @@ body {
 .project-card__desc {
   font-size: 0.86rem;
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--text-secondary);
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -926,21 +910,21 @@ body {
   overflow: hidden;
 }
 
-/* Footer row: Tech Stack + Share Button aligned horizontally */
+/* Footer row: Tech Stack + View Link */
 .project-card__footer {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 0.75rem;
   margin-top: auto;
-  padding-top: 0.6rem;
+  padding-top: 0.75rem;
 }
 
 /* Tech Stack Badges */
 .project-card__tech-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.35rem;
   flex: 1;
   align-items: flex-end;
   min-width: 0;
@@ -949,26 +933,34 @@ body {
 .tech-badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.65rem;
-  font-size: 0.72rem;
+  padding: 2px 10px;
+  font-size: 0.7rem;
   font-weight: 500;
-  color: var(--text-secondary);
+  color: var(--accent);
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
   white-space: nowrap;
   transition:
     background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    border-color var(--transition-fast);
+}
+
+:root:not(.dark) .tech-badge {
+  border-color: rgba(0, 0, 0, 0.18);
 }
 
 .tech-badge:hover {
-  background: var(--bg-secondary);
-  border-color: var(--border-hover);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
+:root:not(.dark) .tech-badge:hover {
+  background: var(--bg-secondary);
+  border-color: var(--border-hover);
+}
+
+/* Share icon button */
 .project-card__share-wrap {
   display: flex;
   flex-shrink: 0;
@@ -1003,7 +995,7 @@ body {
   box-shadow: 0 8px 20px var(--shadow-hover);
 }
 
-/* Disabled link state */
+/* Disabled state */
 .project-card__share--disabled {
   opacity: 0.4;
   cursor: not-allowed;
@@ -1713,12 +1705,10 @@ body {
 
 /* ====================== MEDIA QUERIES ====================== */
 @media (max-width: 1024px) {
-  .project-card {
-    width: 280px;
-  }
-
+  /* Projects: switch to 2-column grid on tablet */
   .projects-track {
-    gap: 1.4rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 
   .skills-categories {
@@ -1823,18 +1813,20 @@ body {
     padding: 0 1rem;
   }
 
+  /* Align certs first card with page content — same padding as projects scroller */
+  .certs-scroller {
+    box-sizing: border-box;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    scroll-padding-left: 1.5rem;
+  }
+
   .cert-card {
     flex: 0 0 300px;
     min-width: 300px;
   }
 
-  .project-card {
-    width: 260px;
-  }
 
-  .projects-track {
-    gap: 1rem;
-  }
 
   .contact-cards {
     gap: 1rem;
@@ -1918,84 +1910,120 @@ body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
 
-  /* ── Scrollbar ── */
-  .projects-scroller {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding-bottom: 2rem;
-    /*
-      scroll-padding-left aligns each snap point to the track's
-      left padding so the first card isn't obscured on snap.
-    */
-    scroll-padding-left: 1rem;
+  /* ── Projects mobile: horizontal 2×N scroll ── */
+
+  /* Scrollbar — identical values to .certs-scroller */
+  .projects-mobile-scroller {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 1.5rem;
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    margin: 0 -1rem;
+    /* 1.5rem matches the global .container padding so first card
+       aligns with the rest of the page content */
+    padding: 0.75rem 1.5rem 1.25rem 1.5rem;
   }
 
-  .projects-scroller::-webkit-scrollbar {
-    display: none;
+  .projects-mobile-scroller::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .projects-mobile-scroller::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 999px;
+    margin: 0 2rem;
+  }
+
+  .projects-mobile-scroller::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+    border: 1px solid var(--scrollbar-track);
+    transition: background var(--transition-fast);
+  }
+
+  .projects-mobile-scroller::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
   }
 
   /*
-    2-row × N-column CSS Grid — one column = one swipeable "page".
-
-    grid-auto-flow: column fills cells top-first then right, so:
-      col 1 → card 1 (row 1),  card 2 (row 2)   ← Page 1
-      col 2 → card 3 (row 1),  card 4 (row 2)   ← Page 2
-      col 3 → card 5 (row 1),  card 6 (row 2)   ← Page 3
-      …and so on through all 13 cards.
-
-    grid-auto-columns: 82vw keeps each page at 82% of the viewport,
-    leaving a comfortable right-peek of the next page.
+    Bug 3+4 fix — inner grid.
+    grid-template-columns: unset removes the desktop repeat(3,1fr)
+    so grid-auto-columns: 75vw actually governs column width.
+    grid-template-rows: repeat(2, auto) lets each row size to its
+    tallest card — no fixed px that clips content.
+    align-items: start prevents cards from stretching to fill row height.
   */
   .projects-track {
     display: grid;
+    grid-template-columns: unset;
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
-    grid-auto-columns: 82vw;
-    column-gap: 1.25rem;
-    row-gap: 1rem;
-    padding: 0.5rem 1rem;
-    width: auto;
-    min-width: unset;
+    grid-auto-columns: 75vw;
+    align-items: start;
+    gap: 1rem;
+    padding: 0.25rem 1rem;
+    width: max-content;
   }
 
-  /*
-    Restore display: contents — identical to the desktop rule.
-    This removes the .projects-row wrappers from the layout tree
-    so all 13 cards participate directly in the grid above,
-    in their exact source order. Without this, the 5-card row
-    wrappers become opaque flex containers that destroy the grid.
-  */
-  .projects-row {
-    display: contents;
-  }
-
-  /*
-    Cards fill their 82vw grid column.
-    flex: none clears the 0 0 87% sizing inherited from the
-    previous mobile rule, which has no meaning inside a grid.
-    scroll-snap-align: start causes one column-page to snap
-    into view per swipe.
-  */
+  /* Bug 1+5 fix — cards: auto height, min-height floor, flex col so
+     footer stays at bottom via margin-top: auto (already set on base) */
   .project-card {
     width: 100%;
-    flex: none;
+    height: auto;
+    min-height: 320px;
+    overflow: hidden;        /* clips images cleanly but flex handles footer */
+    display: flex;
+    flex-direction: column;
     scroll-snap-align: start;
   }
 
-  /*
-    Replace the 1:1 square ratio with 16:9.
-    At 82vw on a 390px device (≈ 320px wide), the image height
-    becomes ≈ 180px instead of 320px — compact enough for two
-    stacked cards to fit within a standard mobile viewport height.
-    object-fit: contain (already declared on .project-card__image)
-    cleanly letterboxes any non-16:9 source image.
-  */
-  .project-card__image-wrap {
-    aspect-ratio: 9 / 9;
+  /* Bug 2 fix — info panel spacing */
+  .project-card__info {
+    padding: 0.9rem 1rem 1rem;
+    gap: 0.4rem;
+    flex: 1;                 /* grow to fill remaining card height */
   }
 
+  /* Bug 2 fix — title row gap */
+  .project-card__row {
+    margin-bottom: 0.35rem;
+  }
+
+  /* Bug 2 fix — description spacing */
+  .project-card__desc {
+    line-height: 1.6;
+    -webkit-line-clamp: 3;
+    margin-bottom: 0.35rem;
+  }
+
+  /* Bug 5 fix — footer row: always at bottom, wraps naturally */
+  .project-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-top: 0.5rem;
+    margin-top: auto;
+  }
+
+  /* Bug 1 fix — image area fixed height, never clips the info below */
+  .project-card__image-wrap {
+    height: 140px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 600px) {
   /* Certificate cards - Mobile responsive */
   .cert-card {
     flex: 0 0 85vw;
