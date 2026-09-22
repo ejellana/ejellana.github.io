@@ -259,19 +259,16 @@ body {
 /* Alternating section backgrounds */
 .hero {
   background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  text-align: center;
+  text-align: left;
   display: flex;
   align-items: center;
   min-height: 90vh;
   border-top: none;
 }
 
-#about {
-  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-}
-
+/* Skills section keeps its gradient since About is removed */
 #skills {
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
 }
 
 #projects {
@@ -305,10 +302,32 @@ body {
   width: 100%;
 }
 
-.hero-content {
-  max-width: 680px;
+/*
+  Two-column hero layout — text left, profile card right.
+  align-items: center vertically centers both columns.
+*/
+.hero-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
   width: 100%;
-  margin: 0 auto;
+}
+
+/* Left column — intro text, takes ~55% of the width */
+.hero-content {
+  flex: 1 1 55%;
+  min-width: 280px;
+  text-align: left;
+}
+
+/* Right column — profile card */
+.hero-image-col {
+  flex: 0 1 40%;
+  min-width: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero h2 {
@@ -321,7 +340,7 @@ body {
 
 .hero h1 {
   font-family: "Poppins", sans-serif;
-  font-size: clamp(2.8rem, 6vw, 6.3rem);
+  font-size: clamp(2.8rem, 5vw, 5.8rem);
   font-weight: 800;
   margin: 0.4rem 0 1rem;
   color: var(--text-primary);
@@ -337,11 +356,11 @@ body {
 }
 
 .hero .tagline--large {
-  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
   font-weight: 600;
   color: var(--text-primary);
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 0.9rem;
+  margin-bottom: 1rem;
   letter-spacing: -0.5px;
 }
 
@@ -352,13 +371,38 @@ body {
   line-height: 1.6;
 }
 
+/*
+  Academic identity chips — school, program, honour.
+  Rendered as a muted inline row between tagline and action buttons.
+*/
+.hero-identity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-identity__item {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
+
+.hero-identity__sep {
+  font-size: 0.8rem;
+  color: var(--border-hover);
+  line-height: 1;
+}
+
 /* ── Hero action buttons ── */
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 1.5rem;
 }
 
@@ -1224,10 +1268,25 @@ body {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: stretch;
+  align-items: flex-start;
   gap: 0 0;
   margin-top: 3.5rem;
   padding-bottom: 0.5rem;
+}
+
+.exp-timeline__col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.exp-timeline__col--left {
+  grid-column: 1;
+}
+
+.exp-timeline__col--right {
+  grid-column: 2;
 }
 
 /*
@@ -1369,7 +1428,7 @@ body {
   position: relative;
   width: calc(100% + 2px);   /* compensate left + right 1px borders */
   margin: -1px -1px 0 -1px;  /* pull flush to top, left, right borders */
-  height: 200px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--bg-tertiary);
   flex-shrink: 0;
@@ -1379,7 +1438,7 @@ body {
 .exp-card__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1686,16 +1745,39 @@ body {
     font-size: 3.2rem;
   }
 
-  .hero .tagline--large {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+  /* ── Hero two-column — stack vertically on mobile ── */
+  .hero-layout {
+    flex-direction: column; /* text first, image below on mobile */
+    gap: 2.5rem;
+    text-align: center;
   }
 
-  /* ── Experience timeline — stack vertically on mobile ── */
+  .hero-content {
+    text-align: center;
+    flex: none;
+    width: 100%;
+  }
+
+  .hero-image-col {
+    flex: none;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .hero-identity {
+    justify-content: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  /* ── Experience timeline — single column stack on mobile ── */
   .exp-timeline {
-    grid-template-columns: 1fr;
-    gap: 2rem 0;
-    /* Indent right to make room for the left-side timeline line */
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
     padding-left: 2.25rem;
     margin-top: 2.5rem;
   }
@@ -1706,13 +1788,25 @@ body {
     transform: none;
   }
 
+  /* Column wrappers become transparent flex containers — they flow inline */
+  .exp-timeline__col {
+    display: contents; /* flatten into the parent flex flow */
+  }
+
+  /* Order the three cards: PurpleBug → ASEAN → JPCS */
+  /* PurpleBug is inside col--left, first child */
+  .exp-timeline__col--left > *:first-child { order: 1; }
+  /* ASEAN Hackathon is inside col--right */
+  .exp-timeline__col--right > *:first-child { order: 2; }
+  /* JPCS is inside col--left, second child */
+  .exp-timeline__col--left > *:last-child  { order: 3; }
+
   .exp-entry--left,
   .exp-entry--right {
-    grid-column: 1;
     align-items: flex-start;
     padding-right: 0;
     padding-left: 0;
-    flex-direction: column;
+    width: 100%;
   }
 
   /* Both dots sit on the left-edge line */

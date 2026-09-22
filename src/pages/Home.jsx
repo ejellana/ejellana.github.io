@@ -384,119 +384,227 @@ const slideInRight = {
 
 export default function Home() {
   return (
-    <div id="home">
+    <div>
 
       {/* ── Hero / Introduction Section ───────────────────── */}
       <section className="hero" id="home">
         <div className="container">
-          {/* Left-aligned content column — ~55-60% of the container width */}
-          <div className="hero-content">
+          <div className="hero-layout">
 
-            {/* "Hello," greeting */}
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            >
-              Hello,
-            </motion.h2>
+            {/* LEFT — intro text */}
+            <div className="hero-content">
 
-            {/* Main name headline */}
-            <motion.h1
-              className="title-accent"
-              initial={{ opacity: 0, y: 36 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-            >
-              I'm Emmanuel Ellana
-            </motion.h1>
+              {/* "Hello," greeting */}
+              <motion.h2
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+              >
+                Hello,
+              </motion.h2>
 
-            {/* Tagline with rotating role */}
-            <motion.p
-              className="tagline tagline--large"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
-            >
-              Aspiring <RotatingRole />
-            </motion.p>
+              {/* Main name headline */}
+              <motion.h1
+                className="title-accent"
+                initial={{ opacity: 0, y: 36 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              >
+                I'm Emmanuel Ellana
+              </motion.h1>
 
-            {/* Action buttons — social icons + CV download, staggered pop-in */}
-            <motion.div
-              className="hero-actions"
-              variants={staggerContainer(0.07)}
-              initial="hidden"
-              animate="visible"
-              style={{ transitionDelay: '0.75s' }}
-            >
-              {[
-                { href: "https://www.instagram.com/ej.ellana/", icon: faInstagram, label: "Instagram" },
-                { href: "https://github.com/ejellana", icon: faGithub, label: "GitHub" },
-                { href: "https://www.linkedin.com/in/emmanuel-ellana-ba8a9a182/", icon: faLinkedinIn, label: "LinkedIn" },
-              ].map(({ href, icon, label }) => (
+              {/* Tagline with rotating role */}
+              <motion.p
+                className="tagline tagline--large"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
+              >
+                Aspiring <RotatingRole />
+              </motion.p>
+
+              {/* Academic identity — school + program (no Dean's Lister) */}
+              <motion.div
+                className="hero-identity"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+              >
+                <span className="hero-identity__item">Mapúa MCL</span>
+                <span className="hero-identity__sep" aria-hidden="true">·</span>
+                <span className="hero-identity__item">BSCS – Data Science & Analytics</span>
+              </motion.div>
+
+              {/* Action buttons — social icons + CV download, staggered pop-in */}
+              <motion.div
+                className="hero-actions"
+                variants={staggerContainer(0.07)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.3 }}
+              >
+                {[
+                  { href: "https://www.instagram.com/ej.ellana/", icon: faInstagram, label: "Instagram" },
+                  { href: "https://github.com/ejellana", icon: faGithub, label: "GitHub" },
+                  { href: "https://www.linkedin.com/in/emmanuel-ellana-ba8a9a182/", icon: faLinkedinIn, label: "LinkedIn" },
+                ].map(({ href, icon, label }) => (
+                  <motion.a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="hero-icon-btn"
+                    variants={socialIcon}
+                    whileHover={{
+                      y: -4,
+                      scale: 1.04,
+                      transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{ willChange: 'transform' }}
+                  >
+                    <FontAwesomeIcon icon={icon} />
+                  </motion.a>
+                ))}
+
                 <motion.a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="hero-icon-btn"
+                  href={cvFile}
+                  download="CV_Ellana-EmmanuelJacob.pdf"
+                  aria-label="Download CV"
+                  className="hero-cv-btn"
                   variants={socialIcon}
                   whileHover={{
                     y: -4,
-                    scale: 1.04,
+                    scale: 1.02,
                     transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
                   }}
-                  whileTap={{ scale: 0.95 }}
+                  whileTap={{ scale: 0.97 }}
                   style={{ willChange: 'transform' }}
                 >
-                  <FontAwesomeIcon icon={icon} />
+                  Download CV
                 </motion.a>
-              ))}
+              </motion.div>
 
-              <motion.a
-                href={cvFile}
-                download="CV_Ellana-EmmanuelJacob.pdf"
-                aria-label="Download CV"
-                className="hero-cv-btn"
-                variants={socialIcon}
-                whileHover={{
-                  y: -4,
-                  scale: 1.02,
-                  transition: { duration: 0.35, ease: [0.25, 1, 0.5, 1] },
-                }}
-                whileTap={{ scale: 0.97 }}
-                style={{ willChange: 'transform' }}
-              >
-                Download CV
-              </motion.a>
+            </div>
+
+            {/* RIGHT — profile card (moved from the removed About section) */}
+            <motion.div
+              className="hero-image-col"
+              initial={{ opacity: 0, x: 32 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            >
+              <ProfileCard image={imgMe} alt="Emmanuel Jacob C. Ellana" />
             </motion.div>
 
           </div>
         </div>
       </section>
 
-      {/* ── About Me Section ─────────────────────────────── */}
-      <section id="about" className="section about">
+      {/* ── Experience & Achievements Section ───────────────────── */}
+      <section id="experience" className="section experience" aria-label="Experience and Achievements">
         <div className="container">
-          <div className="about-content">
+          <ScrollReveal variant={fadeUp}>
+            <h2 className="skills-heading">Experience &amp; Achievements</h2>
+          </ScrollReveal>
 
-            {/* Left column — heading + description, slides in from the left */}
-            <ScrollReveal variant={slideInLeft} className="about-text-col">
-              <h2 className="title-accent about-heading">About Me</h2>
-              <p className="about-paragraph">
-                I am Emmanuel Jacob C. Ellana, a Bachelor of Science in Computer Science student specializing in Data Science and Analytics at Mapúa Malayan Colleges Laguna.
-                I am a consistent Dean's Lister and an Iskolar ng Laguna who enjoys continuously learning and taking on new challenges.
-                Outside of academics, I enjoy playing video games, watching movies, listening to music, and spending time exploring new interests.
-                I value creativity, curiosity, and personal growth, and I strive to maintain a balance between my studies and the activities I enjoy.
-              </p>
-            </ScrollReveal>
+          <div className="exp-timeline" role="list">
+            {/* ── Center vertical line ── */}
+            <div className="exp-timeline__line" aria-hidden="true" />
 
-            {/* Right column — profile card, slides in from the right, badges follow */}
-            <ScrollReveal variant={slideInRight} delay={0.1} className="about-image-col">
-              <ProfileCard image={imgMe} alt="Emmanuel Jacob C. Ellana" />
-            </ScrollReveal>
+            {/* ── LEFT column ── */}
+            <div className="exp-timeline__col exp-timeline__col--left">
+              {/* ── LEFT card — Internship ── */}
+              <ScrollReveal variant={slideLeft} delay={0.1} className="exp-entry exp-entry--left">
+                <article className="exp-card" role="listitem" aria-label="PurpleBug Inc. Internship">
+                  <header className="exp-card__header">
+                    <div className="exp-card__meta-row">
+                      <div>
+                        <h3 className="exp-card__company">PurpleBug Inc.</h3>
+                        <p className="exp-card__location">Makati, Philippines</p>
+                      </div>
+                      <time className="exp-card__date" dateTime="2026-05/2026-08">May 2026 – Aug. 2026</time>
+                    </div>
+                    <p className="exp-card__role">IT Business Analyst Intern</p>
+                  </header>
+                  <ul className="exp-card__bullets">
+                    <li>Developed an AI-powered B2B lead generation system automating lead discovery, enrichment, qualification, and management using n8n workflow automation.</li>
+                    <li>Designed and developed an interactive analytics dashboard using React.js, Vite, Tailwind CSS, Axios, React Router, and React Leaflet to visualize lead data and insights.</li>
+                    <li>Validated and reconciled 3,000+ records, identifying data inconsistencies and ensuring accuracy, completeness, and adherence to established standards.</li>
+                    <li>Conducted User Acceptance Testing (UAT), documented system issues, verified resolutions, and supported quality assurance activities prior to deployment.</li>
+                    <li>Prepared and maintained 15+ Content Specification Documents (CSDs) to support standardized data requirements and CMS implementation projects.</li>
+                  </ul>
+                </article>
+                {/* Connector dot — visually joins card to center line */}
+                <div className="exp-entry__dot" aria-hidden="true" />
+              </ScrollReveal>
 
+              {/* ── LEFT card — JPCS Organization ── */}
+              <ScrollReveal variant={slideLeft} delay={0.3} className="exp-entry exp-entry--left">
+                <article className="exp-card" role="listitem" aria-label="Junior Philippine Computer Society (JPCS) - Mapúa MCL Chapter">
+                  <header className="exp-card__header">
+                    <div className="exp-card__meta-row">
+                      <div>
+                        <h3 className="exp-card__company">Junior Philippine Computer Society (JPCS) – Mapúa MCL Chapter</h3>
+                        <p className="exp-card__location">Mapúa Malayan Colleges Laguna</p>
+                      </div>
+                      <time className="exp-card__date" dateTime="2023-08/2026-08">Aug. 2023 – Aug. 2026</time>
+                    </div>
+                    <p className="exp-card__role">Member</p>
+                  </header>
+                  <p className="exp-card__desc">
+                    Member of JPCS at Mapúa Malayan Colleges Laguna and actively participating in academic and technology-related activities within the organization.
+                  </p>
+                </article>
+                {/* Connector dot */}
+                <div className="exp-entry__dot" aria-hidden="true" />
+              </ScrollReveal>
+            </div>
+
+            {/* ── RIGHT column ── */}
+            <div className="exp-timeline__col exp-timeline__col--right">
+              {/* ── RIGHT card — Hackathon ── */}
+              <ScrollReveal variant={slideRight} delay={0.2} className="exp-entry exp-entry--right">
+                {/* Connector dot */}
+                <div className="exp-entry__dot" aria-hidden="true" />
+                <article className="exp-card" role="listitem" aria-label="ASEAN AI Hackathon 2026">
+                  <div className="exp-card__image-wrap">
+                    <img
+                      src={imgHackathon}
+                      alt="ASEAN AI Hackathon 2026 team photo"
+                      loading="lazy"
+                      className="exp-card__image"
+                    />
+                  </div>
+                  <header className="exp-card__header">
+                    <div className="exp-card__meta-row">
+                      <div>
+                        <h3 className="exp-card__company">ASEAN AI Hackathon 2026</h3>
+                        <p className="exp-card__location">Duy Tan University, Da Nang, Vietnam</p>
+                      </div>
+                      <time className="exp-card__date" dateTime="2026">April 2026 – Aug. 2026</time>
+                    </div>
+                    <p className="exp-card__role">International Hackathon Participant</p>
+                  </header>
+                  {/* Achievement badges — pill tags that make achievements pop */}
+                  <div className="exp-card__badges" aria-label="Achievements">
+                    <span className="exp-badge">Top 16 of 240+ Teams</span>
+                    <span className="exp-badge">Top 4 – Public Health Track</span>
+                  </div>
+                  <p className="exp-card__desc">
+                    Recognized as one of the Top 16 teams out of 240+ participating teams at the ASEAN AI Hackathon 2026 held in Vietnam.
+                    Ranked Top 4 in the Public Health Track for our proposed solution, <strong>GenesisAI: Animal Disease Traceability</strong>, focused on improving animal disease traceability and protecting public health.
+                    The project aimed to provide a more reliable and transparent way to monitor animal health and movement within the food supply chain.
+                  </p>
+                </article>
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
@@ -527,81 +635,6 @@ export default function Home() {
                 />
               </ScrollReveal>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Experience Section ────────────────────────────── */}
-      <section id="experience" className="section experience" aria-label="Experience">
-        <div className="container">
-          <ScrollReveal variant={fadeUp}>
-            <h2 className="skills-heading">Experience</h2>
-          </ScrollReveal>
-
-          <div className="exp-timeline" role="list">
-            {/* ── Center vertical line ── */}
-            <div className="exp-timeline__line" aria-hidden="true" />
-
-            {/* ── LEFT card — Internship ── */}
-            <ScrollReveal variant={slideLeft} delay={0.1} className="exp-entry exp-entry--left">
-              <article className="exp-card" role="listitem" aria-label="PurpleBug Inc. Internship">
-                <header className="exp-card__header">
-                  <div className="exp-card__meta-row">
-                    <div>
-                      <h3 className="exp-card__company">PurpleBug Inc.</h3>
-                      <p className="exp-card__location">Makati, Philippines</p>
-                    </div>
-                    <time className="exp-card__date" dateTime="2026-05/2026-08">May 2026 – Aug. 2026</time>
-                  </div>
-                  <p className="exp-card__role">IT Business Analyst Intern</p>
-                </header>
-                <ul className="exp-card__bullets">
-                  <li>Developed an AI-powered B2B lead generation system automating lead discovery, enrichment, qualification, and management using n8n workflow automation.</li>
-                  <li>Designed and developed an interactive analytics dashboard using React.js, Vite, Tailwind CSS, Axios, React Router, and React Leaflet to visualize lead data and insights.</li>
-                  <li>Validated and reconciled 3,000+ records, identifying data inconsistencies and ensuring accuracy, completeness, and adherence to established standards.</li>
-                  <li>Conducted User Acceptance Testing (UAT), documented system issues, verified resolutions, and supported quality assurance activities prior to deployment.</li>
-                  <li>Prepared and maintained 15+ Content Specification Documents (CSDs) to support standardized data requirements and CMS implementation projects.</li>
-                </ul>
-              </article>
-              {/* Connector dot — visually joins card to center line */}
-              <div className="exp-entry__dot" aria-hidden="true" />
-            </ScrollReveal>
-
-            {/* ── RIGHT card — Hackathon ── */}
-            <ScrollReveal variant={slideRight} delay={0.2} className="exp-entry exp-entry--right">
-              {/* Connector dot */}
-              <div className="exp-entry__dot" aria-hidden="true" />
-              <article className="exp-card" role="listitem" aria-label="ASEAN AI Hackathon 2026">
-                <div className="exp-card__image-wrap">
-                  <img
-                    src={imgHackathon}
-                    alt="ASEAN AI Hackathon 2026 team photo"
-                    loading="lazy"
-                    className="exp-card__image"
-                  />
-                </div>
-                <header className="exp-card__header">
-                  <div className="exp-card__meta-row">
-                    <div>
-                      <h3 className="exp-card__company">ASEAN AI Hackathon 2026</h3>
-                      <p className="exp-card__location">Vietnam</p>
-                    </div>
-                    <time className="exp-card__date" dateTime="2026">2026</time>
-                  </div>
-                  <p className="exp-card__role">International Hackathon Participant</p>
-                </header>
-                {/* Achievement badges — pill tags that make achievements pop */}
-                <div className="exp-card__badges" aria-label="Achievements">
-                  <span className="exp-badge"> Top 16 of 240+ Teams</span>
-                  <span className="exp-badge"> Top 4 – Public Health Track</span>
-                </div>
-                <p className="exp-card__desc">
-                  Recognized as one of the Top 16 teams out of 240+ participating teams at the ASEAN AI Hackathon 2026 held in Vietnam.
-                  Ranked Top 4 in the Public Health Track for our proposed solution, <strong>GenesisAI</strong>, focused on improving animal disease traceability and protecting public health.
-                  The project aimed to provide a more reliable and transparent way to monitor animal health and movement within the food supply chain.
-                </p>
-              </article>
-            </ScrollReveal>
           </div>
         </div>
       </section>

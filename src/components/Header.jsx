@@ -5,15 +5,15 @@ import { faBars, faTimes, faSun, faMoon } from '@fortawesome/free-solid-svg-icon
 import { Link } from 'react-router-dom';
 
 const NAV_LINKS = [
-  { href: '#about', label: 'About' },
+  { href: '#home', label: 'Home' },
+  { href: '#experience', label: 'Exp' },
   { href: '#skills', label: 'Skills' },
-  { href: '#experience', label: 'Experience' },
   { href: '#projects', label: 'Projects' },
   { href: '#certificates', label: 'Certificates' },
   { href: '#contact', label: 'Contact' },
 ];
 
-const SECTION_IDS = ['home', ...NAV_LINKS.map((l) => l.href.slice(1))];
+const SECTION_IDS = ['home', 'experience', 'skills', 'projects', 'certificates', 'contact'];
 
 
 
