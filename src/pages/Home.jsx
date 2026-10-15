@@ -40,7 +40,7 @@ import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
 import imgHackathon from '../assets/images/Experience/hackathon.jpg';
 
 // About Me profile image
-import imgMe from '../assets/images/home/me.jpg';
+import imgMe from '../assets/images/home/me.png';
 
 // Project images
 import imgN8BLeadGen from '../assets/images/Projects/N8N-B2BLeadGen.png';
