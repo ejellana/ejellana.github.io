@@ -34,7 +34,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 // CV file
-import cvFile from '../assets/PDFs/CV_Ellana-EmmanuelJacob.pdf';
+import cvFile from '../assets/PDFs/Resume_EllanaEmmanuelJacob.pdf';
 
 // Experience images
 import imgHackathon from '../assets/images/Experience/hackathon.jpg';
