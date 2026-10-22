@@ -532,11 +532,11 @@ export default function Home() {
                     <p className="exp-card__role">IT Business Analyst Intern</p>
                   </header>
                   <ul className="exp-card__bullets">
-                    <li>Developed an AI-powered B2B lead generation system automating lead discovery, enrichment, qualification, and management using n8n workflow automation.</li>
-                    <li>Designed and developed an interactive analytics dashboard using React.js, Vite, Tailwind CSS, Axios, React Router, and React Leaflet to visualize lead data and insights.</li>
-                    <li>Validated and reconciled 3,000+ records, identifying data inconsistencies and ensuring accuracy, completeness, and adherence to established standards.</li>
-                    <li>Conducted User Acceptance Testing (UAT), documented system issues, verified resolutions, and supported quality assurance activities prior to deployment.</li>
-                    <li>Prepared and maintained 15+ Content Specification Documents (CSDs) to support standardized data requirements and CMS implementation projects.</li>
+                    <li>Developed an AI-powered B2B lead generation system using n8n workflow automation, integrating lead discovery, enrichment, qualification, management, and dashboard analytics with map-based data visualization.</li>
+                    <li>Developed interactive analytics dashboards using Microsoft Excel, Power BI, and Google Data Studio to visualize and analyze data from different client projects, supporting data-driven insights and decision-making.</li>
+                    <li>Validated and reconciled 3,000+ records for client website data migration, identifying data inconsistencies and ensuring data accuracy, completeness, and compliance with established standards.</li>
+                    <li>Conducted User Acceptance Testing (UAT) for client websites and software systems, documented system issues, verified resolutions, and supported quality assurance activities prior to deployment.</li>
+                    <li>Prepared and maintained 15+ Content Specification Documents (CSDs) and Business Requirements Documents (BRDs) for different clients to support standardized data requirements and CMS implementation projects.</li>
                   </ul>
                 </article>
                 {/* Connector dot — visually joins card to center line */}
